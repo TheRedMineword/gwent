@@ -3,6 +3,7 @@ const http = require("http");
 const WebSocket = require("ws");
 const path = require("path");
 const cors = require("cors");
+const crypto = require("crypto");
 
 const app = express();
 const server = http.createServer(app);
@@ -30,6 +31,14 @@ function generateCode() {
   return code;
 }
 
+function generatePlayerId() {
+  const part = () => crypto.randomBytes(2).toString("hex"); // 4 hex chars
+  const num = () => Math.floor(1000 + Math.random() * 9000); // 4-digit number
+
+  return `${part()}-${num()}-${part()}-${num()}`;
+}
+
+
 // Serve all client files (index.html, JS, CSS, etc.)
 app.use(express.static(__dirname));
 app.get("/wake", (req, res) => {
@@ -40,7 +49,7 @@ app.get("*", (_, res) => {
 });
 
 wss.on('connection', (ws) => {
-  ws.playerId = nextPlayerId++;
+  ws.playerId = generatePlayerId();
   players.push(ws);
 
   // Send a welcome message with the player's ID
