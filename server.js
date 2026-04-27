@@ -32,6 +32,9 @@ function generateCode() {
 
 // Serve all client files (index.html, JS, CSS, etc.)
 app.use(express.static(__dirname));
+app.get("/wake", (req, res) => {
+  res.json({ ok: "ok" });
+});
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -161,10 +164,6 @@ wss.on('connection', (ws) => {
     // Remove the player from the players list
     players = players.filter(player => player !== ws);
   });
-});
-
-app.get("/wake", (req, res) => {
-  res.status(200).json({ status: "awake" });
 });
 
 

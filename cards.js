@@ -53,11 +53,29 @@ function loadGwent() {
 
 // start boot
 async function bootstrap() {
-    await wakeBackend("https://drmineword-gwent.onrender.com/wake");
+    try {
+        const res = await fetch("https://drmineword-gwent.onrender.com/wake");
 
-    await loadCards();
+        if (!res.ok) {
+            throw new Error("Server not responding");
+        }
 
-    startGame(); // or load gwent.js logic
+        const data = await res.json();
+
+        if (!data || data.ok !== "ok") {
+            throw new Error("Invalid server response");
+        }
+
+        console.log("Backend is ready:", data);
+
+        await loadCards(); // still needed separately unless you merge it too
+
+        startGame();
+
+    } catch (err) {
+        console.error("Bootstrap failed:", err);
+        alert("Server is not ready. Please try again in a few seconds.");
+    }
 }
 
 bootstrap();
