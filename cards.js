@@ -52,30 +52,4 @@ function loadGwent() {
 }
 
 // start boot
-async function bootstrap() {
-    try {
-        const res = await fetch("https://drmineword-gwent.onrender.com/wake");
-
-        if (!res.ok) {
-            throw new Error("Server not responding");
-        }
-
-        const data = await res.json();
-
-        if (!data || data.ok !== "ok") {
-            throw new Error("Invalid server response");
-        }
-
-        console.log("Backend is ready:", data);
-
-        await loadCards(); // still needed separately unless you merge it too
-
-        startGame();
-
-    } catch (err) {
-        console.error("Bootstrap failed:", err);
-        alert("Server is not ready. Please try again in a few seconds.");
-    }
-}
-
-bootstrap();
+loadCards();
