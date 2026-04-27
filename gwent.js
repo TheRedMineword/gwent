@@ -1,5 +1,6 @@
 "use strict"
 
+
 class Controller {}
 
 // Better menu //
@@ -2001,6 +2002,8 @@ class Popup {
 	
 }
 
+
+
 // Screen used to customize, import and export deck contents
 class DeckMaker {
 	constructor() {
@@ -2734,3 +2737,4 @@ function startLoadingEffect() {
 function stopLoadingEffect() {
 	passButton.classList.remove('loading');
 }
+
