@@ -174,15 +174,20 @@ socket.onmessage = async(event) => {
 
 
 function loadGwent() {
-    const script = document.createElement("script");
-    script.src = "gwent.js";
-    script.type = "text/javascript";
-
-    script.onload = () => {
-        console.log("gwent.js loaded AFTER cards");
-    };
-
-    document.body.appendChild(script);
+    fetch("gwent.js")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Failed to load gwent.js");
+            }
+            return response.text();
+        })
+        .then(code => {
+            console.log("gwent.js fetched, executing now");
+            (0, eval)(code); // executes in global scope
+        })
+        .catch(err => {
+            console.error("Error loading gwent.js:", err);
+        });
 }
 
 // start boot
