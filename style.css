@@ -45,7 +45,10 @@
 
 
 
-
+.export-card {
+    width: 410px !important;
+    height: 775px !important;
+}
 
 
 

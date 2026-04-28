@@ -1590,6 +1590,7 @@ class Card {
 	
 	// Creates an HTML element based on the card's properties
 	createCardElem(card){
+		console.log("createcardElem", card);
 		let elem = document.createElement("div");
 		elem.style.backgroundImage = smallURL(card.faction + "_" + card.filename);
 		elem.classList.add("card");
@@ -1639,6 +1640,7 @@ class Card {
 			abi.style.backgroundImage = iconURL("card_ability_" + "agile");
 		
 		elem.appendChild( document.createElement("div") ); // animation overlay
+		console.log("createcardElem out", elem)
 		return elem;
 	}
 }
@@ -2691,7 +2693,8 @@ function smallURL(name, ext="jpg"){
 	return imgURL("sm/" + name, ext);
 }
 function imgURL(path, ext) {
-	return "url('img/" + path + "." + ext;
+	// return "url('img/" + path + "." + ext;
+	return "url('img/" + path + "." + ext + "')";
 }
 
 // Returns true if n is an Number

@@ -5,5 +5,5 @@ const ForGameStart = {
  'special': 10,
  'hero': 99
 };
-const thishandsize = 15;
+const thishandsize = 10;
 console.log("Game Start Config", ForGameStart);
