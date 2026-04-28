@@ -312,7 +312,7 @@ class Player {
 		this.health = 2;
 		this.total = 0;
 		this.passed = false;
-		this.handsize = 10;
+		this.handsize = thishandsize;
 		this.winning = false;
 	
 		this.enableLeader();
@@ -1194,7 +1194,7 @@ class Game {
 		ui.toggleMusic_elem.classList.remove("music-customization");
 		this.currPlayer = player_me;
 		this.initPlayers(player_me, player_op);
-		await Promise.all([...Array(10).keys()].map( async () => {
+		await Promise.all([...Array(thishandsize).keys()].map( async () => {
 			await player_me.deck.draw(player_me.hand);
 			await player_op.deck.draw(player_op.hand);
 		}));
@@ -2341,13 +2341,14 @@ class DeckMaker {
 	updateStats(){
 		let stats = document.getElementById("deck-stats");
 		stats.children[1].innerHTML = this.stats.total;
-		stats.children[3].innerHTML = this.stats.units +(this.stats.units < 22 ? "/22" : "");
-		stats.children[5].innerHTML = this.stats.special + "/10";
+		stats.children[3].innerHTML = this.stats.units +(this.stats.units < ForGameStart.unitscards ? "/" + ForGameStart.unitscards : "");
+		stats.children[5].innerHTML = this.stats.special + "/" + ForGameStart.special;
 		stats.children[7].innerHTML = this.stats.strength;
-		stats.children[9].innerHTML = this.stats.hero;
+		stats.children[9].innerHTML = this.stats.hero + "/" + ForGameStart.hero;
 		
 		stats.children[3].style.color = this.stats.units < 22 ? "red" : "";
-		stats.children[5].style.color = (this.stats.special > 10) ? "red" : "";
+		stats.children[5].style.color = (this.stats.special > ForGameStart.special) ? "red" : "";
+		stats.children[9].style.color = (this.stats.hero > ForGameStart.hero) ? "red" : "";
 	}
 	
 	// Opens a Carousel to allow the client to select a leader for their deck
@@ -2441,12 +2442,14 @@ class DeckMaker {
 			socket.send(JSON.stringify({ type: "unReady" }));
 			return
 		}
-		
+		console.log("[Start] \\this.stats\\", this.stats);
 		let warning = "";;
-		if (this.stats.units < 22)
-			warning += "Your deck must have at least 22 unit cards. \n";
-		if (this.stats.special > 10)
-			warning += "Your deck must have no more than 10 special cards. \n";
+		if (this.stats.units < ForGameStart.unitscards)
+			warning += `Your deck must have at least ${ForGameStart.unitscards} unit cards. \n`;
+		if (this.stats.special > ForGameStart.special)
+			warning += `Your deck must have no more than ${ForGameStart.special} special cards. \n`;
+		if (this.stats.hero > ForGameStart.hero)
+			warning += `Your deck must have no more than ${ForGameStart.hero} hero cards. \n`;
 			
 		if (warning != "")
 			return alert(warning);
