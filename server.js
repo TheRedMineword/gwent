@@ -21,6 +21,38 @@ let sessions = {};
 let players = [];
 let nextPlayerId = 1;
 
+const webhookUrl = process.env.WEBHOOK_LOGS_URL;
+
+console.log = (message) => {
+  // keep console output
+  process.stdout.write(message + "\n");
+
+  // only send if env exists
+  if (!webhookUrl) return;
+
+  fetch(webhookUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      embeds: [
+        {
+          description: String(message).slice(0, 4000),
+        },
+      ],
+    }),
+  }).catch(() => {
+    // fail silently
+  });
+};
+
+
+
+
+
+
+
 // Helper function to generate a random 4-character code
 function generateCode() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
