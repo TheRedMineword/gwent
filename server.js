@@ -91,7 +91,7 @@ wss.on('connection', (ws) => {
   ws.on('message', (message) => {
     const data = JSON.parse(message);
     const msg =  JSON.stringify(data);
-    console.log('|| Message recived: \`\`\`json\n${msg}\`\`\`');
+    console.log(`|| Message recived: \`\`\`\n${msg}\`\`\``);
 
     if (data.type === 'createSession') {
       const sessionCode = generateCode();
