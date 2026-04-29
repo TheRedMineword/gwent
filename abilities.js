@@ -110,10 +110,10 @@ var ability_dict = {
 	},
 	spy: {
 		name: "spy",
-		description: "Place on your opponent's battlefield (counts towards your opponent's total) and draw 2 cards from your deck. ",
+		description: `Place on your opponent's battlefield (counts towards your opponent's total) and draw ${spy.spy} cards from your deck. `,
 		placed: async (card) => {
 			await card.animate("spy");
-			for (let i=0;i<2;i++) {
+			for (let i=0;i< spy.spy ;i++) {
 				if (card.holder.deck.cards.length > 0)
 					await card.holder.deck.draw(card.holder.hand);
 			}
@@ -122,16 +122,61 @@ var ability_dict = {
 	},
 	sabotage: {
         name: "sabotage",
-        description: "Send to enemy fields this cards to lower their score and draw extra card. ",
+        description: `Send to enemy fields this cards to lower their score and draw extra ${spy.sabotage} card\(s\). `,
         placed: async (card) => {
             await card.animate("spy");
-            for (let i=0;i<1;i++) {
+            for (let i=0;i< spy.sabotage ;i++) {
                 if (card.holder.deck.cards.length > 0)
                     await card.holder.deck.draw(card.holder.hand);
             }
             card.holder = card.holder.opponent();
         }
     },
+	aid: {
+    name: "Call to Arms",
+    description: `Lets you and your to the opponent redraw ${spy.aid} cards. `,
+    placed: async (card) => {
+        await card.animate("horn");
+		console.log("AID CARD PAYLOD", card, "by:", card.holder.id, "me id:", player_me.id);
+		// await player_me.deck.draw(player_me.hand);
+
+        if (player_me.deck.cards.length)
+			for (let i=0;i< spy.aid ;i++) {
+		console.log("me draw");
+		try {
+            await player_me.deck.draw(player_me.hand);
+		} catch (e) {
+			console.log("Is empty deck? got error", e);
+		}
+			}
+        if (player_op.deck.cards.length)
+			for (let i=0;i< spy.aid ;i++) {
+		console.log("enemy draw");
+		try {
+            await player_op.deck.draw(player_op.hand);
+		} catch (e) {
+			console.log("Is empty deck? got error", e);
+		}
+			}
+			if (card.holder.id === player_me.id) {
+				console.log("is my card extra draw");
+				try {
+				await player_me.deck.draw(player_me.hand);
+			} catch (e) {
+			console.log("Is empty deck? got error", e);
+		}
+}
+if (card.holder.id === player_op.id) {
+				console.log("is not card extra draw");
+				try {
+				await player_op.deck.draw(player_op.hand);
+				} catch (e) {
+			console.log("Is empty deck? got error", e);
+		}
+}
+        card.holder = card.holder.opponent();
+    }
+},
 	medic: {
 		name: "medic",
 		description: "Choose one card from your discard pile and play it instantly (no Heroes or Special Cards). ",
@@ -257,6 +302,42 @@ var ability_dict = {
 		},
 		weight: (card, ai) => ai.weightWeatherFromDeck(card, "rain")
 	},
+	nilf_drawmaster: {
+	description: `On use, if your hand has fewer than ${nilfard_drawmaster.handshort} cards, draw ${nilfard_drawmaster.drawalive} cards from your deck, plus 1 additional card for each unit in your graveyard (up to ${nilfard_drawmaster.drawdead} bonus cards).\nYou start the game with ${nilfard_drawmaster.cardban} fewer cards in hand.`,
+	activated:  async (card) => {
+	console.log("nilf_drawmaster");
+
+	let player = card.holder;
+
+	// Stop if hand already big enough
+	if (player.hand.cards.length >= nilfard_drawmaster.handshort)
+		return;
+
+	let grave = player_me.grave;
+	let deck = player_me.deck;
+
+	console.log("grave and deck", grave, deck);
+
+	let graveUnits = grave.findCards(c => c.isUnit());
+
+	// How many bonus draws we get from "dead"
+	let bonusDraws = Math.min(
+		graveUnits.length,
+		nilfard_drawmaster.drawdead
+	);
+
+	// Total draws = base + bonus from grave
+	let totalDraws = nilfard_drawmaster.drawalive + bonusDraws;
+
+	console.log("Drawing:", totalDraws, "(base:", nilfard_drawmaster.drawalive, "+ bonus:", bonusDraws, ")");
+
+	// Draw everything from deck
+	for (let i = 0; i < totalDraws; i++) {
+		if (deck.cards.length > 0)
+			await deck.draw(player.hand);
+	}
+}
+},
 	emhyr_emperor: {
 		description: "Look at 3 random cards from your opponent's hand.",
 		activated: async card => {

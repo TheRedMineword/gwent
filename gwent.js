@@ -43,7 +43,7 @@ function showTooltip(text) {
     const tooltip = document.getElementById("tooltip");
 
     // set message
-    tooltip.textContent = `Copied: ${text}`;
+    tooltip.textContent = `${text}`;
 
     tooltip.classList.add("show");
 
@@ -94,7 +94,7 @@ function showTooltip(text) {
     const tooltip = document.getElementById("tooltip");
 
     // set message
-    tooltip.textContent = `Copied: ${text}`;
+    tooltip.textContent = `${text}`;
 
     tooltip.classList.add("show");
 
@@ -110,7 +110,7 @@ document.getElementById("copy-session").onclick = () => {
 
     try {
         navigator.clipboard.writeText(joinedSessionId);
-        showTooltip(joinedSessionId);
+        showTooltip(`Copied: ${joinedSessionId}`);
     } catch (err) {
         console.error("Copy failed:", err);
     }
@@ -131,6 +131,7 @@ socket.onmessage = async(event) => {
 			
 			// Opponent has joined and the session is ready
 			case "sessionReady":
+				// showTooltip("Opponent has joined and the session is ready");
 				// [socket raw event.data] {"type":"sessionJoined","code":"XRA2"}
 				readyButtonElem.classList.remove("disabled");
 				isOpponentReadyElem.classList.remove("hidden");
@@ -145,6 +146,7 @@ socket.onmessage = async(event) => {
 
 			// Opponent has left and the session is no longer ready
 			case "sessionUnready":
+				showTooltip("Opponent has left and the session is no longer ready");
 				console.log("---------------------");
 				console.log("Opponent left the game");
 				isOpponentReadyElem.classList.add("hidden");
@@ -162,6 +164,7 @@ socket.onmessage = async(event) => {
 			
 			// Opponent is ready. If you are ready begin the game immediately
 			case "ready":
+				 showTooltip("Opponent is ready. If you are ready begin the game immediately");
 				player_op = new Player(1, "Opponent", data.deck);
 				if (amReady) {
 					customizationElem.classList.add("hide");
@@ -177,11 +180,13 @@ socket.onmessage = async(event) => {
 
 			case "opChangeFaction":
 				console.log("opponent has changed his faction");
+				 showTooltip(`Opponent changed his faction to ${data.faction}`);
 				opponentReadyElem.querySelector("img").src = `img/icons/deck_shield_${data.faction}.png`
 				break;
 			
 			case "unReady":
 				opponentReady = false;
+				 showTooltip("Opponent is unReady.");
 				opponentReadyElem.classList.add("disabled");
 				if (amReady) {
 					readyButtonElem.classList.remove("ready");
@@ -899,6 +904,8 @@ class Row extends CardContainer {
 			total = Math.min(1, total);
 		if (game.doubleSpyPower && card.abilities.includes("spy"))
 			total *= 2;
+		//if (game.doubleSpyPower && card.abilities.includes("sabotage")) //Double sabotage power
+		//	total *= 2;
 		let bond = this.effects.bond[card.id()];
 		if (isNumber(bond) && bond > 1)
 			total *= Number(bond);
@@ -1105,7 +1112,7 @@ class Board {
 	getRow(card, row_name, player){
 		player = player ? player : card ? card.holder : player_me;
 		let isMe = player === player_me;
-		let isSpy = card.abilities.includes("spy");
+		let isSpy = card.abilities.includes("spy") || card.abilities.includes("sabotage");
 		switch (row_name) {
 			case "weather": return weather; break;
 			case "close":  return this.row[ isMe^isSpy ? 3 : 2];
@@ -1194,8 +1201,23 @@ class Game {
 		ui.toggleMusic_elem.classList.remove("music-customization");
 		this.currPlayer = player_me;
 		this.initPlayers(player_me, player_op);
-		await Promise.all([...Array(thishandsize).keys()].map( async () => {
+		console.log("start game players:", player_me, player_op);
+		var meleadercardloss = player_me.leader.abilities[0] === "nilf_drawmaster" ? nilfard_drawmaster.cardban : 0;
+		var cardspecialgain = 0;
+		console.log("On game start i lose cards:", meleadercardloss);
+		var gamestart_thishandsize = thishandsize + cardspecialgain - meleadercardloss;
+		console.log("End game start hannd size", gamestart_thishandsize);
+		await Promise.all([...Array(gamestart_thishandsize).keys()].map( async () => {
 			await player_me.deck.draw(player_me.hand);
+			// await player_op.deck.draw(player_op.hand);
+		}));
+		var op_meleadercardloss = player_op.leader.abilities[0] === "nilf_drawmaster" ? nilfard_drawmaster.cardban : 0;
+		var op_cardspecialgain = cardspecialgain;
+		console.log("On game start op lose cards:", op_meleadercardloss);
+		var op_gamestart_thishandsize = thishandsize + op_cardspecialgain - op_meleadercardloss;
+		console.log("End game start hannd size", op_gamestart_thishandsize);
+		await Promise.all([...Array(op_gamestart_thishandsize).keys()].map( async () => {
+			// await player_me.deck.draw(player_me.hand);
 			await player_op.deck.draw(player_op.hand);
 		}));
 		
@@ -2469,6 +2491,7 @@ class DeckMaker {
 		player_me = new Player(0, "you", me_deck );
 		socket.send(JSON.stringify({ type: "ready", deck: me_deck }));
 		amReady = true;
+		 showTooltip("You are ready, please wait for opponent!");
 		if (opponentReady) {
 			this.elem.classList.add("hide");
 			game.startGame();
