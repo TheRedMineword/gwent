@@ -895,6 +895,7 @@ class Row extends CardContainer {
 	
 	// Calculates the current power of a card affected by row affects
 	calcCardScore(card) {
+		// console.log("calcCardScore(card)", card, this);
 		if (card.name === "decoy")
 			return 0;
 		let total = card.basePower;
@@ -904,8 +905,8 @@ class Row extends CardContainer {
 			total = Math.min(1, total);
 		if (game.doubleSpyPower && card.abilities.includes("spy"))
 			total *= 2;
-		//if (game.doubleSpyPower && card.abilities.includes("sabotage")) //Double sabotage power
-		//	total *= 2;
+		if (game.doubleSpyPower && card.abilities.includes("sabotage")) //Double sabotage power
+			 total = Math.ceil(total * 1.5);
 		let bond = this.effects.bond[card.id()];
 		if (isNumber(bond) && bond > 1)
 			total *= Number(bond);
