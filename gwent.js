@@ -2022,17 +2022,17 @@ async notification(name, duration) {
 
     // SOUND mapping
     const guia2 = {
-        "me-pass": "pass",
-        "win-round": "round_win",
-        "lose-round": "round_lose",
-        "me-turn": "turn_me",
-        "op-turn": "turn_op",
-        "op-leader": "turn_op",
-        "op-white-flame": "turn_op",
-        "nilfgaard-wins-draws": "turn_op",
-        "sv-err": "server_error",
-        "win-opleft": "opponent_left"
-    };
+			"me-pass" : "pass",
+			"win-round" : "round_win",
+			"lose-round" : "round_lose",
+			"me-turn" : "turn_me",
+			"op-turn" : "turn_op",
+			"op-leader" : "turn_op",
+			"op-white-flame" : "turn_op",
+			"nilfgaard-wins-draws" : "turn_op",
+			"sv-err": "server_error",
+			"win-opleft" : "opponent_left"
+		};
 
     const temSom = Object.keys(guia2);
     const som =
@@ -2041,7 +2041,7 @@ async notification(name, duration) {
             : name === "round-start" && game.roundHistory.length === 0
             ? "round1_start"
             : "";
-
+console.log(som);
     if (som !== "") {
         console.log("[notif] PLAY SOUND:", som);
         tocar(som, false);
