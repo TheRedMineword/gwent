@@ -259,8 +259,12 @@ console.log("onmsg data:", data)
 				isOpponentReadyElem.classList.add("hidden");
 
 				readyButtonElem.classList.add("disabled");
-				if (game.roundCound > 0) {
-					await ui.notification("win-opleft", 1200);
+				// if (game.roundCound > 0) { //oryginal dev typo X D
+				var game_state = this.game;
+				console.log("END GAME TRY round counts", game_state.roundCount, "game", game_state);
+				if (game_state.roundCount > 0) {
+					console.log("running");
+					await ui.notification("win-opleft", ui_display_times.round_end_result *2);
 
 					game.returnToCustomization();
 					if (joinedSessionId) {
@@ -1329,6 +1333,13 @@ class Game {
 			await player_op.deck.draw(player_op.hand);
 		}));
 		
+		try {
+			eval(ongame_start_eval);
+		} catch (e) {
+			console.log("Game eval start fail", e);
+		}
+
+
 		await this.runEffects(this.gameStart);
 		tocar("game_opening", false);
 		if (player_op.deck.faction === "scoiatael" && player_me.deck.faction !== "scoiatael") {
@@ -1383,7 +1394,7 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 					game.currPlayer = player;
 					
 					socket.removeEventListener('message', handleMessage);
-					await ui.notification(game.firstPlayer.tag + "-coin", 1200);
+					await ui.notification(game.firstPlayer.tag + "-coin", ui_display_times.coin);
 					resolve(true);
 				}
 			}
@@ -1419,9 +1430,9 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 		if (this.currPlayer.passed)
 			this.currPlayer = this.currPlayer.opponent();
 		
-		await ui.notification("round-start", 1200);
+		await ui.notification("round-start", ui_display_times.round_start);
 		if (this.currPlayer.opponent().passed)
-			await ui.notification(this.currPlayer.tag + "-turn", 1200);
+			await ui.notification(this.currPlayer.tag + "-turn", ui_display_times.turn);
 		
 		this.startTurn();
 	}
@@ -1431,7 +1442,7 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 		await this.runEffects(this.turnStart);
 		if (!this.currPlayer.opponent().passed){
 			this.currPlayer = this.currPlayer.opponent();
-			ui.notification(this.currPlayer.tag + "-turn", 1200);
+			ui.notification(this.currPlayer.tag + "-turn", ui_display_times.turn);
 		}
 		if (this.currPlayer === player_me) {
 			passButton.classList.remove("hidden");
@@ -1453,7 +1464,7 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 			ui.enablePlayer(false);
 		await this.runEffects(this.turnEnd);
 		if (this.currPlayer.passed)
-			await ui.notification(this.currPlayer.tag + "-pass", 1200);
+			await ui.notification(this.currPlayer.tag + "-pass", ui_display_times.pass);
 		if (player_op.passed && player_me.passed)
 			this.endRound();
 		else
@@ -1480,11 +1491,11 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 		player_op.endRound( dif < 0);
 		
 		if (dif > 0)
-			await ui.notification("win-round", 1200);
+			await ui.notification("win-round", ui_display_times.round_end_result);
 		else if (dif < 0)
-			await ui.notification("lose-round", 1200);
+			await ui.notification("lose-round", ui_display_times.round_end_result);
 		else
-			await ui.notification("draw-round", 1200);
+			await ui.notification("draw-round", ui_display_times.round_end_result);
 		
 		if (player_me.health === 0 || player_op.health === 0)
 			this.endGame();
@@ -1972,36 +1983,153 @@ class UI {
 			desc.classList.add("hide");
 		}
 	}
-	
-	// Displayed a timed notification to the client
-	async notification(name, duration){
-		if (!duration)
-			duration = 1200;
 
-		duration = Math.max(800, duration);
-		var guia2 = {
-			"me-pass" : "pass",
-			"win-round" : "round_win",
-			"lose-round" : "round_lose",
-			"me-turn" : "turn_me",
-			"op-turn" : "turn_op",
-			"op-leader" : "turn_op",
-			"op-white-flame" : "turn_op",
-			"nilfgaard-wins-draws" : "turn_op",
-			"sv-err": "server_error",
-			"win-opleft" : "opponent_left"
-		}
-		var temSom = new Array();
-		for (var x in guia2) temSom[temSom.length] = x;
-		var som = temSom.indexOf(name) > -1 ? guia2[name] : name == "round-start" && game.roundHistory.length == 0 ? "round1_start" : "";
-		if (som != "") tocar(som, false);
+async waitNotificationsDone() {
+    console.log("[notif] WAIT START");
+	console.log("[notif]: check config:", ui_display_times.hold_pause.sleep, ui_display_times.hold_pause.needs);
+    let consecutiveTrueCount = 0;
+    const requiredConsecutive = ui_display_times.hold_pause.needs;
 
-		const fadeSpeed = 150;
-		this.notif_elem.children[0].id = "notif-" + name;
-		await fadeIn(this.notif_elem, fadeSpeed);
-		await sleep(duration);
-		await fadeOut(this.notif_elem, fadeSpeed, duration - fadeSpeed);
-	}
+    while (true) {
+        const isDone =
+            ui_display_times.queue.length === 0 &&
+            !ui_display_times.is_busy &&
+            !ui_display_times.is_transitioning;
+
+        if (isDone) {
+            consecutiveTrueCount++;
+            console.log(`[notif] check: condition true (${consecutiveTrueCount}/${requiredConsecutive})`);
+        } else {
+            consecutiveTrueCount = 0;
+            console.log("[notif] check: condition false, reset counter");
+        }
+
+        if (consecutiveTrueCount >= requiredConsecutive) {
+            break; // exit loop after 10 consecutive true checks
+        }
+		 console.log(`[notif] check: sleeps`);
+        await sleep(ui_display_times.hold_pause.sleep);
+		console.log(`[notif] check: sleeped`);
+    }
+    console.log("[notif] WAIT DONE");
+}
+
+async notification(name, duration) {
+    console.log("[notif] notification() CALL:", name, duration);
+
+    if (!duration) duration = ui_display_times.notyfication;
+    duration = Math.max(800, duration);
+
+    // SOUND mapping
+    const guia2 = {
+        "me-pass": "pass",
+        "win-round": "round_win",
+        "lose-round": "round_lose",
+        "me-turn": "turn_me",
+        "op-turn": "turn_op",
+        "op-leader": "turn_op",
+        "op-white-flame": "turn_op",
+        "nilfgaard-wins-draws": "turn_op",
+        "sv-err": "server_error",
+        "win-opleft": "opponent_left"
+    };
+
+    const temSom = Object.keys(guia2);
+    const som =
+        temSom.includes(name)
+            ? guia2[name]
+            : name === "round-start" && game.roundHistory.length === 0
+            ? "round1_start"
+            : "";
+
+    if (som !== "") {
+        console.log("[notif] PLAY SOUND:", som);
+        tocar(som, false);
+    } else {
+        console.log("[notif] NO SOUND FOR:", name);
+    }
+
+    // Add notification to queue
+    ui_display_times.queue.push({
+        name: name,
+        duration: duration,
+        time: Date.now()
+    });
+
+    console.log("[notif] QUEUE PUSHED:", name, "queue size:", ui_display_times.queue.length);
+
+    // Start notification loop if not already running
+    this.notificationLoop();
+
+    // Wait until all notifications are finished
+    await this.waitNotificationsDone();
+
+    console.log("[notif] notification() RETURN:", name);
+}
+
+async notificationLoop() {
+    if (ui_display_times.is_running) {
+     //   console.log("[notif] notificationLoop already running");
+        return;
+    }
+
+    ui_display_times.is_running = true;
+    console.log("[notif] notificationLoop START");
+
+    while (true) {
+        if (
+            !ui_display_times.is_busy &&
+            !ui_display_times.is_transitioning &&
+            ui_display_times.queue.length > 0
+        ) {
+            ui_display_times.is_busy = true;
+
+            const item = ui_display_times.queue.shift();
+            console.log("[notif] SHOW:", item.name, "queue left:", ui_display_times.queue.length);
+
+            try {
+                const fadeSpeed = ui_display_times.fadeSpeed;
+
+                // Show notification
+                ui_display_times.is_transitioning = true;
+                this.notif_elem.classList.remove("hide");
+                this.notif_elem.style.display = "";
+                this.notif_elem.style.opacity = 0;
+
+                this.notif_elem.children[0].id = "notif-" + item.name;
+
+                console.log("[notif] fadeIn:", item.name);
+                await fadeIn(this.notif_elem, fadeSpeed);
+                console.log("[notif] fadeIn complete:", item.name);
+
+                // Wait for display duration
+                await sleep(item.duration);
+
+                console.log("[notif] fadeOut:", item.name);
+                ui_display_times.is_transitioning = true;
+                await fadeOut(this.notif_elem, fadeSpeed);
+                console.log("[notif] fadeOut complete:", item.name);
+
+                // Reset state after fade out
+                this.notif_elem.classList.add("hide");
+                this.notif_elem.style.display = "none";
+                this.notif_elem.style.opacity = 0;
+
+                console.log("[notif] DONE:", item.name);
+            } catch (e) {
+                console.error("[notif] ERROR:", e);
+                ui_display_times.is_transitioning = false;
+            }
+			console.log("[notif] done down here notif too")
+            ui_display_times.is_busy = false;
+			console.log("[notif] Notif to unpause is_transitioning sleeps for", ui_display_times.checkDelay * 2.3)
+        await sleep(ui_display_times.fadeSpeed * 2.3);
+		ui_display_times.is_transitioning = false;
+		console.log("[notif]: ui_display_times.is_transitioning = false;", ui_display_times.is_transitioning);
+        }
+		await sleep(ui_display_times.checkDelay);
+    }
+}
 	
 	// Displays a cancellable Carousel for a single card 
 	async viewCard(card, action) {

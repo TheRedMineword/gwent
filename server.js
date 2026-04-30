@@ -12,9 +12,7 @@ const wss = new WebSocket.Server({ server });
 
 const PORT = process.env.PORT || 8081;
 
-app.use(cors({
-  origin: "*", // or your frontend domain in production
-}));
+app.use(cors({ origin: '*' }));
 
 
 

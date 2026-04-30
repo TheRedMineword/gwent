@@ -7,7 +7,27 @@ const ForGameStart = {
 };
 const maxhealth = 2; // Dont change it, it also should do nothing
 const thishandsize = 10;
-console.log("Game Start Config", ForGameStart, "hand size:", thishandsize);
+const ui_display_times = {
+	'hold_pause': {
+		'sleep': 78,
+		'needs': 6
+	},
+	'queue': [],
+	'is_running': false,
+	'is_busy': false,
+	'round_end_result': 2200,
+	'notyfication': 2200, // From async notification(name, duration) // a fail save value
+	'fadeSpeed': 150,
+	'checkDelay': 25,
+	'pass': 1320,
+	'turn': 1200,
+	'round_start': 1200,
+	'coin': 1200
+}
+ui_display_times.is_transitioning = false;
+const ongame_start_eval = "console.log(\"evaled start game\");\n(function notificationRepeat() {\r\n  ui.notificationLoop();\r\n  setTimeout(notificationRepeat, ui_display_times.checkDelay);\r\n})();";
+
+console.log("Game Start Config", ForGameStart, "hand size:", thishandsize, "ui_display_times", ui_display_times, "ongame_start_eval", ongame_start_eval);
 const spy = {
     'spy': 2,
     'aid': 5,
