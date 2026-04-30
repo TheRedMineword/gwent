@@ -1334,7 +1334,7 @@ class Game {
 		if (player_op.deck.faction === "scoiatael" && player_me.deck.faction !== "scoiatael") {
 			await new Promise((resolve) => {
 				const handleMessage = async (event) => {
-					const data = JSON.parse(event);
+					const data = await recv_and_decomp(event);
 console.log("Player op have a Squirrel leader, waiting for msg", event);
 					if (data.type === "scoiataelStart") {
 						console.log("Is who start info vs Squirrel");
