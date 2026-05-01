@@ -6,7 +6,7 @@ var factions = {
 		factionAbility: player => game.roundStart.push( async () => {
 			if (game.roundCount > 1 && game.roundHistory[game.roundCount-2].winner === player) {
 				player.deck.draw(player.hand);
-				await ui.notification("north", 1200);
+				await ui.notification("north", ui_display_times.faction_ability);
 			}
 			return false;
 		}),
@@ -38,7 +38,7 @@ var factions = {
 			card.noRemove = true;
 			
 			game.roundStart.push( async () => {
-				await ui.notification("monsters", 1200);
+				await ui.notification("monsters", ui_display_times.faction_ability);
 				delete card.noRemove;
 				return true; 
 			});
@@ -63,7 +63,7 @@ var factions = {
 		factionAbility: player => game.roundStart.push( async () => {
 			if (game.roundCount != 3)
 				return false;
-			await ui.notification("skellige-" + player.tag, 1200);
+			await ui.notification("skellige-" + player.tag, ui_display_times.faction_ability);
 
 			// Edit by Rick: Previously this'd revive two random cards from the graveyard but the random selection was different per client.
 			// Easiest fix is to have it behave the same way as the altered Medic ability when affected by a Nilfgaard leader card;

@@ -36,6 +36,7 @@ const isOpponentReadyElem = document.getElementById("opponent-ready");
 const passButton = document.getElementById("pass-button");
 const customizationElem = document.getElementById("deck-customization");
 const gameStartControlsElem = document.getElementById("session-start-control");
+const ep_id = document.getElementById("player-id-btn");
 
 let debug = true;
 
@@ -49,6 +50,35 @@ function showTooltip(text) {
 
     setTimeout(() => {
         tooltip.classList.remove("show");
+    }, 3200);
+}
+
+function cardredrawnotice(text) {
+    tooltipQueue.push(text);
+    processTooltipQueue();
+}
+
+function processTooltipQueue() {
+    if (tooltipActive) return;
+    if (tooltipQueue.length === 0) return;
+
+    tooltipActive = true;
+
+    const tooltip2 = document.getElementById("tooltip2");
+    const text = tooltipQueue.shift();
+
+    tooltip.textContent = text;
+    tooltip.classList.add("show");
+
+    setTimeout(() => {
+        tooltip.classList.remove("show");
+
+        // small delay so CSS fade-out can finish cleanly
+        setTimeout(() => {
+            tooltipActive = false;
+            processTooltipQueue();
+        }, 200);
+
     }, 3200);
 }
 
@@ -228,6 +258,14 @@ console.log("onmsg data:", data)
 			case "welcome":
 				playerId = data.playerId;
 				console.log("Welcome, your id is " + playerId);
+ep_id.textContent = `Hello PlayerID:\n${playerId}`;
+ep_id.style.color = "";
+				menuBtn.style.transition = "color 2s ease";
+menuBtn.style.color = "lightgreen";
+
+setTimeout(() => {
+    menuBtn.style.color = "";
+}, ui_display_times.socketready);
 				break;
 			
 			// Opponent has joined and the session is ready
@@ -497,8 +535,9 @@ class Player {
 	
 	// Shows a preview of the card being played, plays it to the board and ends the turn
 	async playCardAction(card, action){
+		console.log("[ShowCard]", card, action, ui_display_times.show_me_that_card_you_have);
 		ui.showPreviewVisuals(card);
-		await sleep(1000);
+		await sleep(ui_display_times.show_me_that_card_you_have);
 		ui.hidePreview(card);
 		await action();
 		this.endTurn();
@@ -663,16 +702,43 @@ class CardContainer {
 	}
 	
 	// Adds a card to a random index of the CardContainer
-	addCardRandom(card){
-		this.cards.push(card);
-		let index = randomInt(this.cards.length);
-		if (index !== this.cards.length-1) {
-			let t = this.cards[this.cards.length-1];
-			this.cards[this.cards.length-1] = this.cards[index];
-			this.cards[index] = t;
-		}
-		return index;
+	//addCardRandom(card){
+	//	this.cards.push(card);
+	//	let index = randomInt(this.cards.length);
+	//	if (index !== this.cards.length-1) {
+	//		let t = this.cards[this.cards.length-1];
+	//		this.cards[this.cards.length-1] = this.cards[index];
+	//		this.cards[index] = t;
+	//	}
+	//	return index;
+//	}
+addCardRandom(card) {
+//	console.log("[addRCard] called", { game, card });
+
+	this.cards.push(card);
+//	console.log("[addRCard] after push", { cardsLength: this.cards.length });
+	var CardsAll = this.cards;
+//	console.log("CardPicked?", CardsAll);
+
+	let index = randomInt(this.cards.length);
+//	console.log("[addRCard] random index", index);
+
+	if (index !== this.cards.length - 1) {
+		//console.log("[addRCard] swapping", {
+		//	from: this.cards.length - 1,
+		//	to: index
+	//	});
+
+		let t = this.cards[this.cards.length - 1];
+		this.cards[this.cards.length - 1] = this.cards[index];
+		this.cards[index] = t;
 	}
+
+	//console.log("[addRCard] result index", index, { game });
+	//console.log("CardPicked?", CardsAll[this.cards.length - 1]);
+
+	return index;
+}
 	
 	// Removes the HTML elemenet associated with the card from this CardContainer
 	removeCardElement(card, index){
@@ -817,10 +883,23 @@ class Deck extends CardContainer {
 	}
 	
 	// Draws a card and sends it to the container before adding a card from the container back to the deck.
+	//swap(container, card){
+	//	container.addCard(this.removeCard(0));
+	//	this.addCard(card);
+	//	}
 	swap(container, card){
-		container.addCard(this.removeCard(0));
-		this.addCard(card);
-	}
+    const fromDeck = this.cards[0]; // card that will be removed
+
+    console.log("SWAP START", "\n Deck gives:", fromDeck?.name,"\n Hand gives:", card?.name);
+
+    const removedFromDeck = this.removeCard(0);
+
+    container.addCard(removedFromDeck);
+    this.addCard(card);
+
+    console.log("SWAP RESULT", "\n -> Deck received:", card?.name, "\n -> Hand received:", removedFromDeck?.name);
+	try { var txt_draw = `You redrawed card \"${card?.name}\" for a \"${removedFromDeck?.name}\"`; console.log(txt_draw); cardredrawnotice(txt_draw); } catch (e) { console.log("cardredrawnotice err", e); }
+}
 	
 	// Override
 	addCardElement() {
@@ -1417,6 +1496,8 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 	async startRound(){
 		this.roundCount++;
 		this.currPlayer = (this.roundCount%2 === 0) ? this.firstPlayer : this.firstPlayer.opponent();
+		player_me.setPassed(false);
+		player_op.setPassed(false); //tried reset to resolve desync //Update it worked, ez
 		await this.runEffects(this.roundStart);
 		
 		if ( !player_me.canPlay() )
@@ -1816,18 +1897,21 @@ class UI {
 	// Initializes the youtube background music object
 	initYouTube() {
 		this.youtube = new YT.Player('youtube', {
-			videoId: "UE9fPWy1_o4",
+			videoId: audio_yt_vid_soundtrack,
 			playerVars: {
 				"autoplay": 1,
 				"controls": 0,
 				"loop": 1,
-				"playlist": "UE9fPWy1_o4",
+				"playlist": audio_yt_vid_soundtrack,
 				"rel": 0,
 				"version": 3,
 				"modestbranding": 1
 			},
 			events: {
-				'onStateChange': initButton
+				'onStateChange': initButton,
+				 onReady: (event) => {
+				event.target.setVolume( audio_yt_vid_soundtrack_volume);
+				 }
 			}
 		});
 
@@ -2031,7 +2115,8 @@ async notification(name, duration) {
 			"op-white-flame" : "turn_op",
 			"nilfgaard-wins-draws" : "turn_op",
 			"sv-err": "server_error",
-			"win-opleft" : "opponent_left"
+			"win-opleft" : "round_win", // "opponent_left",
+			"round-start": "round1_start"
 		};
 
     const temSom = Object.keys(guia2);
@@ -2041,7 +2126,7 @@ async notification(name, duration) {
             : name === "round-start" && game.roundHistory.length === 0
             ? "round1_start"
             : "";
-console.log(som);
+console.log("[notif]: value to play", som);
     if (som !== "") {
         console.log("[notif] PLAY SOUND:", som);
         tocar(som, false);
@@ -3085,19 +3170,122 @@ function somCarta() {
 }
 
 var lastSound = "";
+// legacy
+//function tocar(arquivo, pararMusica) {
+//	console.log("[sfx] play: arquivo, pararMusica", arquivo, pararMusica)
+//	if (arquivo != lastSound && arquivo != "") {
+	//	var s = new Audio("sfx/" + arquivo + ".mp3");
+     //   if (pararMusica && ui.youtube && ui.youtube.getPlayerState() === YT.PlayerState.PLAYING) {
+	//		ui.youtube.pauseVideo();
+	//		ui.toggleMusic_elem.classList.add("fade");
+	//	}
+	//	lastSound = arquivo;
+	//	s.play();
+	//	setTimeout(function() {
+	//		lastSound = "";
+	//	}, 50);
+	//}
+//}
 
+// cache:
+async function loadPackedSFX() {
+	var loadPackedSFX_pref = "[sfx] [zip]";
+
+	console.log(loadPackedSFX_pref, " loading packed.zip");
+
+    const response = await fetch("sfx/packed.zip");
+    const buffer = await response.arrayBuffer();
+	console.log(loadPackedSFX_pref, " buffer ", buffer);
+    const zip = await JSZip.loadAsync(buffer);
+
+    const files = Object.keys(zip.files);
+console.log(loadPackedSFX_pref, " files ", files);
+    for (const filename of files) {
+        if (!filename.endsWith(".mp3")) continue;
+
+        const blob = await zip.files[filename].async("blob");
+
+        const url = URL.createObjectURL(blob);
+
+        const cleanName = filename
+            .replace("sfx/", "")
+            .replace(".mp3", "");
+
+        audio_cache[cleanName] = url;
+
+        console.log(loadPackedSFX_pref, " cached:", cleanName);
+    }
+
+    console.log(loadPackedSFX_pref, " all sounds loaded");
+}
+// new:
 function tocar(arquivo, pararMusica) {
+	//console.log("[sfx] tocar() called");
+	//console.log("[sfx] params -> arquivo:", arquivo, "| pararMusica:", pararMusica);
+	//console.log("[sfx] current lastSound:", lastSound);
+
 	if (arquivo != lastSound && arquivo != "") {
-		var s = new Audio("sfx/" + arquivo + ".mp3");
-        if (pararMusica && ui.youtube && ui.youtube.getPlayerState() === YT.PlayerState.PLAYING) {
-			ui.youtube.pauseVideo();
-			ui.toggleMusic_elem.classList.add("fade");
+	//	console.log("[sfx] sound allowed to play");
+
+	
+	var audioPath = audio_cache[arquivo] || ("sfx/" + arquivo + ".mp3");
+
+// console.log("[sfx] creating Audio with path:", audioPath);
+
+var s = new Audio(audioPath);
+
+		if (pararMusica) {
+		//	console.log("[sfx] pararMusica is true");
+
+			if (ui.youtube) {
+			//	console.log("[sfx] youtube player exists");
+
+				var state = ui.youtube.getPlayerState();
+			//	console.log("[sfx] youtube player state:", state);
+
+				if (state === YT.PlayerState.PLAYING) {
+			//		console.log("[sfx] youtube is playing -> pausing video");
+
+					ui.youtube.pauseVideo();
+
+					if (ui.toggleMusic_elem) {
+			//			console.log("[sfx] adding fade class to toggleMusic element");
+						ui.toggleMusic_elem.classList.add("fade");
+					} else {
+			//			console.warn("[sfx] ui.toggleMusic_elem not found");
+					}
+				} else {
+			//		console.log("[sfx] youtube exists but is not playing");
+				}
+			} else {
+			//	console.warn("[sfx] ui.youtube does not exist");
+			}
+		} else {
+		//	console.log("[sfx] pararMusica is false -> not touching music");
 		}
+
 		lastSound = arquivo;
-		s.play();
-		setTimeout(function() {
+		//console.log("[sfx] lastSound updated to:", lastSound);
+
+		s.play()
+			.then(() => {
+			//	console.log("[sfx] audio playback started successfully");
+			})
+			.catch((err) => {
+			//	console.error("[sfx] audio playback failed:", err);
+			});
+
+		setTimeout(function () {
+		//	console.log("[sfx] resetting lastSound after timeout");
 			lastSound = "";
 		}, 50);
+
+	} else {
+		if (arquivo == "") {
+			//console.warn("[sfx] blocked: arquivo is empty");
+		} else {
+		//	console.warn("[sfx] blocked: same as lastSound:", arquivo);
+		}
 	}
 }
 
@@ -3159,6 +3347,13 @@ window.onload = function() {
 	document.getElementsByTagName("main")[0].style.display = "";
 	document.getElementById("button_start").addEventListener("click", function() {
 		inicio();
+		// cache audio:
+		try {
+			console.log("[sfx] In init: loadPackedSFX()");
+			loadPackedSFX();
+		} catch (e) {
+			console.log("[sfx] In init: loadPackedSFX(); err", e);
+		}
     });
 	isLoaded = true;
 }

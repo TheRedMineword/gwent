@@ -1,5 +1,7 @@
 "use strict"
 const OnGameStartDraw = 2;
+const tooltipQueue = [];
+let tooltipActive = false;
 const ForGameStart = {
  'unitscards': 22,
  'special': 10,
@@ -8,6 +10,7 @@ const ForGameStart = {
 const maxhealth = 2; // Dont change it, it also should do nothing
 const thishandsize = 10;
 const ui_display_times = {
+	'socketready': 3000,
 	'hold_pause': {
 		'sleep': 78,
 		'needs': 6
@@ -22,8 +25,12 @@ const ui_display_times = {
 	'pass': 1320,
 	'turn': 1200,
 	'round_start': 1200,
-	'coin': 1200
+	'coin': 1200,
+	'faction_ability': 1200,
+	'show_me_that_card_you_have': 2900
 }
+
+
 ui_display_times.is_transitioning = false;
 const ongame_start_eval = "console.log(\"evaled start game\");\n(function notificationRepeat() {\r\n  ui.notificationLoop();\r\n  setTimeout(notificationRepeat, ui_display_times.checkDelay);\r\n})();";
 
@@ -69,3 +76,9 @@ nilfard_drawmaster.drawiffail =
 	-1 + nilfard_drawmaster.drawdead + nilfard_drawmaster.drawalive;
 
 console.log("nilfard_drawmaster", nilfard_drawmaster);
+
+
+const audio_cache = {};
+const audio_yt_vid_soundtrack = "FTsuevfvQ9w"; // wild hunt: "UE9fPWy1_o4" // How about round of gwent: "FTsuevfvQ9w"
+const audio_yt_vid_soundtrack_volume = 47; // 100 for wild hunt, less for other
+

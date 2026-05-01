@@ -6,7 +6,9 @@
     font-size:28px;
     cursor:pointer;
 }
-
+#player-id-btn {
+  white-space: pre-line;
+}
 #top-menu{
     position:fixed;
     top:45px;
@@ -2099,6 +2101,34 @@ html {
   opacity: 1;
 }
 .tooltip.show {
+	visibility: visible;
+	opacity: 1;
+}
+
+.tooltip2 {
+  z-index: 9999;
+  position: fixed; /* 👈 more reliable than absolute */
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: #fff;   /* white */
+  color: #111;              /* dark text */
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 14px;
+
+  opacity: 0;
+ 
+  transition: opacity 0.2s ease;
+
+  border: 1px solid #ccc;
+}
+
+.tooltip2.show {
+  opacity: 1;
+}
+.tooltip2.show {
 	visibility: visible;
 	opacity: 1;
 }

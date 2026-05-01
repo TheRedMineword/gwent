@@ -11,3 +11,9 @@ Full credit and thanks go to CD Projekt Red for creating The Witcher 3, [asundr 
 https://pngtree.com/freebackground/vintage-crinkled-paper-texture-aged-brown-background-with-sheet-of-paper_15221865.html
 - Fonts for custom gwent cards:
 https://fontmeme.com/fonts/gwent-font/
+
+
+
+
+- Music
+Pass sound [pixabay.com](https://pixabay.com/sound-effects/film-special-effects-copyright-free-swoosh-487669/) by DRAGON-STUDIO

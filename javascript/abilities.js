@@ -206,7 +206,7 @@ if (card.holder.id === player_op.id) {
 				// Wait for the opponent to choose which card to revive
 				wrapper.card = await new Promise((resolve) => {
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 						if (data.type === "medicDraw") {
 							const drawnCard = grave.cards.filter(c => c.filename === data.card)[0]
 							if (drawnCard) {
@@ -345,7 +345,7 @@ if (card.holder.id === player_op.id) {
 			if (card.holder.controller instanceof ControllerOpponent) {
 				await new Promise((resolve) => {
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 						if (data.type === "containerClosed") {
 								resolve(true);
 						}
@@ -378,7 +378,7 @@ if (card.holder.id === player_op.id) {
 			if (card.holder.controller instanceof ControllerOpponent) {
 				const newCard = await new Promise((resolve) => {
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 
 						if (data.type === "addCardHand") {
 							// Edit by Rick: Previously this would try to choose the card based on replicated index.
@@ -435,7 +435,7 @@ if (card.holder.id === player_op.id) {
 			if (card.holder.controller instanceof ControllerOpponent) {
 				newCard = await new Promise((resolve) => {
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 
 						if (data.type === "medicDraw") {
 							const drawnCard = player_op.grave.cards.filter(c => c.isUnit() && c.filename === data.card)[0]
@@ -465,7 +465,7 @@ if (card.holder.id === player_op.id) {
 				await new Promise((resolve) => {
 					let flag = 0;
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 						if (data.type === "removeCardHand") {
 							// Edit by Rick: Previously used data.index, but hand order seems to not always be synchronized.
 							// So now uses card filename instead.
@@ -544,7 +544,7 @@ if (card.holder.id === player_op.id) {
 			if (card.holder.controller instanceof ControllerOpponent) {
 				const card = await new Promise((resolve) => {
 					const handleMessage = async (event) => {
-						const data = JSON.parse(event.data);
+						const data = await recv_and_decomp(event);
 						if (data.type === "weatherDraw") {
 							const drawnCard = deck.cards.filter(c => c.faction === "weather" && c.filename === data.card)[0]
 							if (drawnCard) {
