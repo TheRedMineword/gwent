@@ -2189,13 +2189,13 @@ var card_dict = [
         "count": "1"
     },
     {
-        "name": "scol_secondchance",
+        "name": "Gaunter o'Dim",
         "id": "1004",
         "deck": "scoiatael",
         "row": "leader",
         "strength": "",
         "ability": "scol_secondchance",
-        "filename": "",
+        "filename": "Gaunter_Leader",
         "count": "1"
     }
 ];

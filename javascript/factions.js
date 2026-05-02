@@ -4,7 +4,7 @@ var factions = {
 	realms: {
 		name: "Northern Realms",
 		factionAbility: player => game.roundStart.push( async () => {
-			if (game.roundCount > 1 && game.roundHistory[game.roundCount-2].winner === player) {
+			if (game.roundCount > 1 && scol_secondchance.lastwin.id === player.id ) { //patched to scol_secondchance.lastwin.id === player.id from game.roundHistory[game.roundCount-2].winner === player because scol_... lower round number breaking the ability
 				player.deck.draw(player.hand);
 				await ui.notification("north", ui_display_times.faction_ability);
 			}
