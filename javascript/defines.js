@@ -9,7 +9,7 @@ let tooltipActive = false;
 const ForGameStart = {
  'unitscards': 22,
  'special': 10,
- 'hero': 15
+ 'hero': 7
 };
 const maxhealth = 2; // Dont change it, it also should do nothing
 const thishandsize = 10;
