@@ -38,7 +38,7 @@ const customizationElem = document.getElementById("deck-customization");
 const gameStartControlsElem = document.getElementById("session-start-control");
 const ep_id = document.getElementById("player-id-btn");
 
-let debug = true;
+let debug = false;
 
 function showTooltip(text) {
     const tooltip = document.getElementById("tooltip");
