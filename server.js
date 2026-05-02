@@ -203,6 +203,12 @@ wss.on('connection', (ws) => {
       sessions[sessionCode].players = sessions[sessionCode].players.filter(player => player !== ws);
     }
 
+      // manual hand sync dump to opponent
+
+
+
+
+
     if (data.type === 'joinSession') {
       const sessionCode = data.sessionId;
       if (sessions[sessionCode] && sessions[sessionCode].players.length === 1) {
