@@ -2187,6 +2187,7 @@ var card_dict = [
         "ability": "nilf_drawmaster",
         "filename": "nilf_drawmaster",
         "count": "1"
-    }
+    }, 
+    {"name":"Gaunter o'Dim","id":"1004","deck":"monsters","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"nilfgaard","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"realms","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"scoiatael","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"skellige","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"}
 ];
 console.log("Cards array", card_dict);

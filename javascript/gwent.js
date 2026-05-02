@@ -367,8 +367,42 @@ setTimeout(() => {
 
 			// Game - Opponent plays card
 			case "play":
-				const card = player_op.hand.cards.find(c => c.filename === data.card.filename);
-				console.log("Opponent plays card", card);
+				let card = player_op.hand.cards.find(
+    c => c.filename === data.card.filename
+);
+
+if (!card) {
+    console.warn("Opponent hand desync, rebuilding card:", data.card);
+
+    // use raw network data if available, fallback to dictionary
+    const source = data.card || card_dict.find(
+        c => c.filename === data.card.filename
+    );
+
+    if (!source) {
+        throw new Error(`Unknown card ${data.card.filename}`, "source", source);
+    }
+
+    card = new Card({
+        name: source.name,
+        filename: source.filename,
+        faction: source.faction || source.deck,
+        power: Number(source.power || source.strength),
+        basePower: Number(source.basePower || source.strength),
+        row: source.row,
+        abilities: source.abilities || [source.ability].filter(Boolean),
+        hero: !!source.hero
+    });
+
+    card.holder = player_op;
+}
+console.log(
+    "Opponent plays card:",
+	"card, data.card",	//source",
+    card,
+    data.card//,
+//	source || null/
+);
 
 				const splitRowName = data.row.split("-");
 				let row
@@ -598,7 +632,7 @@ class Player {
 	}
 	
 	// Enable access to leader ability and toggles leader visuals to on state
-	enableLeader() {
+	async enableLeader() {
 		this.leaderAvailable = this.leader.activated.length > 0;
 		let elem = this.elem_leader.cloneNode(true);
 		this.elem_leader.parentNode.replaceChild(elem, this.elem_leader);
@@ -1401,6 +1435,14 @@ class Game {
 		var cardspecialgain = 0;
 		console.log("On game start i lose cards:", meleadercardloss);
 		var gamestart_thishandsize = thishandsize + cardspecialgain - meleadercardloss;
+		if (
+    player_me.leader.abilities.includes("gaunter_neutral_leader") ||
+    player_op.leader.abilities.includes("gaunter_neutral_leader")
+) {
+    gamestart_thishandsize = Math.floor(
+        gamestart_thishandsize * (1 + gaunter_lider.extra_cards)
+    );
+}
 		console.log("End game start hannd size", gamestart_thishandsize);
 		await Promise.all([...Array(gamestart_thishandsize).keys()].map( async () => {
 			await player_me.deck.draw(player_me.hand);
@@ -1410,6 +1452,14 @@ class Game {
 		var op_cardspecialgain = cardspecialgain;
 		console.log("On game start op lose cards:", op_meleadercardloss);
 		var op_gamestart_thishandsize = thishandsize + op_cardspecialgain - op_meleadercardloss;
+		if (
+    player_me.leader.abilities.includes("gaunter_neutral_leader") ||
+    player_op.leader.abilities.includes("gaunter_neutral_leader")
+) {
+    op_gamestart_thishandsize = Math.floor(
+        op_gamestart_thishandsize * (1 + gaunter_lider.extra_cards)
+    );
+}
 		console.log("End game start hannd size", op_gamestart_thishandsize);
 		await Promise.all([...Array(op_gamestart_thishandsize).keys()].map( async () => {
 			// await player_me.deck.draw(player_me.hand);
@@ -1823,7 +1873,13 @@ class Card {
 	createCardElem(card){
 		console.log("createcardElem", card);
 		let elem = document.createElement("div");
-		elem.style.backgroundImage = smallURL(card.faction + "_" + card.filename);
+		var tmp = card.faction + "_" + card.filename;
+
+if (card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+elem.style.backgroundImage = smallURL(tmp);
 		elem.classList.add("card");
 		elem.addEventListener("click", () => ui.selectCard(card), false);
 		
@@ -2035,7 +2091,13 @@ class UI {
 	showPreviewVisuals(card){
 		this.previewCard = card;
 		this.preview.classList.remove("hide");
-		this.preview.getElementsByClassName("card-lg")[0].style.backgroundImage = largeURL(card.faction+"_"+card.filename);
+		var tmp = card.faction + "_" + card.filename;
+
+if (card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.preview.getElementsByClassName("card-lg")[0].style.backgroundImage = largeURL(tmp);
 		let desc_elem = this.preview.getElementsByClassName("card-description")[0];
 		this.setDescription(card, desc_elem);
 	}
@@ -2124,7 +2186,8 @@ async notification(name, duration) {
 			"nilfgaard-wins-draws" : "turn_op",
 			"sv-err": "server_error",
 			"win-opleft" : "round_win", // "opponent_left",
-			"round-start": "round1_start"
+			"round-start": "round1_start",
+			"gaunter": "necromancy_ability"
 		};
 
     const temSom = Object.keys(guia2);
@@ -2469,7 +2532,13 @@ class Carousel {
 			let curr = this.index - 2 + i;
 			if (curr >= 0 && curr < this.indices.length) {
 				let card = this.container.cards[this.indices[curr]];
-				this.previews[i].style.backgroundImage = largeURL(card.faction + "_" + card.filename);
+				var tmp = card.faction + "_" + card.filename;
+
+if (card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.previews[i].style.backgroundImage = largeURL(tmp);
 				this.previews[i].classList.remove("hide");
 				this.previews[i].classList.remove("noclick");
 			} else {
@@ -2601,7 +2670,13 @@ class DeckMaker {
 			.filter(c => c.card.deck === faction_name && c.card.row === "leader");
 		if (!this.leader || this.faction !== faction_name) {
 			this.leader = this.leaders[0];
-			this.leader_elem.children[1].style.backgroundImage = largeURL(this.leader.card.deck + "_" + this.leader.card.filename);
+			var tmp = this.leader.card.deck + "_" + this.leader.card.filename;
+
+if (this.leader.card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 		}
 		this.faction = faction_name;
 		setTimeout(function() {
@@ -2613,7 +2688,13 @@ class DeckMaker {
 	// Called when client selects a leader for their deck
 	setLeader(index){
 		this.leader = this.leaders.find( l => l.index == index);
-		this.leader_elem.children[1].style.backgroundImage = largeURL(this.leader.card.deck + "_" + this.leader.card.filename);
+		var tmp = this.leader.card.deck + "_" + this.leader.card.filename;
+
+if (this.leader.card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 	}
 	
 	// Constructs a bank of cards that can be used by the faction's deck.
@@ -2647,7 +2728,13 @@ class DeckMaker {
 		let card_data = card_dict[index];
 		
 		let elem = document.createElement("div");
-		elem.style.backgroundImage = largeURL(card_data.deck + "_" + card_data.filename);
+		var tmp = card_data.deck + "_" + card_data.filename;
+
+if (card_data.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+elem.style.backgroundImage = largeURL(tmp);
 		elem.classList.add("card-lg");
 		let count = document.createElement("div");
 		elem.appendChild(count);
@@ -2719,7 +2806,13 @@ class DeckMaker {
 		ui.queueCarousel(container, 1, (c,i) => {
 			let data = c.cards[i].data;
 			this.leader = data;
-			this.leader_elem.children[1].style.backgroundImage = largeURL(data.card.deck + "_" + data.card.filename);
+			var tmp = data.card.deck + "_" + data.card.filename;
+
+if (data.card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 		}, () => true, false, true);
 		Carousel.curr.index = index;
 		Carousel.curr.update();
@@ -2911,7 +3004,13 @@ class DeckMaker {
 		comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: deck.faction }));
 		if (card_dict[deck.leader].row === "leader" && deck.faction === card_dict[deck.leader].deck){
 			this.leader = this.leaders.find(c => c.index === deck.leader);
-			this.leader_elem.children[1].style.backgroundImage = largeURL(this.leader.card.deck + "_" + this.leader.card.filename);
+			var tmp = this.leader.card.deck + "_" + this.leader.card.filename;
+
+if (this.leader.card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 		}
 		this.makeBank(deck.faction, cards);
 		this.update();
@@ -3107,7 +3206,13 @@ function removeCircularReferences(obj) {
 
 function createCardElement(card){
 	let elem = document.createElement("div");
-	elem.style.backgroundImage = smallURL(card.faction + "_" + card.filename);
+	var tmp = card.faction + "_" + card.filename;
+
+if (card.filename === "Gaunter_Leader") {
+	tmp = "neutral_Gaunter_Leader";
+}
+
+elem.style.backgroundImage = smallURL(tmp);
 	elem.classList.add("card");
 	elem.addEventListener("click", () => ui.selectCard(card), false);
 	

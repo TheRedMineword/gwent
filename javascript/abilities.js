@@ -336,8 +336,32 @@ if (card.holder.id === player_op.id) {
 		if (deck.cards.length > 0)
 			await deck.draw(player.hand);
 	}
+
+
+	
+
 }
 },
+	gaunter_neutral_leader: {
+		description: `On use both sides will gain an additional (${gaunter_lider.revive * 100}%+1)  of the number of cards in the thier grave as additional cards from deck and all players start the game with ${gaunter_lider.extra_cards * 100}% more cards in their hand (based on their starting number)`,
+	activated: async (card) => {
+    const me = player_me;
+    const op = player_op;
+
+    const myDraws = Math.floor(me.grave.cards.length * gaunter_lider.revive + 1);
+    const opDraws = Math.floor(op.grave.cards.length * gaunter_lider.revive + 1);
+		await ui.notification("gaunter", ui_display_times.faction_ability);
+    for (let i = 0; i < myDraws; i++)
+        if (me.deck.cards.length)
+            await me.deck.draw(me.hand);
+
+    for (let i = 0; i < opDraws; i++)
+        if (op.deck.cards.length)
+            await op.deck.draw(op.hand);
+
+    await Promise.resolve();
+}
+	},
 	emhyr_emperor: {
 		description: "Look at 3 random cards from your opponent's hand.",
 		activated: async card => {

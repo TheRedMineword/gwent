@@ -415,16 +415,16 @@ html {
 #notif-scol_secondchance_necro1 {
 	background-image: url(img/icons/notif_scoiatael.png);
 }
-#notif-scol_secondchance_necro1::after {
+#notif-gaunter::after {
 	content: "Scoia'tael \A Second Chance!";
 }
 
-#notif-scol_secondchance_necro2 {
-	background-image: url(img/icons/notif_scoiatael.png);
+#notif-gaunter {
+	background-image: url(img/icons/icon_card_count.png);
 }
 
 #notif-scol_secondchance_necro2::after {
-	content: "Scoia'tael \A Third Chance!";
+	content: "Gaunter o'Dim Ability Used \A Both sides recived additional card!";
 }
 
 #notif-scol_secondchance::after {

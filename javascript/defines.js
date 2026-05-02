@@ -89,3 +89,8 @@ const audio_cache = {};
 const audio_yt_vid_soundtrack = "FTsuevfvQ9w"; // wild hunt: "UE9fPWy1_o4" // How about round of gwent: "FTsuevfvQ9w"
 const audio_yt_vid_soundtrack_volume = 47; // 100 for wild hunt, less for other
 
+const gaunter_lider = {
+	"extra_cards": 0.50,
+	"revive": 0.60
+}
+console.log("gaunter_lider", gaunter_lider);
