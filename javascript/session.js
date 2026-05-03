@@ -135,8 +135,6 @@ socket.addEventListener("message", async (event) => {
       console.log("Joined session:", joinedSessionId);
       break;
 
-    case "sessionInvalid":
-      alert("Invalid session ID");
-      break;
+    
   }
 });

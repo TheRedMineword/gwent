@@ -569,16 +569,16 @@ var card_dict = [
         "filename": "emhyr_silver",
         "count": "1"
     },
-    {
-        "name": "Emhyr var Emreis - Emperor of Nilfgaard",
-        "id": "2",
-        "deck": "nilfgaard",
-        "row": "leader",
-        "strength": "",
-        "ability": "emhyr_emperor",
-        "filename": "emhyr_copper",
-        "count": "1"
-    },
+ //   {
+   //     "name": "Emhyr var Emreis - Emperor of Nilfgaard",
+   //     "id": "2",
+   //     "deck": "nilfgaard",
+   //     "row": "leader",
+   //     "strength": "",
+   //     "ability": "emhyr_emperor",
+   //     "filename": "emhyr_copper",
+   //     "count": "1"
+  //  },
     {
         "name": "Emhyr var Emreis - the White Flame",
         "id": "3",
@@ -949,26 +949,26 @@ var card_dict = [
         "filename": "eredin_bronze",
         "count": "1"
     },
-    {
-        "name": "Eredin - Destroyer of Worlds",
-        "id": "137",
-        "deck": "monsters",
-        "row": "leader",
-        "strength": "",
-        "ability": "eredin_destroyer",
-        "filename": "eredin_gold",
-        "count": "1"
-    },
-    {
-        "name": "Eredin - King of the Wild Hunt",
-        "id": "135",
-        "deck": "monsters",
-        "row": "leader",
-        "strength": "",
-        "ability": "eredin_king",
-        "filename": "eredin_copper",
-        "count": "1"
-    },
+   // {
+  //      "name": "Eredin - Destroyer of Worlds",
+  //      "id": "137",
+  //      "deck": "monsters",
+   //     "row": "leader",
+   //     "strength": "",
+  ///      "ability": "eredin_destroyer",
+  //      "filename": "eredin_gold",
+  //      "count": "1"
+  //  },
+   // {
+ //       "name": "Eredin - King of the Wild Hunt",
+ //       "id": "135",
+ //       "deck": "monsters",
+ //       "row": "leader",
+ //       "strength": "",
+ //       "ability": "eredin_king",
+//        "filename": "eredin_copper",
+//        "count": "1"
+ //   },
     {
         "name": "Eredin Bréacc Glas - The Treacherous",
         "id": "",
@@ -2188,6 +2188,16 @@ var card_dict = [
         "filename": "nilf_drawmaster",
         "count": "1"
     }, 
-    {"name":"Gaunter o'Dim","id":"1004","deck":"monsters","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"nilfgaard","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"realms","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"scoiatael","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"skellige","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"}
+    {"name":"Gaunter o'Dim","id":"1004","deck":"monsters","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"nilfgaard","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"realms","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"scoiatael","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},{"name":"Gaunter o'Dim","id":"1004","deck":"skellige","row":"leader","strength":"0","ability":"gaunter_neutral_leader","filename":"Gaunter_Leader","count":"1"},
+    {
+        "name": "Spice Merchant",
+        "id": "1005",
+        "deck": "realms",
+        "row": "close",
+        "strength": "-5",
+        "ability": "hero sabotage",
+        "filename": "spice_trader",
+        "count": "1"
+    }
 ];
 console.log("Cards array", card_dict);

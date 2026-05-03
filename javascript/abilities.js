@@ -208,6 +208,7 @@ if (card.holder.id === player_op.id) {
 				// Wait for the opponent to choose which card to revive
 				wrapper.card = await new Promise((resolve) => {
 					const handleMessage = async (event) => {
+						console.log("PING, medic draw op?", event, await recv_and_decomp(event));
 						const data = await recv_and_decomp(event);
 						if (data.type === "medicDraw") {
 							const drawnCard = grave.cards.filter(c => c.filename === data.card)[0]
@@ -217,7 +218,9 @@ if (card.holder.id === player_op.id) {
 							}
 						}
 					}
+					
 					socket.addEventListener('message', handleMessage);
+					
 				});
 			} else
 				await ui.queueCarousel(card.holder.grave, 1, (c, i) => wrapper.card=c.cards[i], c => c.isUnit(), true);
@@ -463,11 +466,15 @@ if (card.holder.id === player_op.id) {
 					const handleMessage = async (event) => {
 						const data = await recv_and_decomp(event);
 
-						if (data.type === "medicDraw") {
-							const drawnCard = player_op.grave.cards.filter(c => c.isUnit() && c.filename === data.card)[0]
-							if (drawnCard) {
-								resolve(drawnCard);
-							}
+						if (data.type === "containerClosed") {
+						//	const drawnCard = player_op.grave.cards.filter(c => c.isUnit() && c.filename === data.card)[0]
+						//	if (drawnCard) {
+						//		resolve(drawnCard);
+						//	}
+						//player_op.hand.cards.push({});
+						var op_counter = document.getElementById("hand-count-op");
+op_counter.innerHTML = player_op.hand.cards.length
+resolve(player_op.grave.cards[0]);
 						}
 					}
 					socket.addEventListener('message', handleMessage);

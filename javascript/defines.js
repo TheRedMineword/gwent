@@ -1,5 +1,6 @@
 "use strict"
 let twoPlayersConnected = false; //host alone
+let extraJSON = null;
  //host alone
 const players = {
 	'me': "You", "op": "Opponent"
@@ -44,7 +45,7 @@ const ui_display_times = {
 }
 
 
-const RegisterMovesHold = 3500 + SEND_INTERVAL_MS; //If op passed wait before moves
+const RegisterMovesHold = 2700 + SEND_INTERVAL_MS + ui_display_times.show_me_that_card_you_have; //If op passed wait before moves
 const resync_wait = 1000 * 0.01;
 
 ui_display_times.is_transitioning = false;

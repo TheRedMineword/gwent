@@ -413,7 +413,7 @@ op_counter.innerHTML = player_op.hand.cards.length
 					alert("Failed to build opponent hand, check console for more!! \n\nReport is as bug!!!");
 				}
 				console.log("[OPHAND]","OP", "PLAY", card, cards_to_find, data);
-
+				
 				const splitRowName = data.row.split("-");
 				let row
 				if (splitRowName.length > 1) {
@@ -436,8 +436,8 @@ op_counter.innerHTML = player_op.hand.cards.length
 					await  player_op.playScorch(card);
 				else
 					await player_op.playCardToRow(card, row);
-
-
+				
+				await sleep(500);
 				console.log("[OPHAND]","PLAY EXCUTE DONE, SYNC2");
 				try {
 				console.log("[OPHAND] post", await deserializeCards(   data?.HandMePost,    player_op));
@@ -451,6 +451,15 @@ op_counter.innerHTML = player_op.hand.cards.length
 				}
 				break;
 
+				case "sessionInvalid":
+      alert("Invalid session ID");
+      break;
+				//case "medicDraw":
+				//	var data2 = data;
+				
+
+
+				//break;
 			// Game - Opponent pass
 			case "pass":
 				player_op.passRound();
@@ -2076,6 +2085,11 @@ class UI {
 		console.log("HandData_after", handData);
 			console.log("You played the card", this.previewCard)
 			comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData, HandMePost: handData_after }));
+			if (extraJSON !== null) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    comp_and_send(socket, extraJSON);
+    extraJSON = null;
+}
 			if ( player_op.passed && !player_me.passed ) {
 			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
 			await sleep(RegisterMovesHold);
@@ -2121,6 +2135,11 @@ class UI {
 		var handData_after = await serializeCards(player_me.hand.cards);
 		console.log("HandData_after", handData_after)
 		comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, isMeHand: handData, HandMePost: handData_after}));
+		if (extraJSON !== null) {
+    await new Promise(resolve => setTimeout(resolve, 300));
+    comp_and_send(socket, extraJSON);
+    extraJSON = null;
+}
 		if ( player_op.passed && !player_me.passed ) {
 			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
 			await sleep(RegisterMovesHold);
@@ -2544,7 +2563,7 @@ class Carousel {
 
 		if (actionString === "(c, i) => wrapper.card=c.cards[i]" || actionString === "(c,i) => newCard = c.cards[i]") {
 			setTimeout(() => {
-				comp_and_send(socket, JSON.stringify({ type: "medicDraw", card: resp.filename }));
+				extraJSON = JSON.stringify({ type: "medicDraw", card: resp.filename });
 			}, 1000);
 		} else if (actionString.includes("board.toWeather")) {
 			setTimeout(() => {
