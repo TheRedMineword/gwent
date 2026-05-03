@@ -7,7 +7,7 @@ const btnReadyElem = document.getElementById("session-start-control");
 const btnCancelElem = document.getElementById("cancel-game");
 
 // Session display
-const sessionDisplay = document.getElementById("session-display");
+// const sessionDisplay = document.getElementById("session-display");
 const sessionCodeText = document.getElementById("session-code-text");
 
 // Initial state
@@ -15,7 +15,7 @@ btnCreateElem.classList.add("disabled");
 btnJoinElem.classList.add("disabled");
 btnReadyElem.classList.add("hidden");
 btnCancelElem.classList.add("hidden");
-sessionDisplay.classList.add("hidden");
+// sessionDisplay.classList.add("hidden");
 
 // Session state
 let createdSessionId = null;
@@ -43,7 +43,7 @@ socket.onclose = () => {
 
   btnReadyElem.classList.add("hidden");
   btnCancelElem.classList.add("hidden");
-  sessionDisplay.classList.add("hidden");
+ // sessionDisplay.classList.add("hidden");
 
   createdSessionId = null;
   joinedSessionId = null;
@@ -80,7 +80,7 @@ function cancelSession() {
   btnJoinElem.classList.remove("hidden");
 
   btnCancelElem.classList.add("hidden");
-  sessionDisplay.classList.add("hidden");
+ // sessionDisplay.classList.add("hidden");
 
   if (createdSessionId) {
     console.log("Cancelled Session:", createdSessionId);
@@ -118,7 +118,7 @@ socket.addEventListener("message", async (event) => {
     case "sessionCreated":
       createdSessionId = data.code;
 
-      sessionDisplay.classList.remove("hidden");
+  //    sessionDisplay.classList.remove("hidden");
       sessionCodeText.textContent = createdSessionId;
 
       console.log("Session created:", createdSessionId);
@@ -127,7 +127,7 @@ socket.addEventListener("message", async (event) => {
     case "sessionJoined":
       joinedSessionId = data.code;
 
-      sessionDisplay.classList.remove("hidden");
+ //     sessionDisplay.classList.remove("hidden");
       sessionCodeText.textContent = joinedSessionId;
 
       btnReadyElem.classList.remove("hidden");

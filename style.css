@@ -945,6 +945,8 @@ html {
 	width: 88.5%;
 	margin-bottom: -27%;
 	background-color: rgba(20, 20, 20, .6);
+	outline: none !important;
+  border: none !important;
 }
 
 .current-turn {
@@ -953,10 +955,14 @@ html {
 
 #stats-op {
 	top: 24.25%;
+	outline: none !important;
+  border: none !important;
 }
 
 #stats-me {
 	top: 61.75%;
+	outline: none !important;
+  border: none !important;
 }
 
 .profile-img {

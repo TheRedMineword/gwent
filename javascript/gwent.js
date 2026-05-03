@@ -41,6 +41,7 @@ const ep_id = document.getElementById("player-id-btn");
 let debug = false;
 
 function showTooltip(text) {
+	console.log("ToolTip", text);
     const tooltip = document.getElementById("tooltip");
 
     // set message
@@ -242,18 +243,7 @@ async function recv_and_decomp(event) {
 
 
 
-function showTooltip(text) {
-    const tooltip = document.getElementById("tooltip");
 
-    // set message
-    tooltip.textContent = `${text}`;
-
-    tooltip.classList.add("show");
-
-    setTimeout(() => {
-        tooltip.classList.remove("show");
-    }, 3200);
-}
 
 document.getElementById("copy-session").onclick = () => {
 // document.querySelector("copy-session").addEventListener("click", async () => {
@@ -303,8 +293,8 @@ setTimeout(() => {
 				readyButtonElem.classList.remove("hidden");
 				isOpponentReadyElem.classList.remove("hidden");
 				
-				  document.getElementById("session-display").classList.remove("hidden");
-    document.getElementById("session-code-text").textContent = joinedSessionId;
+				 // document.getElementById("session-display").classList.remove("hidden");
+  //  document.getElementById("session-code-text").textContent = joinedSessionId;
 	
 	// joinedSessionId;
 				// sends the opponent which faction you're playing with
@@ -678,11 +668,19 @@ class Player {
 				await ui.viewCard(this.leader, async () => {
 						comp_and_send(socket, JSON.stringify({ type: "useLeader", player: this.id }));
 						await this.activateLeader();
+							if ( player_op.passed && !player_me.passed ) {
+			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
+			await sleep(RegisterMovesHold);
+		}
 					//	await init_sync_hands();
 				});
 		});
 		} else {
 			this.elem_leader.addEventListener("click", async () => await ui.viewCard(this.leader), false);
+				if ( player_op.passed && !player_me.passed ) {
+			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
+			await sleep(RegisterMovesHold);
+		}
 		}
 		
 		// TODO set crown color
@@ -1611,6 +1609,8 @@ console.log("Player op have a Squirrel leader, waiting for msg", event);
 	
 	// Starts a new turn. Enables client interraction in client's turn.
 	async startTurn() {
+		console.log("startTurn()", player_me, player_op);
+		
 		await this.runEffects(this.turnStart);
 		if (!this.currPlayer.opponent().passed){
 			this.currPlayer = this.currPlayer.opponent();
@@ -2076,6 +2076,10 @@ class UI {
 		console.log("HandData_after", handData);
 			console.log("You played the card", this.previewCard)
 			comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData, HandMePost: handData_after }));
+			if ( player_op.passed && !player_me.passed ) {
+			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
+			await sleep(RegisterMovesHold);
+		}
 			pCard.holder.endTurn();
 		//	await init_sync_hands();
 		}
@@ -2117,6 +2121,10 @@ class UI {
 		var handData_after = await serializeCards(player_me.hand.cards);
 		console.log("HandData_after", handData_after)
 		comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, isMeHand: handData, HandMePost: handData_after}));
+		if ( player_op.passed && !player_me.passed ) {
+			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
+			await sleep(RegisterMovesHold);
+		}
 		holder.endTurn();
 		// await init_sync_hands();
 	}

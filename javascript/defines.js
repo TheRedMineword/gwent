@@ -44,7 +44,7 @@ const ui_display_times = {
 }
 
 
-let isSyncingHands = false;
+const RegisterMovesHold = 3500 + SEND_INTERVAL_MS; //If op passed wait before moves
 const resync_wait = 1000 * 0.01;
 
 ui_display_times.is_transitioning = false;
