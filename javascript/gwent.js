@@ -2089,7 +2089,7 @@ class UI {
 			comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData, HandMePost: handData_after }));
 			if (extraJSON !== null) {
 				console.log("Hold before send extraJSON", extraJSON);
-				showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000}`);
+				showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds`);
     await new Promise(resolve => setTimeout(resolve, RegisterMovesHold));
     comp_and_send(socket, extraJSON);
     extraJSON = null;
@@ -2142,7 +2142,7 @@ class UI {
 		comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, isMeHand: handData, HandMePost: handData_after}));
 		if (extraJSON !== null) {
 			console.log("Hold before send extraJSON", extraJSON);
-    showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000}`);
+    showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds`);
     await new Promise(resolve => setTimeout(resolve, RegisterMovesHold));
     comp_and_send(socket, extraJSON);
     extraJSON = null;
