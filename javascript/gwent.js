@@ -1472,6 +1472,7 @@ class Game {
 		ui.toggleMusic_elem.classList.remove("music-customization");
 		this.currPlayer = player_me;
 		this.initPlayers(player_me, player_op);
+		openFullscreen();
 		console.log("start game players:", player_me, player_op);
 		var meleadercardloss = player_me.leader.abilities[0] === "nilf_drawmaster" ? nilfard_drawmaster.cardban : 0;
 		var cardspecialgain = 0;
@@ -3533,7 +3534,7 @@ function inicio() {
 	for (var i = 0; i < classe.length; i++) classe[i].style.display = "none";
 	iniciou = true;
 	tocar("menu_opening", false);
-	// openFullscreen();
+	//openFullscreen();
 	iniciarMusica();
 }
 

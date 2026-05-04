@@ -5,6 +5,10 @@ let extraJSON = null;
 const players = {
 	'me': "You", "op": "Opponent"
 }
+const fullscreenConfig = {
+	'localhost': false,
+	'else': true
+}
 
 const OnGameStartDraw = 2;
 const tooltipQueue = [];

@@ -18,6 +18,7 @@ https://fontmeme.com/fonts/gwent-font/
 - Gwent board stone texture from: https://www.vecteezy.com/vector-art/111496-cracked-stone-vector-texture
 - Weather box texture: https://www.magnific.com/free-photo/abstract-fractal-geometric-figure-background-with-texture_20612729.htm
 - rain effect image: https://www.pngwing.com/en/free-png-zlhiu
+- starting screen image: https://wall.alphacoders.com/big.php?i=1036489
 - Pass sound [pixabay.com](https://pixabay.com/sound-effects/film-special-effects-copyright-free-swoosh-487669/) by DRAGON-STUDIO
 - Game ends: draw - [TF2 Stealmate](https://www.youtube.com/watch?v=Gz7l7d7otIs)
 - scol_secondchance necromance: Start of "Geralt of Rivia - Sonya Belousova & Giona Ostinelli"

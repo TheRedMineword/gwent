@@ -138,3 +138,41 @@ socket.addEventListener("message", async (event) => {
     
   }
 });
+
+
+function isLocalhost() {
+	const host = window.location.hostname;
+	return host === "localhost" || host === "127.0.0.1";
+}
+
+function openFullscreen() {
+	const elem = document.documentElement;
+	const local = isLocalhost();
+
+	console.log("[FS] Attempting fullscreen");
+	console.log("[FS] Element:", elem);
+	console.log("[FS] Hostname:", window.location.hostname);
+	console.log("[FS] Is localhost:", local);
+
+	const allowed = local ? fullscreenConfig.localhost : fullscreenConfig.else;
+
+	console.log("[FS] Fullscreen allowed:", allowed);
+
+	if (!allowed) {
+		console.warn("[FS] Fullscreen blocked by config");
+		return;
+	}
+
+	if (elem.requestFullscreen) {
+		console.log("[FS] Using standard requestFullscreen()");
+		elem.requestFullscreen();
+	} else if (elem.webkitRequestFullscreen) {
+		console.log("[FS] Using webkitRequestFullscreen()");
+		elem.webkitRequestFullscreen();
+	} else if (elem.msRequestFullscreen) {
+		console.log("[FS] Using msRequestFullscreen()");
+		elem.msRequestFullscreen();
+	} else {
+		console.error("[FS] Fullscreen API not supported");
+	}
+}

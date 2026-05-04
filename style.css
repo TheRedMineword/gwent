@@ -1404,6 +1404,23 @@ html {
 	z-index: 85;
 }
 
+/* background image layer */
+.deck-bg {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+
+	background-image: url('img/deck.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+
+	opacity: 0.4; /* controls how visible image is */
+	z-index: 0;
+}
+
 #faction-title {
 	position: absolute;
 	height: 5%;
