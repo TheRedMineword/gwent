@@ -2279,6 +2279,17 @@ var card_dict = [
         "ability": "bond",
         "filename": "spirit",
         "count": "2"
+    },
+    {
+        "name": "Sky Kid -  Danielle",
+        "id": "3009",
+        "deck": "sky",
+        "row": "close",
+        "strength": "4",
+        "ability": "morale",
+        "filename": " Danielle",
+        "count": "1",
+        "@Discord": "1359183163355693347"
     }
 ];
 console.log("Cards array", card_dict);
