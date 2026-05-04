@@ -106,7 +106,7 @@ var factions = {
 			card.noRemove = true;
 			
 			game.roundStart.push( async () => {
-				await ui.notification("monsters", ui_display_times.faction_ability);
+				await ui.notification("sky", ui_display_times.faction_ability);
 				delete card.noRemove;
 				return true; 
 			});
