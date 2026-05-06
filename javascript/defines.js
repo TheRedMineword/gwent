@@ -70,7 +70,15 @@ const powergain = {
 	'desc': null
 }
 powergain.desc = `Card base power grows by ${powergain.ForEachCardGain} for each card in the row (${powergain.CountSelf ? "including itself" : "excluding itself"}). Card base power is not affected by weather, but its bonus power is reduced by ${Math.round((1 - powergain.WeatherDebuffPercent) * 100)}% under weather effects. Values are rounded ${powergain.Ceil ? "up" : "down"}.`;
-console.log("Spy draw:", spy, "\nPowergain:", powergain);
+
+const axii = {
+	"IfBasePowerUnder": 5,
+	"TakeAway": 2,
+	"desc": null
+}
+axii.desc = `Each card in row under Axii effect that base power is less than ${axii.IfBasePowerUnder} will lose ${axii.TakeAway} power. Debuffs dont stack. Dont affect hero cards`
+
+console.log("Spy draw:", spy, "\nPowergain:", powergain, "\nAxii:", axii);
 
 const nilfard_drawmaster =
 {

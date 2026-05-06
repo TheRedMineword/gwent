@@ -5,3 +5,5 @@
 - Added special ability "Power Gain"
 > "Card base power grows by 1.05 for each card in the row (excluding itself). Card base power is not affected by weather, but its bonus power is reduced by 75% under weather effects. Values are rounded down."
 - Adedd new neutral card "Roach" wich new ability "Power Gain"
+
+- Added Lambert Hero card wich axii ability

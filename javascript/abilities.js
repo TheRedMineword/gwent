@@ -199,6 +199,36 @@ if (card.holder.id === player_op.id) {
 		//await resync_hands();
     }
 },
+	axii: {
+	name: "witcher Signs",
+	description: `This card use Witchers tricks to cast into enemy fields Axii sign. ${axii.desc}. `,
+	placed: async (card) => {
+		try {
+			// Find axii card data by filename
+			const targetData = Object.values(card_dict).find(c => c.filename === "axii");
+
+			if (!targetData) {
+				console.warn("Axii card not found in card_dict");
+				return;
+			}
+			await card.animate("axii")
+			// Create new card for opponent
+			const opponent = card.holder.opponent();
+			const spawned = new Card(targetData, opponent);
+
+			// Add to opponent close row
+			await board.addCardToRow(spawned, "close", opponent);
+
+		} catch (e) {
+			console.log("Axii ability error:", e);
+		}
+	}
+},
+	axii2_desc: {
+		name: "Axii",
+		description: `${axii.desc} `,
+		placed: async card => await card.animate("debuff")
+	},
 	medic: {
 		name: "medic",
 		description: "Choose one card from your discard pile and play it instantly (no Heroes or Special Cards). ",

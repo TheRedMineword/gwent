@@ -1211,6 +1211,11 @@ class Row extends CardContainer {
 		if (card.name === "decoy")
 			return 0;
 		let total = card.basePower;
+		if (this.cards.some(c => c.filename === "axii")) {
+					if (0 < total && total < axii.IfBasePowerUnder) {
+						total = total - axii.TakeAway
+					}
+		}
 		if (card.abilities.includes("powergain") === true ){
 			let count = this.cards.length;
 
@@ -1252,8 +1257,8 @@ class Row extends CardContainer {
 	//	}
 		total += Math.max(0, this.effects.morale + (card.abilities.includes("morale") ? -1 : 0 ));
 		if (this.effects.horn - (card.abilities.includes("horn") ? 1 : 0) >  0 )
-			card.animate("powergain");
-		//	total *= 2;
+		//	card.animate("powergain");
+			total *= 2;
 		return total;
 	}
 	

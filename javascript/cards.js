@@ -2211,6 +2211,26 @@ var card_dict = [
         "filename": "roach",
         "count": "1"
     },
+    {
+        "name": "Axii",
+        "id": "1007",
+        "deck": "neutral",
+        "row": "close",
+        "strength": "0",
+        "ability": "hero axii2_desc",
+        "filename": "axii",
+        "count": "0"
+    },
+    {
+        "name": "Lambert",
+        "id": "1008",
+        "deck": "neutral",
+        "row": "close",
+        "strength": "9",
+        "ability": "hero axii",
+        "filename": "lambert",
+        "count": "99"
+    },
     // New cards for sky
     {
         "name": "Hopeful Steward",
