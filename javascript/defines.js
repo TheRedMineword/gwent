@@ -62,7 +62,15 @@ const spy = {
     'aid': 5,
     'sabotage': 1
 };
-console.log("Spy draw:", spy);
+const powergain = {
+	'ForEachCardGain': 1.05,
+	'CountSelf': false,
+	'WeatherDebuffPercent': 0.25,
+	'Ceil': false,
+	'desc': null
+}
+powergain.desc = `Card base power grows by ${powergain.ForEachCardGain} for each card in the row (${powergain.CountSelf ? "including itself" : "excluding itself"}). Card base power is not affected by weather, but its bonus power is reduced by ${Math.round((1 - powergain.WeatherDebuffPercent) * 100)}% under weather effects. Values are rounded ${powergain.Ceil ? "up" : "down"}.`;
+console.log("Spy draw:", spy, "\nPowergain:", powergain);
 
 const nilfard_drawmaster =
 {

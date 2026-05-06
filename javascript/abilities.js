@@ -1,5 +1,12 @@
 "use strict"
 
+function findAvengerTarget(cardName) {
+	console.log("findAvengerTarget(\"",cardName,"\");");
+	return card_dict.find(c => c.avenger === cardName);
+}
+
+
+
 var ability_dict = {
 	clear: {
 		name: "Clear Weather",
@@ -43,16 +50,29 @@ var ability_dict = {
 		}
 	},
 	berserker: {
-		name: "Berserker",
-		description: "Transforms into a bear when a Mardroeme card is on its row. ",
-		placed: async (card, row) => {
-			if (row.effects.mardroeme === 0)
-				return;
-			row.removeCard(card);
-			let cardId = card.name.indexOf("Young") === -1 ? 206 : 207;
-			await row.addCard(new Card(card_dict[cardId], card.holder));
+	name: "Berserker",
+	description: "Transforms into a bear when a Mardroeme card is on its row.",
+	placed: async (card, row) => {
+		if (row.effects.mardroeme === 0)
+			return;
+
+		row.removeCard(card);
+
+		const isYoung = card.name.includes("Young");
+		const transformedName = isYoung
+			? "Transformed Young Vildkaarl"
+			: "Transformed Vildkaarl";
+
+		const targetData = Object.values(card_dict).find(c => c.name === transformedName);
+
+		if (!targetData) {
+			console.warn("No transformed card found for:", card.name);
+			return;
 		}
-	},
+
+		await row.addCard(new Card(targetData, card.holder));
+	}
+},
 	scorch: {
 		name: "Scorch",
 		description: "Discard after playing. Kills the strongest card(s) on the battlefield. ",
@@ -237,6 +257,11 @@ if (card.holder.id === player_op.id) {
 		description: "Adds +1 to all units in the row (excluding itself). ",
 		placed: async card => await card.animate("morale")
 	},
+	powergain: {
+		name: "Power Gain",
+		description: powergain.desc,
+		placed: async card => await card.animate("powergain")
+	},
 	bond: {
 		name: "Tight Bond",
 		description: "Place next to a card with the same name to double the strength of both cards. ",
@@ -249,23 +274,74 @@ if (card.holder.id === player_op.id) {
 	avenger: {
 		name: "Avenger",
 		description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place. ",
-		removed: async (card) => {
-			let bdf = new Card(card_dict[21], card.holder);
-			bdf.removed.push( () => setTimeout( () => bdf.holder.grave.removeCard(bdf), 1001) );
-			await board.addCardToRow(bdf, "close", card.holder);
-		},
-		weight: () => 50
-	},
-	avenger_kambi: {
-		name: "Avenger",
-		description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place. ",
 		removed: async card => {
-			let bdf = new Card(card_dict[196], card.holder);
-			bdf.removed.push( () => setTimeout( () => bdf.holder.grave.removeCard(bdf), 1001) );
-			await board.addCardToRow(bdf, "close", card.holder);
-		},
-		weight: () => 50
+		try {
+			console.log("Avenger script running");
+
+			const targetData = findAvengerTarget(card.name);
+
+			if (!targetData) {
+				console.warn("No avenger target found for:", card.name);
+				return;
+			}
+
+			let bdf = new Card(targetData, card.holder);
+
+			bdf.removed.push(() =>
+				setTimeout(() => bdf.holder.grave.removeCard(bdf), 1001)
+			);
+
+			await board.addCardToRow(bdf, targetData.row, card.holder);
+
+		} catch (e) {
+			console.log(e);
+		}
 	},
+	weight: () => 50
+	},
+//	avenger_kambi: {
+//		name: "Avenger",
+//		description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place. ",
+//		removed: async card => {
+//			try {
+//			console.log("kambi")
+//			let bdf = new Card(card_dict[197], card.holder);
+	//		bdf.removed.push( () => setTimeout( () => bdf.holder.grave.removeCard(bdf), 1001) );
+//			await board.addCardToRow(bdf, "close", card.holder);
+//			} catch (e) {
+//				console.log(e);
+//			}
+//		},
+	//	weight: () => 50
+	//},
+	avenger_kambi: {
+	name: "Avenger",
+	description: "When this card is removed from the battlefield, it summons a powerful new Unit Card to take its place.",
+	removed: async card => {
+		try {
+			console.log("kambi");
+
+			const targetData = findAvengerTarget(card.name);
+
+			if (!targetData) {
+				console.warn("No avenger target found for:", card.name);
+				return;
+			}
+
+			let bdf = new Card(targetData, card.holder);
+
+			bdf.removed.push(() =>
+				setTimeout(() => bdf.holder.grave.removeCard(bdf), 1001)
+			);
+
+			await board.addCardToRow(bdf, "close", card.holder);
+
+		} catch (e) {
+			console.log(e);
+		}
+	},
+	weight: () => 50
+},
 	foltest_king: {
 		description: "Pick an Impenetrable Fog card from your deck and play it instantly.",
 		activated: async card => {

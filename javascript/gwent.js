@@ -1207,10 +1207,35 @@ class Row extends CardContainer {
 	
 	// Calculates the current power of a card affected by row affects
 	calcCardScore(card) {
-	// console.log("calcCardScore(card)", card, this); this.cards[0].holder.leader.abilities to get card 0 leader abilities, could be usefull in future
+	// console.log("calcCardScore(card)", card, this); //this.cards[0].holder.leader.abilities to get card 0 leader abilities, could be usefull in future
 		if (card.name === "decoy")
 			return 0;
 		let total = card.basePower;
+		if (card.abilities.includes("powergain") === true ){
+			let count = this.cards.length;
+
+			// exclude self if needed
+			if (!powergain.CountSelf) {
+				count = Math.max(0, count - 1);
+			}
+
+			let bonus = count * powergain.ForEachCardGain;
+
+			// apply weather debuff
+		if (this.effects.weather) {
+			bonus *= powergain.WeatherDebuffPercent;
+			}
+
+			// rounding
+			bonus = powergain.Ceil ? Math.ceil(bonus) : Math.floor(bonus);
+
+			total += bonus;
+			if (count > 1){
+		//	card.animate("powergain");
+			}
+			return total;
+		}
+		// card.animate("powergain");
 		if (card.hero)
 			return total;
 		if (this.effects.weather) 
@@ -1222,9 +1247,13 @@ class Row extends CardContainer {
 		let bond = this.effects.bond[card.id()];
 		if (isNumber(bond) && bond > 1)
 			total *= Number(bond);
+	//	if (this?.effects.morale > 0) {
+		//	card.animate("powergain");
+	//	}
 		total += Math.max(0, this.effects.morale + (card.abilities.includes("morale") ? -1 : 0 ));
 		if (this.effects.horn - (card.abilities.includes("horn") ? 1 : 0) >  0 )
-			total *= 2;
+			card.animate("powergain");
+		//	total *= 2;
 		return total;
 	}
 	
@@ -1906,7 +1935,8 @@ class Card {
 			"medic" : "med",
 			"muster" : "ally",
 			"morale" : "moral",
-			"bond" : "moral"
+			"bond" : "moral",
+			"powergain": "moral" //no audio
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;

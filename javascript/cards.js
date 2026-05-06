@@ -217,7 +217,8 @@ var card_dict = [
         "strength": "8",
         "ability": "",
         "filename": "chort",
-        "count": "0"
+        "count": "0",
+        "avenger": "Cow"
     },
     {
         "name": "Foltest - King of Temeria",
@@ -1967,7 +1968,8 @@ var card_dict = [
         "strength": "11",
         "ability": "hero",
         "filename": "hemdall",
-        "count": "0"
+        "count": "0",
+        "avenger": "Kambi"
     },
     {
         "name": "Hjalmar",
@@ -1995,7 +1997,7 @@ var card_dict = [
         "deck": "skellige",
         "row": "close",
         "strength": "0",
-        "ability": "avenger_kambi",
+        "ability": "avenger",
         "filename": "kambi",
         "count": "1"
     },
@@ -2197,6 +2199,16 @@ var card_dict = [
         "strength": "-5",
         "ability": "hero sabotage",
         "filename": "spice_trader",
+        "count": "1"
+    },
+    {
+        "name": "Roach",
+        "id": "1006",
+        "deck": "neutral",
+        "row": "close",
+        "strength": "1",
+        "ability": "powergain",
+        "filename": "roach",
         "count": "1"
     },
     // New cards for sky
