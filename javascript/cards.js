@@ -2229,7 +2229,7 @@ var card_dict = [
         "strength": "9",
         "ability": "hero axii",
         "filename": "lambert",
-        "count": "99"
+        "count": "1"
     },
     // New cards for sky
     {
