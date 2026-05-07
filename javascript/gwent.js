@@ -313,6 +313,13 @@ setTimeout(() => {
 			//	btnJoinElem.classList.remove("hidden");
 				}
 				twoPlayersConnected = false
+				if (twoPlayersConnected === true){
+					ui.stopYouTube();
+					play_wait_music();
+				} else {
+					stop_wait_music();
+					ui.resumeYouTube();
+				}
 				console.log("---------------------");
 				console.log("Opponent left the game");
 				// isOpponentReadyElem.classList.add("hidden");
@@ -372,6 +379,13 @@ setTimeout(() => {
 
 			case "opChangeFaction":
 				twoPlayersConnected = true;
+				if (twoPlayersConnected === true){
+					ui.stopYouTube();
+					play_wait_music();
+				} else {
+					stop_wait_music();
+					ui.resumeYouTube();
+				}
 				console.log("opponent has changed his faction");
 				 showTooltip(`Opponent changed his faction to ${data.faction}`);
 				 op_icon_faction = `img/icons/deck_shield_${data.faction}.png`;
@@ -1548,6 +1562,9 @@ class Game {
 		btnJoinElem.classList.add("hidden");
 		gameStartControlsElem.classList.add("hide");
 		// isOpponentReadyElem.classList.add("hidden");
+		ui.resumeYouTube();
+		await sleep(20);
+		ui.youtubePlay(audio_yt_vid_soundtrack, audio_yt_vid_soundtrack_volume, true); stop_wait_music();
 		updateOpponentUI({
  								 "name": " ",
  								 "state": op_icon_faction,
@@ -1821,6 +1838,7 @@ class Game {
 	
 	// Returns the client to the deck customization screen
 	returnToCustomization(){
+		ui.youtubePlay(tavern_yt_vid, tavern_yt_volume, true);
 		comp_and_send(socket, JSON.stringify({ type: "unReady" }));
 		amReady = false;
 		opponentReady = false;
@@ -1831,7 +1849,7 @@ class Game {
 		this.reset();
 		player_me.reset();
 		player_op.reset();
-		ui.toggleMusic_elem.classList.add("music-customization");
+	//	ui.toggleMusic_elem.classList.add("music-customization");
 		this.endScreen.classList.add("hide");
 		customizationElem.classList.remove("hide");
 		gameStartControlsElem.classList.remove("hide");
@@ -2081,6 +2099,8 @@ class UI {
 		this.preview = document.getElementsByClassName("card-preview")[0];
 		this.previewCard = null;
 		this.lastRow = null;
+		this.bypassPlayback = false; // If true, ignore user settings and control playback directly
+		this.savedVolume = null; // To store previous volume before muting or stopping
 		passButton.addEventListener("click", () => {
 			comp_and_send(socket, JSON.stringify({ type: "pass", player: playerId }));
 			player_me.passRound();
@@ -2101,12 +2121,12 @@ class UI {
 	// Initializes the youtube background music object
 	initYouTube() {
 		this.youtube = new YT.Player('youtube', {
-			videoId: audio_yt_vid_soundtrack,
+			videoId: tavern_yt_vid,
 			playerVars: {
 				"autoplay": 1,
 				"controls": 0,
 				"loop": 1,
-				"playlist": audio_yt_vid_soundtrack,
+				"playlist": tavern_yt_vid,
 				"rel": 0,
 				"version": 3,
 				"modestbranding": 1
@@ -2114,10 +2134,12 @@ class UI {
 			events: {
 				'onStateChange': initButton,
 				 onReady: (event) => {
-				event.target.setVolume( audio_yt_vid_soundtrack_volume);
+				event.target.setVolume(tavern_yt_volume);
 				 }
 			}
 		});
+
+	
 
 		function initButton() {
 			if (ui.ytActive !== undefined)
@@ -2134,15 +2156,131 @@ class UI {
 			}, 500);
 		}
 	}
+	// Stops the YouTube video, but preserves mute and volume settings
+stopYouTube() {
+    if (this.youtube) {
+        // Save current volume
+		this.bypassPlayback = true;
+        this.savedVolume = this.youtube.getVolume();
+
+        // Mute or pause depending on your preference
+        this.youtube.pauseVideo();
+
+        // Optionally, set volume to 0
+        // this.youtube.setVolume(0);
+    }
+}
+
+// Resumes the YouTube video with previous volume if available
+resumeYouTube() {
+//	console.log("resumeYouTube() ", this.youtube, this.savedVolume, this.bypassPlayback, buttonmutemode);
+    if (this.youtube && this.savedVolume !== null) {
+	//	console.log("resumeYouTube() ", "was inside", buttonmutemode);
+		this.bypassPlayback = false;
+        // Resume playback
+        this.youtube.playVideo();
+
+        // Restore previous volume
+        this.youtube.setVolume(this.savedVolume || audio_yt_vid_soundtrack_volume);
+        this.savedVolume = null; // Reset
+		if (buttonmutemode === 0){
+			this.youtube.pauseVideo();
+			this.bypassPlayback = false;
+		}
+    }
+//	console.log("resumeYouTube() ", this.youtube, this.savedVolume, this.bypassPlayback, buttonmutemode);
+}
+
+youtubeRestart() {
+    if (this.youtube && this.youtube.getPlayerState() !== YT.PlayerState.UNSTARTED) {
+        this.youtube.seekTo(0);
+        this.youtube.playVideo();
+    }
+}
+
+youtubePlay(video_id, volume_int = 100, repeat = false) {
+    if (this.youtube) {
+        this.youtube.loadVideoById(video_id);
+        this.youtube.setVolume(volume_int);
+        this.youtube.playVideo();
+
+        if (repeat) {
+            // Add event listener for repeat
+            this.youtube.addEventListener('onStateChange', (event) => {
+                if (event.data === YT.PlayerState.ENDED) {
+                    this.youtube.seekTo(0);
+                    this.youtube.playVideo();
+                }
+            });
+        } else {
+            // Remove any previous 'ended' listener if needed
+            // (Note: YouTube API does not directly allow removing specific event listeners)
+            // You might need to implement logic to prevent multiple repeats or handle this differently.
+        }
+    }
+	button_is_second_sheet = 1;
+	if (buttonmutemode === 0){
+		ui.stopYouTube();
+		console.log("muted");
+	}
+	console.log("Is second sheet:", button_is_second_sheet);
+}
 
 	// Called when client toggles the music
 	toggleMusic() {
-		if (this.youtube.getPlayerState() !== YT.PlayerState.PLAYING) iniciarMusica();
-		else {
-			this.youtube.pauseVideo();
-			this.toggleMusic_elem.classList.add("fade");
+		if (button_is_second_sheet === 1){
+			this.bypassPlayback = false;
 		}
+		console.log(this.bypassPlayback, button_is_second_sheet);
+		try {
+    if (this.bypassPlayback) {
+		
+		if (buttonmutemode === 0){
+			iniciarMusica(this.bypassPlayback)
+			buttonmutemode = 1;
+		} else {
+			 this.youtube.pauseVideo();
+        this.toggleMusic_elem.classList.add("fade");
+			buttonmutemode = 0;
+		}
+        // When bypassed, just stop or resume
+      //  if (this.youtube.getPlayerState() === YT.PlayerState.PLAYING) {
+      //      this.stopYouTube();
+      //  } else {
+      //      this.resumeYouTube();
+      //  }
+     return;
+    }
+	if (button_is_second_sheet === 1){
+		if (buttonmutemode === 0){
+			buttonmutemode =1;	
+			ui.resumeYouTube();
+			this.toggleMusic_elem.classList.remove("fade");
+		} else {
+				ui.stopYouTube();
+				buttonmutemode = 0;
+				this.toggleMusic_elem.classList.add("fade");
+		}
+		return;
 	}
+    // Existing logic
+    else if (this.youtube.getPlayerState() !== YT.PlayerState.PLAYING) {
+        buttonmutemode = 1;
+		iniciarMusica(this.bypassPlayback);
+    } else {
+        this.youtube.pauseVideo();
+        this.toggleMusic_elem.classList.add("fade");
+		buttonmutemode = 0;
+    }
+} catch (e) {
+	console.log("Music toggle error:", e);
+	try {
+		ui.initYouTube();
+	} catch (e){
+		console.log("ui.initYouTube(); error", e);
+	}
+}
+}
 
 	// Enables or disables backgorund music 
 	setYouTubeEnabled(enable) {
@@ -3598,10 +3736,14 @@ function onYouTubeIframeAPIReady() {
 	ui.initYouTube();
 }
 
-function iniciarMusica() {
+function iniciarMusica(bypass = false) {
 	try {
 		if (ui.youtube.getPlayerState() !== YT.PlayerState.PLAYING) {
-			ui.youtube.playVideo();
+			ui.youtube.playVideo(); 
+			console.log(bypass)
+			if (bypass){
+				ui.stopYouTube();
+			}
 			ui.toggleMusic_elem.classList.remove("fade");
 		}
 	} catch(err) {}
@@ -3637,7 +3779,7 @@ function inicio() {
 	iniciou = true;
 	tocar("menu_opening", false);
 	//openFullscreen();
-	iniciarMusica();
+	iniciarMusica(false);
 }
 
 var iniciou = false, isLoaded = false;

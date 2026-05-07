@@ -21,6 +21,7 @@ https://fontmeme.com/fonts/gwent-font/
 - starting screen image: https://wall.alphacoders.com/big.php?i=1036489
 - Pass sound [pixabay.com](https://pixabay.com/sound-effects/film-special-effects-copyright-free-swoosh-487669/) by DRAGON-STUDIO
 - Game ends: draw - [TF2 Stealmate](https://www.youtube.com/watch?v=Gz7l7d7otIs)
+- Game waiting for both players ready: [INFO](https://github.com/TheRedMineword/GWENT/blob/main/sfx/oldgwent)
 - scol_secondchance necromance: Start of "Geralt of Rivia - Sonya Belousova & Giona Ostinelli"
 
 

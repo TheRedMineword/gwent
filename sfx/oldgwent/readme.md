@@ -1,0 +1,1 @@
+Inline.ogg comes from: [LegacyGwent: Replica of Beta Gwent](https://github.com/LegacyGwent/LegacyGwent/blob/diy/README_EN.md)

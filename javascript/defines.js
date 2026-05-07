@@ -118,11 +118,73 @@ console.log("nilfard_drawmaster", nilfard_drawmaster);
 
 
 const audio_cache = {};
+let buttonmutemode = 1;
+let button_is_second_sheet = 0;
+// In game, match in progress
 const audio_yt_vid_soundtrack = "FTsuevfvQ9w"; // wild hunt: "UE9fPWy1_o4" // How about round of gwent: "FTsuevfvQ9w"
 const audio_yt_vid_soundtrack_volume = 47; // 100 for wild hunt, less for other
-
+// Tavern (Deck menu)
+const tavern_yt_vid = "yu197hlNWK0"; // The Witcher 3: Wild Hunt OST - Skellige Tavern | Extended
+const tavern_yt_volume = 100;
 const gaunter_lider = {
 	"extra_cards": 0.50,
 	"revive": 0.60
 }
+let waitMusicAudio = null;
+let waitMusicPlaying = false;
+let cachedWaitMusicBlobUrl = null;
+
+async function cacheWaitMusic() {
+    // Load the Blob (assuming you fetch it from server or have it)
+    const response = await fetch('sfx/oldgwent/Inline.ogg');
+    const blob = await response.blob();
+    cachedWaitMusicBlobUrl = URL.createObjectURL(blob);
+}
+async function play_wait_music() {
+	console.log("[WAITING]", "PLAY");
+    if (waitMusicPlaying) return; // Already playing
+    
+    waitMusicPlaying = true;
+    const url = cachedWaitMusicBlobUrl || 'sfx/oldgwent/Inline.ogg';
+    waitMusicAudio = new Audio(url);
+    waitMusicAudio.loop = true;
+
+    // Set volume to 60%
+    waitMusicAudio.volume = 0.6; 
+
+    try {
+        await waitMusicAudio.play();
+    } catch (e) {
+        console.error("Failed to play wait music:", e);
+    }
+
+    while (waitMusicPlaying) {
+        await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    if (waitMusicAudio) {
+        waitMusicAudio.pause();
+        waitMusicAudio = null;
+    }
+}
+function stop_wait_music() {
+	console.log("[WAITING]", "STOP");
+    waitMusicPlaying = false;
+    if (waitMusicAudio) {
+        waitMusicAudio.pause();
+        waitMusicAudio = null;
+    }
+}
+function monitorVolume() {
+    if (waitMusicAudio) {
+        waitMusicAudio.volume = buttonmutemode === 1 ? 0.6 : 0; // 60% or mute
+    }
+   // console.log("WAITING DEBUG", buttonmutemode);
+    // Schedule the next call
+    setTimeout(monitorVolume, 100);
+}
+
+cacheWaitMusic();
+monitorVolume();
+
+
 console.log("gaunter_lider", gaunter_lider);
