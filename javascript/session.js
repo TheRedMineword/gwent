@@ -117,6 +117,7 @@ socket.addEventListener("message", async (event) => {
   switch (data.type) {
     case "sessionCreated":
       createdSessionId = data.code;
+      showTooltip(`Created Session Id: ${createdSessionId}`);
 
   //    sessionDisplay.classList.remove("hidden");
      // sessionCodeText.textContent = createdSessionId;

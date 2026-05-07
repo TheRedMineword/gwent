@@ -6,3 +6,5 @@
 > While 2 players are in game Game music will play
 - Powered on autism, toggle music button using like 3 different variables will controll music playing
 - Multiplayer menu (top-menu-btn) was moved behing start screen
+
+- Added 2 more cards for Sky Kindom Faction

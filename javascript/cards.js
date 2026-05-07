@@ -2322,6 +2322,26 @@ var card_dict = [
         "filename": " Danielle",
         "count": "1",
         "@Discord": "1359183163355693347"
+    },
+    {
+        "name": "Red Crab",
+        "id": "3010",
+        "deck": "sky",
+        "row": "siege",
+        "strength": "4",
+        "ability": "morale",
+        "filename": "redcrab",
+        "count": "2"
+    },
+    {
+        "name": "Spy Crab",
+        "id": "3011",
+        "deck": "sky",
+        "row": "agile",
+        "strength": "3",
+        "ability": "spy",
+        "filename": "crabspy",
+        "count": "2"
     }
 ];
 console.log("Cards array", card_dict);
