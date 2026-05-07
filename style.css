@@ -820,7 +820,7 @@ html {
 }
 
 #end-screen button {
-	position: absolute;
+	position: center;
 	height: 3vw;
 	width: 10vw;
 	top: 87%;

@@ -387,7 +387,7 @@ setTimeout(() => {
 					ui.resumeYouTube();
 				}
 				console.log("opponent has changed his faction");
-				 showTooltip(`Opponent changed his faction to ${data.faction}`);
+				 showTooltip(`Opponent changed his faction to ${factions[data.faction]?.name || data.faction}`);
 				 op_icon_faction = `img/icons/deck_shield_${data.faction}.png`;
 				updateOpponentUI({
  								 "name": "Opponent",
@@ -1499,9 +1499,9 @@ class Game {
 		this.endScreen = document.getElementById("end-screen");
 		let buttons = this.endScreen.getElementsByTagName("button");
 		this.customize_elem = buttons[0];
-		this.replay_elem = buttons[1];
+	//	this.replay_elem = buttons[1];
 		this.customize_elem.addEventListener("click", () => this.returnToCustomization(), false);
-		this.replay_elem.addEventListener("click", () => this.restartGame(), false);
+	//	this.replay_elem.addEventListener("click", () => this.restartGame(), false);
 		this.reset();
 	}
 	
@@ -1849,6 +1849,8 @@ class Game {
 		this.reset();
 		player_me.reset();
 		player_op.reset();
+		var btn5 = document.getElementById("session-start-control");
+		btn5.textContent = "Ready";
 	//	ui.toggleMusic_elem.classList.add("music-customization");
 		this.endScreen.classList.add("hide");
 		customizationElem.classList.remove("hide");
