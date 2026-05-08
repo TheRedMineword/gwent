@@ -2949,12 +2949,11 @@ class DeckMaker {
 		
 		this.faction = "realms";
 		this.setFaction(this.faction, true);
-		
 		let start_deck = premade_deck.find(d => d.faction === this.faction);
+		console.log(start_deck);
 		start_deck.cards = start_deck.cards.map(c => ({index: c[0], count: c[1]}) );
 		this.setLeader(start_deck.leader);
 		this.makeBank(this.faction, start_deck.cards);
-		
 		this.change_elem = document.getElementById("change-faction");
 		this.change_elem.addEventListener("click", () => this.selectFaction(), false);
 		
@@ -3152,7 +3151,11 @@ this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 			const faction_premade_deck = premade_deck.find(d => d.faction === card_faction_name)
 
 			if (faction_premade_deck) {
-				if (!faction_premade_deck?.cards[0].index)
+				var is_premade = false;
+				try {
+					is_premade = faction_premade_deck?.cards[0].index
+				} catch (e) {}
+				if (!is_premade)
 					faction_premade_deck.cards = faction_premade_deck.cards.map(c => ({index: c[0], count: c[1]}) );
 				this.makeBank(card_faction_name, faction_premade_deck.cards);
 			} else	
@@ -3178,9 +3181,38 @@ this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 	}
 	
 	// Adds a card to container (Bank or deck)
-	add(index, cards) {
+async	add(index, cards) {
 		let id = cards[index];
 		id.elem.children[0].innerHTML = ++id.count;
+		try {
+		// console.log("Adds a card to container (Bank or deck)", index, cards, id, this, "\n", this.stats, "\n\n", card_dict[id.index].ability);
+		// abilities on the card, e.g. ["hero", "morale"]
+var abilities = (card_dict[id.index].ability || "")
+  .split(" ")
+  .filter(Boolean);
+var descOutput = abilities
+  .map(abilityId => ability_dict[abilityId]?.description || "")
+  .filter(Boolean);
+var descString = descOutput.join("\n");
+var timeNow = Date.now().toString();
+var shaSource =  btoa(timeNow + descString);
+// console.log("\nAdds a card to container (Bank or deck)", abilities, descOutput, descString, shaSource);
+if (2 < descString.length) {
+	console.log("Show stats for", card_dict[id.index], ` wich abilities ${card_dict[id.index].ability} `, descString, " for ", showbankms / 1000);
+	displaynow = shaSource;
+	document.getElementById("cardstatsdisplay").innerHTML =
+  descString.replace(/\n/g, "<br>");
+  await sleep(showbankms);
+  if (shaSource === displaynow){
+	console.log("Hide stats for", card_dict[id.index], ` wich abilities ${card_dict[id.index].ability} `);
+	document.getElementById("cardstatsdisplay").innerHTML = "";
+  } else {
+	console.log(`displaynow no longer valid ${displaynow} != ${shaSource}`);
+}
+}
+
+
+		} catch (e) { console.log("Adds a card to container (Bank or deck)", " err", e)}
 	}
 	
 	// Removes a card from container (bank or deck)
