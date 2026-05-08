@@ -98,6 +98,7 @@ document.getElementById("copy-session").onclick = () => {
 
 // Websocket and Server config.
 let wsUrl;
+const wakeUrl = "https://drmineword-gwent.onrender.com/wake";
 
 const host = window.location.hostname;
 
@@ -110,10 +111,65 @@ if (
 } else {
   wsUrl = `wss://drmineword-gwent.onrender.com`;
 }
+function showBrickScreen() {
+  document.documentElement.innerHTML = `
+    <style>
+      body {
+        margin:0;
+        background:#0d0d0d;
+        color:#ff4d4d;
+        font-family:Arial,sans-serif;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        height:100vh;
+        text-align:center;
+      }
+
+      .box {
+        max-width:700px;
+        padding:40px;
+        border:2px solid #ff4d4d;
+        background:#1a0000;
+        box-shadow:0 0 30px rgba(255,0,0,.35);
+      }
+
+      h1 {
+        font-size:42px;
+        margin-bottom:20px;
+      }
+
+      p {
+        font-size:20px;
+        line-height:1.6;
+        color:#ffd0d0;
+      }
+    </style>
+
+    <div class="box">
+      <h1>MULTIPLAYER FAILURE</h1>
+      <p>
+        Could not connect to multiplayer servers.<br>
+        The backend may still be sleeping or unavailable.<br><br>
+        Please refresh later.
+      </p>
+    </div>
+  `;
+  fetch("https://drmineword-gwent.onrender.com/wake");
+}
 
 console.log("Websocket", wsUrl);
 // const socket = new WebSocket('ws://127.0.0.1:8080');				// Example line for when using local installation instead of remote deployment.
-const socket = new WebSocket(wsUrl);	// Websocket + server is expected to be reachable on this URL. Disable if using local installation.
+let socket = null;
+try {
+	socket = new WebSocket(wsUrl);	// Websocket + server is expected to be reachable on this URL. Disable if using local installation.
+	console.log("SOCKET", socket, wsUrl);
+} catch (e){
+	showBrickScreen();
+	alert("Failed to start multiplayer, please refresh page!!!");
+}
+
+
 let amReady = false;
 let opponentReady = false;
 let playerId = null;
