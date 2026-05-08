@@ -113,6 +113,6 @@ var factions = {
 			return false;
 		}),
 		// OLD: description: "Keeps a random Unit Card out after each round."
-		description: "Keeps the strongest Unit Card out after each round."
+		description: "Keeps the strongest Unit Card out after each round. \nFactions full of morale boosting cards."
 	}
 }
