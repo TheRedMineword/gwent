@@ -155,19 +155,34 @@ function showBrickScreen() {
       </p>
     </div>
   `;
-  fetch("https://drmineword-gwent.onrender.com/wake");
+  fetch(wakeUrl);
 }
 
 console.log("Websocket", wsUrl);
 // const socket = new WebSocket('ws://127.0.0.1:8080');				// Example line for when using local installation instead of remote deployment.
 let socket = null;
-try {
-	socket = new WebSocket(wsUrl);	// Websocket + server is expected to be reachable on this URL. Disable if using local installation.
-	console.log("SOCKET", socket, wsUrl);
-} catch (e){
-	showBrickScreen();
-	alert("Failed to start multiplayer, please refresh page!!!");
-}
+
+socket = new WebSocket(wsUrl);
+
+socket.onopen = () => {
+  console.log("WebSocket connected");
+};
+
+socket.onerror = (err) => {
+  console.error("WebSocket error", err);
+  showBrickScreen();
+  alert("Failed to connect to multiplayer server.");
+};
+
+socket.onclose = (event) => {
+  console.warn("WebSocket closed", event);
+
+  // Optional: treat early close as failure
+  if (!socket._connected) {
+    showBrickScreen();
+    alert("Failed to start multiplayer, please refresh page!!!\n\nIf it dont work wait for a moment before trying again!");
+  }
+};
 
 
 let amReady = false;
