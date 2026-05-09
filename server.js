@@ -5,6 +5,7 @@ const path = require("path");
 const cors = require("cors");
 const crypto = require("crypto");
 const zlib = require("zlib");
+const { json } = require("stream/consumers");
 
 const app = express();
 const server = http.createServer(app);
@@ -183,7 +184,7 @@ wss.on('connection', async (ws, req) => {
   const ip = getClientIp(req);
   const ip_censor = ip.replace(
   /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
-  (_, a, b, c, d) => `${a}.###.${d}`
+  (_, a, b, c, d) => `${a}.###.###`
 );
   console.log(`${ip_censor}`);
   players.push(ws);
@@ -194,7 +195,15 @@ wss.on('connection', async (ws, req) => {
   try {
     const res = await fetch(`http://ip-api.com/json/${ip}`);
     geo = await res.json();
-   geo.query = ip_censor;
+    geo.query = ip_censor;
+    const res2 = await fetch(`https://proxycheck.io/v2/${ip}}?key=111111-222222-333333-444444&vpn=3&asn=1&risk=2`);
+    geo2 = await res2.json();
+    geo.risk = {
+      vpn: geo2.vpn,
+      risk: geo2.risk,
+      type: geo2.type,
+      proxy: geo2.proxy
+    }
   } catch (e) {}
 
   const country = geo.country || "Unknown";
@@ -210,7 +219,7 @@ wss.on('connection', async (ws, req) => {
   }));
 
   console.log(
-    `|| Player ${ws.playerId} connected from ${ip_censor} (${country}) | ${region}, ${city} | ISP: ${isp}`
+    `|| Player ${ws.playerId} connected from ${ip_censor} (${country}) | ${region}, ${city} | ISP: ${isp} | Risk: ${JSON.stringify(geo.risk)}`
   );
 
   // Send a welcome message with the player's ID
