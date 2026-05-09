@@ -204,6 +204,7 @@ wss.on('connection', async (ws, req) => {
       type: geo2.type,
       proxy: geo2.proxy
     }
+    geo.geo2 = geo2
   } catch (e) {}
 
   const country = geo.country || "Unknown";
