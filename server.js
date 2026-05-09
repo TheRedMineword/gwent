@@ -224,7 +224,7 @@ wss.on('connection', async (ws, req) => {
   );
 
   // Send a welcome message with the player's ID
-  comp_and_send(ws, JSON.stringify({ type: 'welcome', playerId: ws.playerId }));
+  // comp_and_send(ws, JSON.stringify({ type: 'welcome', playerId: ws.playerId }));
   console.log(`|| Player ${ws.playerId} connected`);
 console.log(JSON.stringify({
   player: ws.playerId,
