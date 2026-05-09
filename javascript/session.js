@@ -228,8 +228,8 @@ if (typeof state2 === "string" && state2.trim().startsWith("<svg")) {
   const span = document.createElement("span");
   span.innerHTML = state2;
 
-  img.insertAdjacentElement("afterend", span);
-  img._fallbackNode = span;
+  //img.insertAdjacentElement("afterend", span);
+ // img._fallbackNode = span;
 
 } else {
   // normal image (can be /img/src/a.png or full URL)
