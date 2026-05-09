@@ -1643,7 +1643,7 @@ class Game {
 		ui.youtubePlay(audio_yt_vid_soundtrack, audio_yt_vid_soundtrack_volume, true); stop_wait_music();
 		updateOpponentUI({
  								 "name": " ",
- 								 "state": op_icon_faction,
+ 								 "state": `${current_op.me_flag === null ? op_icon_faction : `data:image/svg+xml;base64,${btoa(`<svg width=\"32\" height=\"32\" xmlns=\"http:\/\/www.w3.org\/2000\/svg\">\r\n    <!-- Background image as base64 -->\r\n    <image href=\"${op_icon_faction}\" x=\"0\" y=\"0\" width=\"32\" height=\"32\" preserveAspectRatio=\"none\"\/>\r\n    <!-- Remote image in bottom-right corner -->\r\n    <image x=\"17\" y=\"17\" width=\"15\" height=\"15\" href=\"${current_op.me_flag === null ? op_icon_faction : `https://flagsapi.com/${current_op.me_flag}/flat/64.png`}\"\/>\r\n<\/svg>`)}`}`,
  								 "status": `Game In Progress!`
 								});
 		ui.toggleMusic_elem.style.left = "26vw"
