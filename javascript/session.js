@@ -187,6 +187,7 @@ function openFullscreen() {
 
 let op_icon_faction = "img/icons/google_fonts__signal_disconnected_99dp_CCCCCC_FILL0_wght400_GRAD0_opsz48.png";
 function updateOpponentUI(data) {
+  console.log("[OP UPDATE MENU]", data);
   const box = document.getElementById("opponent-ready");
   if (!box) return;
 
@@ -216,5 +217,22 @@ function updateOpponentUI(data) {
 
   span.textContent = data.status; //Readys
 
- img.src = data.state;
+ // img.src = data.state;
+  var state2 = data.state;
+
+// detect svg string
+if (typeof state2 === "string" && state2.trim().startsWith("<svg")) {
+  // not an image URL → treat as inline SVG/text
+  img.removeAttribute("src");
+
+  const span = document.createElement("span");
+  span.innerHTML = state2;
+
+  img.insertAdjacentElement("afterend", span);
+  img._fallbackNode = span;
+
+} else {
+  // normal image (can be /img/src/a.png or full URL)
+  img.src = state2;
+}
 }
