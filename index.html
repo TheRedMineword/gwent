@@ -312,6 +312,7 @@
     <img src="img/icons/google_fonts__signal_disconnected_99dp_CCCCCC_FILL0_wght400_GRAD0_opsz48.png">
     <span></span>
 </div>
+<button id="chat-toggle">Chat</button>
 </div>
 
 
@@ -321,6 +322,19 @@
     <span>No server connection</span>
 </div>
 
+<div id="chat-overlay" class="hidden">
+    <div id="chat-header">
+        Messages
+        <span id="chat-close">✕</span>
+    </div>
+
+    <div id="chat-log"></div>
+
+    <div id="chat-controls">
+        <input id="chat-input" maxlength="120" placeholder="message...">
+        <button id="chat-send">Send</button>
+    </div>
+</div>
 
 <script type="text/javascript" src="javascript/jszip.min.js"></script>
 <script type="text/javascript" src="javascript/defines.js"></script>
@@ -333,6 +347,7 @@
 <script type="text/javascript" src="javascript/patchnotes.js"></script>
 <script type="text/javascript" src="javascript/sync_hands.js"></script>
 <script type="text/javascript" src="javascript/session.js"></script>
+<script type="text/javascript" src="javascript/chat.js"></script>
 </body>
 
 </html>

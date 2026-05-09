@@ -6,7 +6,7 @@ const showbankms = 9000;
 let gameended = false;
  //host alone
 const players = {
-	'me': "You", "op": "Opponent", "noflag": ""
+	'me': "You", "op": "Opponent", "noflag": "", "sys": "Gwent Bot"
 }
 const fullscreenConfig = {
 	'localhost': false,

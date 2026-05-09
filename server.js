@@ -192,12 +192,73 @@ function getClientIp(req) {
 
 // Serve all client files (index.html, JS, CSS, etc.)
 app.use(express.static(__dirname));
+app.use(express.json());
 app.get("/wake", (req, res) => {
   res.json({ ok: "ok" });
 });
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
+app.post("/api/message", (req, res) => {
+  const { session_id, player_id, message, type } = req.body;
+
+  if (!session_id || !player_id) {
+    return res.status(400).json({ error: "session_id and player_id required" });
+  }
+
+  const session = sessions[session_id];
+  if (!session) {
+    return res.status(404).json({ error: "Session not found" });
+  }
+
+  const targetPlayer = session.players.find(p => p.playerId === player_id);
+
+  if (!targetPlayer) {
+    return res.status(404).json({ error: "Player not found in session" });
+  }
+
+  const payload = {
+    type: type || "apiMessage",
+    message: message || null,
+    session_id,
+    player_id
+  };
+  if (payload.type != 'chat'){
+    return res.status(500).json({ error: "You are not allowed to use that type!!!" });
+  }
+  try {
+    targetPlayer.send(compressPayload(JSON.stringify(payload)));
+    return res.json({ ok: true });
+  } catch (e) {
+    return res.status(500).json({ error: "Failed to send message" });
+  }
+});
+function broadcastToSession(sessionId, payload) {
+  console.log(`broadcastToSession() ${sessionId}, ${payload}`);
+  const session = sessions[sessionId];
+  if (!session) return false;
+  let payload2 = null;
+  let data = null;
+  session.players.forEach(player => {
+    try {
+      if (player.readyState === WebSocket.OPEN) {
+        console.log(`Sending mod msg to ${JSON.stringify(player.playerId)}`);
+         payload2 = {
+    type: "moderation",
+    message: payload || null,
+    session_id: sessionId,
+    player_id: player.playerId
+  };
+  data = compressPayload(JSON.stringify(payload2));
+        player.send(data);
+      }
+    } catch (e) {
+      console.log(`Broadcast error: ${JSON.stringify(e)}`);
+    }
+  });
+
+  return true;
+}
 riskinfo = "{}";
 wss.on('connection', async (ws, req) => {
   ws.playerId = await generatePlayerId(req);
@@ -294,7 +355,7 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     if (data.type === "createSession") {
 
     // Internal unique ID
-    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}`).toString("base64");
+    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}\nRandomstring${generateCode()}`).toString("base64");
 
     // Human-friendly code
     const joinCode = sessionIdToJoinCode(sessionId, sessiondigitLength);
@@ -323,19 +384,19 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
 }
 
     if (data.type === "cancelSession") {
-      const sessionCode = data.code;
-      if (!sessions[sessionCode]) return;
+      const sessionId = data.code;
+      if (!sessions[sessionId]) return;
 
-      console.log(`|| Player ${ws.playerId} cancelled Session ${sessionCode}`);
-      delete sessions[ws.sessionCode];
+      console.log(`|| Player ${ws.playerId} cancelled Session ${sessionId}`);
+      delete sessions[ws.sessionId];
     }
 
     if (data.type === "leaveSession") {
-      const sessionCode = data.code;
-      if (!sessions[sessionCode]) return;
+      const sessionId = data.code;
+      if (!sessions[sessionId]) return;
 
-      console.log(`|| Player ${ws.playerId} left Session ${sessionCode}`);
-      sessions[sessionCode].players = sessions[sessionCode].players.filter(player => player !== ws);
+      console.log(`|| Player ${ws.playerId} left Session ${sessionId}`);
+      sessions[sessionId].players = sessions[sessionId].players.filter(player => player !== ws);
     }
 
       // manual hand sync dump to opponent
@@ -375,34 +436,38 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
         code: joinCode,
         id: sessionId
     }));
+    sessions[sessionId].players.forEach((player, index) => {
+          player.send(compressPayload(JSON.stringify({ type: 'sessionReady', player: index + 1 })));
+        });
 
     console.log(
         `Player joined ${joinCode}`
     );
+    broadcastToSession(ws.sessionId, `Session ${ws.sessionId} Chat active, Please keep the conversations here civilized, that session ids and players id could be later linked using logs wich device that sended them!!`);
 }
 
     if (data.type === "gameStart") {
-        if (ws.sessionCode && sessions[ws.sessionCode]) {
-            const session = sessions[ws.sessionCode]; 
-            if (!sessions[ws.sessionCode]?.firstPlayer) {
+        if (ws.sessionId && sessions[ws.sessionId]) {
+            const session = sessions[ws.sessionId]; 
+            if (!sessions[ws.sessionId]?.firstPlayer) {
                 const firstPlayer = session.players[Math.floor(Math.random() * session.players.length)].playerId;
-                sessions[ws.sessionCode].firstPlayer = firstPlayer
+                sessions[ws.sessionId].firstPlayer = firstPlayer
             }
-            console.log("firstPlayer = ", sessions[ws.sessionCode].firstPlayer)
+            console.log("firstPlayer = ", sessions[ws.sessionId].firstPlayer)
 
             session.players.forEach((player) => {
-                player.send(compressPayload(JSON.stringify({ type: 'coinToss', player: sessions[ws.sessionCode].firstPlayer })));
+                player.send(compressPayload(JSON.stringify({ type: 'coinToss', player: sessions[ws.sessionId].firstPlayer })));
               });
   
         }
     }
 
     if (data.type === 'initial_reDraw') {
-      if (ws.sessionCode && sessions[ws.sessionCode]) {
-        const session = sessions[ws.sessionCode];
+      if (ws.sessionId && sessions[ws.sessionId]) {
+        const session = sessions[ws.sessionId];
         session.playersReady += 1;
 
-        console.log(`|| Players ready in session ${ws.sessionCode}: ${session.playersReady}`);
+        console.log(`|| Players ready in session ${ws.sessionId}: ${session.playersReady}`);
 
         if (session.playersReady === 2) {
             session.players.forEach((player) => {
@@ -414,8 +479,8 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     }
 
     // Relay messages to the other player in the same session
-    if (ws.sessionCode) {
-      const sessionPlayers = sessions[ws.sessionCode]?.players || [];
+    if (ws.sessionId) {
+      const sessionPlayers = sessions[ws.sessionId]?.players || [];
       sessionPlayers.forEach((player) => {
         if (player !== ws) {
           player.send(compressPayload(JSON.stringify(data)));
@@ -428,13 +493,13 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     console.log(`|| Player ${ws.playerId} disconnected`);
 
     // Check if the player has an active session
-    if (ws.sessionCode && sessions[ws.sessionCode]) {
-      const session = sessions[ws.sessionCode];
+    if (ws.sessionId && sessions[ws.sessionId]) {
+      const session = sessions[ws.sessionId];
 
       // Check if the player is the creator of the session
       if (session.players[0] === ws) {
         // If the creator disconnects, delete the session
-        console.log(`|| Deleting session ${ws.sessionCode} because the creator left`);
+        console.log(`|| Deleting session ${ws.sessionId} because the creator left`);
         if (session.players.length > 1) {
           try {
           session.players[1].send(compressPayload(JSON.stringify({ type: 'unReady' })));
@@ -443,14 +508,14 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
             console.log("Err", e);
           }
         }
-        delete sessions[ws.sessionCode];
+        delete sessions[ws.sessionId];
       } else {
         try {
         // If a non-creator disconnects, remove them from the session and notify the creator
         session.players = session.players.filter(player => player !== ws);
         session.players[0].send(compressPayload(JSON.stringify({ type: 'unReady' })));
         session.players[0].send(compressPayload(JSON.stringify({ type: 'sessionUnready' })));
-        console.log(`|| Player ${ws.playerId} left the session ${ws.sessionCode}`);
+        console.log(`|| Player ${ws.playerId} left the session ${ws.sessionId}`);
         } catch (e) {
           console.log("Err", e);
         }

@@ -400,11 +400,13 @@ setTimeout(() => {
 	// joinedSessionId;
 				// sends the opponent which faction you're playing with
 				comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: dm.faction, info: { "me_id": playerId, "me_flag": country} }));
+				sendChatMessageStrig(`play wich ${factions[faction_name].name} faction!`)
 				break;
 
 			// Opponent has left and the session is no longer ready
 			case "sessionUnready":
 				console.log("session un ready", gameended);
+				disableChat();
 				if (gameended === false) {
 				showTooltip("Opponent has left and the session is no longer ready");
 				var btn = document.getElementById("session-start-control");
@@ -3080,6 +3082,7 @@ class DeckMaker {
 			}
 
 			comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: faction_name, info: { "me_id": playerId, "me_flag": country} }));
+			sendChatMessageStrig(`play wich ${factions[faction_name].name} faction!`)
 		}
 
 		this.elem.getElementsByTagName("h1")[0].innerHTML = factions[faction_name].name;
@@ -3462,6 +3465,7 @@ if (2 < descString.length) {
 			return;
 		this.setFaction(deck.faction, true);
 		comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: deck.faction, info: { "me_id": playerId, "me_flag": country} }));
+		sendChatMessageStrig(`play wich ${factions[faction_name].name} faction!`)
 		if (card_dict[deck.leader].row === "leader" && deck.faction === card_dict[deck.leader].deck){
 			this.leader = this.leaders.find(c => c.index === deck.leader);
 			var tmp = this.leader.card.deck + "_" + this.leader.card.filename;

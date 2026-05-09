@@ -150,7 +150,13 @@ socket.addEventListener("message", async (event) => {
       console.log("Joined session:", joinedSessionId);
       console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
       break;
+      case "chat":
+    addMessage("op", data.message);
+      break;
 
+    case "moderation":
+    addMessage("system", data.message);
+    break;
     
   }
 });
