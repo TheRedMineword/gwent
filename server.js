@@ -199,10 +199,10 @@ wss.on('connection', async (ws, req) => {
     const res2 = await fetch(`https://proxycheck.io/v2/${ip}?key=111111-222222-333333-444444&vpn=3&asn=1&risk=2`);
     geo2 = await res2.json();
     geo.risk = {
-      vpn: geo2.vpn,
-      risk: geo2.risk,
-      type: geo2.type,
-      proxy: geo2.proxy
+      vpn: geo2[ip].vpn,
+      risk: geo2[ip].risk,
+      type: geo2[ip].type,
+      proxy: geo2[ip].proxy
     }
     // geo.geo2 = geo2
   } catch (e) {}
