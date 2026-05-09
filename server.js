@@ -355,7 +355,7 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     if (data.type === "createSession") {
 
     // Internal unique ID
-    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}\nRandomstring${generateCode()}`).toString("base64");
+    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}\nRandomstring:${generateCode()}`).toString("base64");
 
     // Human-friendly code
     const joinCode = sessionIdToJoinCode(sessionId, sessiondigitLength);
@@ -397,6 +397,7 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
 
       console.log(`|| Player ${ws.playerId} left Session ${sessionId}`);
       sessions[sessionId].players = sessions[sessionId].players.filter(player => player !== ws);
+      broadcastToSession(ws.sessionId, `Player ${ws.playerId} left the session`);
     }
 
       // manual hand sync dump to opponent
@@ -443,21 +444,25 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     console.log(
         `Player joined ${joinCode}`
     );
-    broadcastToSession(ws.sessionId, `Session ${ws.sessionId} Chat active, Please keep the conversations here civilized, that session ids and players id could be later linked using logs wich device that sended them!!`);
+    broadcastToSession(
+  ws.sessionId,
+  `Session ${ws.sessionId} chat is now active. Please keep conversations civilized. Session IDs and player IDs may later be linked via logs!`
+);
 }
 
     if (data.type === "gameStart") {
         if (ws.sessionId && sessions[ws.sessionId]) {
             const session = sessions[ws.sessionId]; 
             if (!sessions[ws.sessionId]?.firstPlayer) {
+                            broadcastToSession(ws.sessionId, `Game started! Good Luck Everyone!!`);
                 const firstPlayer = session.players[Math.floor(Math.random() * session.players.length)].playerId;
                 sessions[ws.sessionId].firstPlayer = firstPlayer
+                console.log(`First player (coinflip) ${JSON.stringify(firstPlayer)}`);
             }
             console.log("firstPlayer = ", sessions[ws.sessionId].firstPlayer)
-
             session.players.forEach((player) => {
                 player.send(compressPayload(JSON.stringify({ type: 'coinToss', player: sessions[ws.sessionId].firstPlayer })));
-              });
+              });   
   
         }
     }
@@ -516,6 +521,7 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
         session.players[0].send(compressPayload(JSON.stringify({ type: 'unReady' })));
         session.players[0].send(compressPayload(JSON.stringify({ type: 'sessionUnready' })));
         console.log(`|| Player ${ws.playerId} left the session ${ws.sessionId}`);
+        broadcastToSession(ws.sessionId, `Player ${ws.playerId} left the session`);
         } catch (e) {
           console.log("Err", e);
         }

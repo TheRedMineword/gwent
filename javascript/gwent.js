@@ -3416,10 +3416,12 @@ if (2 < descString.length) {
 		if (files.length <= 0)
 			return false;
 		let fr = new FileReader();
+		console.log("[DECK.U]", files, fr);
 		fr.onload = e => {
 			try {
 				this.deckFromJSON(e.target.result);
 			} catch (e) {
+				console.log("DECK.U] err", e);
 				alert("Uploaded deck is not formatted correctly!");
 			}
 		}
@@ -3465,7 +3467,7 @@ if (2 < descString.length) {
 			return;
 		this.setFaction(deck.faction, true);
 		comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: deck.faction, info: { "me_id": playerId, "me_flag": country} }));
-		sendChatMessageStrig(`play wich ${factions[faction_name].name} faction!`)
+		sendChatMessageStrig(`play wich ${factions[deck.faction].name} faction!`)
 		if (card_dict[deck.leader].row === "leader" && deck.faction === card_dict[deck.leader].deck){
 			this.leader = this.leaders.find(c => c.index === deck.leader);
 			var tmp = this.leader.card.deck + "_" + this.leader.card.filename;
