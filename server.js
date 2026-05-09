@@ -183,9 +183,9 @@ wss.on('connection', async (ws, req) => {
   const ip = getClientIp(req);
   const ip_censor = ip.replace(
   /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
-  (_, a, b, c, d) => `${a}.#######.${d}`
+  (_, a, b, c, d) => `${a}.###.${d}`
 );
-  console.log(`${ip}`);
+  console.log(`${ip_censor}`);
   players.push(ws);
 
   // optional geo lookup
@@ -194,7 +194,7 @@ wss.on('connection', async (ws, req) => {
   try {
     const res = await fetch(`http://ip-api.com/json/${ip}`);
     geo = await res.json();
-   // geo.req_call = `http://ip-api.com/json/${ip}`;
+   geo.query = ip_censor;
   } catch (e) {}
 
   const country = geo.country || "Unknown";
