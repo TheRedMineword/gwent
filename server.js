@@ -196,7 +196,7 @@ wss.on('connection', async (ws, req) => {
     const res = await fetch(`http://ip-api.com/json/${ip}`);
     geo = await res.json();
     geo.query = ip_censor;
-    const res2 = await fetch(`https://proxycheck.io/v2/${ip}}?key=111111-222222-333333-444444&vpn=3&asn=1&risk=2`);
+    const res2 = await fetch(`https://proxycheck.io/v2/${ip}?key=111111-222222-333333-444444&vpn=3&asn=1&risk=2`);
     geo2 = await res2.json();
     geo.risk = {
       vpn: geo2.vpn,
@@ -204,7 +204,7 @@ wss.on('connection', async (ws, req) => {
       type: geo2.type,
       proxy: geo2.proxy
     }
-    geo.geo2 = geo2
+    // geo.geo2 = geo2
   } catch (e) {}
 
   const country = geo.country || "Unknown";
