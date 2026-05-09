@@ -219,17 +219,22 @@ function updateOpponentUI(data) {
 
  // img.src = data.state;
   var state2 = data.state;
+  const container = document.getElementById("opponent-ready");
 
+const p = container.querySelector("p");
+if (p) {
+    p.remove();
+}
 // detect svg string
 if (typeof state2 === "string" && state2.trim().startsWith("<svg")) {
   // not an image URL → treat as inline SVG/text
   img.removeAttribute("src");
 
-  const span = document.createElement("span");
-  span.innerHTML = state2;
+  const p = document.createElement("p");
+  p.innerHTML = state2;
 
-  //img.insertAdjacentElement("afterend", span);
- // img._fallbackNode = span;
+  img.insertAdjacentElement("afterend", p);
+  img._fallbackNode = p;
 
 } else {
   // normal image (can be /img/src/a.png or full URL)

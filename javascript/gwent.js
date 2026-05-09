@@ -455,6 +455,7 @@ setTimeout(() => {
 			case "opChangeFaction":
 				twoPlayersConnected = true;
 				current_op = data.info
+			//	current_op.me_flag = "PL";
 				if (twoPlayersConnected === true){
 					ui.stopYouTube();
 					play_wait_music();
