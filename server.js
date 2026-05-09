@@ -144,14 +144,29 @@ function generateCode() {
   }
   return code;
 }
+let ip_is = "abc";
+function generatePlayerId(req) {
+  ip_is = getClientIp(req);
+  const ipHash = crypto
+    .createHash("sha256")
+    .update(ip_is)
+    .digest("hex")
+    .slice(0, 4);
 
-function generatePlayerId() {
-  const part = () => crypto.randomBytes(2).toString("hex"); // 4 hex chars
-  const num = () => Math.floor(1000 + Math.random() * 9000); // 4-digit number
-
-  return `${part()}-${num()}-${part()}-${num()}`;
+  const part = () => crypto.randomBytes(2).toString("hex");
+  const num = () => Math.floor(1000 + Math.random() * 9000);
+  const num2 = () => Math.floor(1000 + Math.random() * 9000);
+  return `${ipHash}-${num()}-${part()}-${num2()}`;
 }
 
+function getClientIp(req) {
+  return (
+    req.headers["x-forwarded-for"]?.split(",")[0]?.trim() ||
+    req.socket?.remoteAddress ||
+    req.connection?.remoteAddress ||
+    "unknown"
+  );
+}
 
 // Serve all client files (index.html, JS, CSS, etc.)
 app.use(express.static(__dirname));
@@ -162,13 +177,57 @@ app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-wss.on('connection', (ws) => {
-  ws.playerId = generatePlayerId();
+wss.on('connection', async (ws, req) => {
+  ws.playerId = await generatePlayerId(req);
+  
+  const ip = getClientIp(req);
+  const ip_censor = ip.replace(
+  /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
+  (_, a, b, c, d) => `${a}.#######.${d}`
+);
+  console.log(`${ip}`);
   players.push(ws);
+
+  // optional geo lookup
+  let geo = {};
+
+  try {
+    const res = await fetch(`http://ip-api.com/json/${ip}`);
+    geo = await res.json();
+   // geo.req_call = `http://ip-api.com/json/${ip}`;
+  } catch (e) {}
+
+  const country = geo.country || "Unknown";
+  const region = geo.regionName || "Unknown";
+  const city = geo.city || "Unknown";
+  const isp = geo.isp || "Unknown";
+
+  // Send welcome
+  comp_and_send(ws, JSON.stringify({
+    type: 'welcome',
+    playerId: ws.playerId,
+    "_ip": geo
+  }));
+
+  console.log(
+    `|| Player ${ws.playerId} connected from ${ip_censor} (${country}) | ${region}, ${city} | ISP: ${isp}`
+  );
 
   // Send a welcome message with the player's ID
   comp_and_send(ws, JSON.stringify({ type: 'welcome', playerId: ws.playerId }));
   console.log(`|| Player ${ws.playerId} connected`);
+console.log(JSON.stringify({
+  player: ws.playerId,
+  ip,
+  country: geo.country,
+  region: geo.regionName,
+  city: geo.city,
+  isp: geo.isp,
+  org: geo.org,
+  timezone: geo.timezone,
+  proxy: geo.proxy,
+  hosting: geo.hosting
+}, null, 2));
 
   ws.on('message', (message) => {
     const msg_is = decompressPayload(message);
