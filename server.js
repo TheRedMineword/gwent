@@ -18,6 +18,7 @@ app.use(cors({ origin: '*' }));
 
 
 let sessions = {};
+const joinIndex = {};
 let players = [];
 let nextPlayerId = 1;
 
@@ -63,6 +64,25 @@ function compressPayload(jsonString) {
     const compressed = zlib.deflateRawSync(input, { level: 9 });
     console.log(`Bytes before ${input.length}\nBytes after ${compressed.length}\nCompressed% ${percentSaved(input.length, compressed.length)}%\nPayload sha ${sha256(compressed)}`);
     console.log(jsonString);
+    return compressed;
+}
+
+function compressString(inputString) {
+    const input = Buffer.from(inputString, "utf8");
+
+    const compressed = zlib.deflateRawSync(input, {
+        level: 9,
+    });
+
+    console.log(
+        `Bytes before ${input.length}\n` +
+        `Bytes after ${compressed.length}\n` +
+        `Compressed% ${percentSaved(input.length, compressed.length)}%\n` +
+        `Payload sha ${sha256(compressed)}`
+    );
+
+    console.log(`String compressed: ${inputString}`);
+
     return compressed;
 }
 
@@ -135,18 +155,18 @@ function decodeIncoming(message) {
 }
 
 
-
+let genlng = 2;
 // Helper function to generate a random 4-character code
 function generateCode() {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
   let code = '';
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < genlng; i++) {
     code += characters.charAt(Math.floor(Math.random() * characters.length));
   }
   return code;
 }
-let country_code = "JC"
-let ip_is = "abc";
+let country_code = "JC";
+let ip_is = "null";
 function generatePlayerId(req) {
   ip_is = getClientIp(req);
   const ipHash = crypto
@@ -178,7 +198,7 @@ app.get("/wake", (req, res) => {
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-
+riskinfo = "{}";
 wss.on('connection', async (ws, req) => {
   ws.playerId = await generatePlayerId(req);
   
@@ -205,6 +225,12 @@ wss.on('connection', async (ws, req) => {
       type: geo2[ip].type,
       proxy: geo2[ip].proxy
     }
+    riskinfo = JSON.stringify({
+      vpn: geo2[ip].vpn,
+      risk: geo2[ip].risk,
+      type: geo2[ip].type,
+      proxy: geo2[ip].proxy
+    });
     // geo.geo2 = geo2
   } catch (e) {}
 
@@ -230,7 +256,7 @@ wss.on('connection', async (ws, req) => {
   console.log(`|| Player ${ws.playerId} connected`);
 console.log(JSON.stringify({
   player: ws.playerId,
-  ip,
+  ip_censor,
   country: geo.country,
   region: geo.regionName,
   city: geo.city,
@@ -240,24 +266,61 @@ console.log(JSON.stringify({
   proxy: geo.proxy,
   hosting: geo.hosting
 }, null, 2));
+let sessiondigitLength = 4;
+function sessionIdToJoinCode(sessionId, digitLength = 4) {
 
+    // Hash session ID
+    const hash = crypto
+        .createHash("sha256")
+        .update(sessionId)
+        .digest();
+
+    // Convert first 4 bytes into number
+    const num = hash.readUInt32BE(0);
+
+    // Range for requested digit length
+    const min = 10 ** (digitLength - 1);
+    const max = 10 ** digitLength;
+
+    // Generate fixed-length code
+    return ((num % (max - min)) + min).toString();
+}
   ws.on('message', (message) => {
     const msg_is = decompressPayload(message);
     const data = JSON.parse(msg_is);
     const msg =  JSON.stringify(data);
     console.log(`|| Message recived: \`\`\`\n${msg}\`\`\``);
 
-    if (data.type === 'createSession') {
-      let sessionCode = generateCode();
-      sessionCode = `${country_code}-${sessionCode}`;
-      // Create a new session and auto-join the creator
-      sessions[sessionCode] = { players: [ws], code: sessionCode, playersReady: 0 };
-      ws.sessionCode = sessionCode;
-      comp_and_send(ws, JSON.stringify({ type: 'sessionCreated', code: sessionCode }));
-      console.log(`|| Player ${ws.playerId} created Session ${sessionCode}`);
+    if (data.type === "createSession") {
 
-      comp_and_send(ws, JSON.stringify({ type: 'sessionJoined', code: sessionCode }));
-    }
+    // Internal unique ID
+    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}`).toString("base64");
+
+    // Human-friendly code
+    const joinCode = sessionIdToJoinCode(sessionId, sessiondigitLength);
+
+    sessions[sessionId] = {
+        id: sessionId,
+        joinCode,
+        players: [ws],
+        playersReady: 0
+    };
+
+    // Fast lookup
+    joinIndex[joinCode] = sessionId;
+
+    ws.sessionId = sessionId;
+
+    comp_and_send(ws, JSON.stringify({
+        type: "sessionCreated",
+        id: sessionId,
+        code: joinCode
+    }));
+
+    console.log(
+        `Session created ${joinCode} -> ${sessionId}`
+    );
+}
 
     if (data.type === "cancelSession") {
       const sessionCode = data.code;
@@ -281,24 +344,42 @@ console.log(JSON.stringify({
 
 
 
-    if (data.type === 'joinSession') {
-      const sessionCode = data.sessionId;
-      if (sessions[sessionCode] && sessions[sessionCode].players.length === 1) {
-        sessions[sessionCode].players.push(ws);
-        ws.sessionCode = sessionCode;
-        comp_and_send(ws, JSON.stringify({ type: 'sessionJoined', code: sessionCode }));
-        console.log(`|| Player ${ws.playerId} joined Session ${sessionCode}`);
+    if (data.type === "joinSession") {
 
-        sessions[sessionCode].players.forEach((player, index) => {
-          player.send(compressPayload(JSON.stringify({ type: 'sessionReady', player: index + 1 })));
-        });
-      
-      } else {
-        comp_and_send(ws, JSON.stringify({ type: 'sessionInvalid' }));
-        const msg_out =  JSON.stringify({ type: 'sessionInvalid' });
-  
-      }
+    const joinCode = data.sessionId;
+
+    const sessionId = joinIndex[joinCode];
+
+    if (!sessionId) {
+        comp_and_send(ws, JSON.stringify({
+            type: "sessionInvalid"
+        }));
+        return;
     }
+
+    const session = sessions[sessionId];
+
+    if (session.players.length >= 2) {
+        comp_and_send(ws, JSON.stringify({
+            type: "sessionFull"
+        }));
+        return;
+    }
+
+    session.players.push(ws);
+
+    ws.sessionId = sessionId;
+
+    comp_and_send(ws, JSON.stringify({
+        type: "sessionJoined",
+        code: joinCode,
+        id: sessionId
+    }));
+
+    console.log(
+        `Player joined ${joinCode}`
+    );
+}
 
     if (data.type === "gameStart") {
         if (ws.sessionCode && sessions[ws.sessionCode]) {

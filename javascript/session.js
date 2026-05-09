@@ -20,6 +20,7 @@ btnCancelElem.classList.add("hidden");
 // Session state
 let createdSessionId = null;
 let joinedSessionId = null;
+let ThisSessionId = null;
 
 // --------------------
 // SOCKET EVENTS
@@ -47,6 +48,8 @@ socket.onclose = () => {
 
   createdSessionId = null;
   joinedSessionId = null;
+  ThisSessionId = null;
+  alert("Disconnected from the server");
 };
 
 // --------------------
@@ -89,6 +92,7 @@ function cancelSession() {
       code: createdSessionId
     }));
     createdSessionId = null;
+    ThisSessionId = null;
   } else if (joinedSessionId) {
     console.log("Left Session:", joinedSessionId);
     comp_and_send(socket, JSON.stringify({
@@ -96,6 +100,7 @@ function cancelSession() {
       code: joinedSessionId
     }));
     joinedSessionId = null;
+    ThisSessionId = null;
   }
 }
 
@@ -117,18 +122,21 @@ socket.addEventListener("message", async (event) => {
   switch (data.type) {
     case "sessionCreated":
       createdSessionId = data.code;
-      showTooltip(`Created Session Id: ${createdSessionId}`);
+      showTooltip(`Created Session join code: ${createdSessionId}`);
 
   //    sessionDisplay.classList.remove("hidden");
      // sessionCodeText.textContent = createdSessionId;
 
-      console.log("Session created:", createdSessionId);
+      console.log("Session created:", data.id, "\nCode:", createdSessionId);
+      ThisSessionId = data.id;
+      console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
       break;
 
     case "sessionJoined":
       console.log("Session.js", data.code);
       joinedSessionId = data.code;
-
+      ThisSessionId = data.id;
+      showTooltip(`Joined session: ${data.id}`);
  //     sessionDisplay.classList.remove("hidden");
   //    sessionCodeText.textContent = joinedSessionId;
 
@@ -140,6 +148,7 @@ socket.addEventListener("message", async (event) => {
 
 
       console.log("Joined session:", joinedSessionId);
+      console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
       break;
 
     

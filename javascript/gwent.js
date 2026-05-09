@@ -19,7 +19,7 @@ document.getElementById("join-game").onclick = () => {
 
     comp_and_send(socket, JSON.stringify({
         type: "joinSession",
-        sessionId: code.toUpperCase()
+        sessionId: code
     }));
 };
 
@@ -234,6 +234,32 @@ async function decompressData(uint8) {
     }
 
     throw new Error("DecompressionStream not supported.");
+}
+
+
+async function decompressBase64(base64) {
+    // base64 -> Uint8Array
+    const binary = atob(base64);
+
+    const bytes = Uint8Array.from(
+        binary,
+        c => c.charCodeAt(0)
+    );
+
+    // Create decompression stream
+    const ds = new DecompressionStream("deflate-raw");
+
+    // Pipe compressed bytes into it
+    const decompressedStream =
+        new Blob([bytes])
+            .stream()
+            .pipeThrough(ds);
+
+    // Read decompressed result
+    const decompressedBuffer =
+        await new Response(decompressedStream).arrayBuffer();
+
+    return new TextDecoder().decode(decompressedBuffer);
 }
 
 function wait(ms) {
