@@ -145,6 +145,7 @@ function generateCode() {
   }
   return code;
 }
+let country_code = "JC"
 let ip_is = "abc";
 function generatePlayerId(req) {
   ip_is = getClientIp(req);
@@ -208,6 +209,7 @@ wss.on('connection', async (ws, req) => {
   } catch (e) {}
 
   const country = geo.country || "Unknown";
+  country_code = geo.countryCode || "JC";
   const region = geo.regionName || "Unknown";
   const city = geo.city || "Unknown";
   const isp = geo.isp || "Unknown";
@@ -246,7 +248,8 @@ console.log(JSON.stringify({
     console.log(`|| Message recived: \`\`\`\n${msg}\`\`\``);
 
     if (data.type === 'createSession') {
-      const sessionCode = generateCode();
+      let sessionCode = generateCode();
+      sessionCode = `${country_code}-${sessionCode}`;
       // Create a new session and auto-join the creator
       sessions[sessionCode] = { players: [ws], code: sessionCode, playersReady: 0 };
       ws.sessionCode = sessionCode;
