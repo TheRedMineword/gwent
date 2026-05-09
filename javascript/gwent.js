@@ -329,8 +329,9 @@ document.getElementById("copy-session").onclick = () => {
     }
 };
 
-
-
+let ip_data = null;
+let country = null;
+let current_op = null;
 socket.onmessage = async (event) => {
     console.log('[socket raw event.data]', event.data);
 	const event_parsed = await recv_and_decomp(event);
@@ -340,6 +341,9 @@ console.log("onmsg data:", data)
 		switch (data.type) {
 			case "welcome":
 				playerId = data.playerId;
+				ip_data = data._ip;
+				country = ip_data.countryCode || null;
+				console.log("[SERVER DROPPED IP DATA", ip_data, ` Country: ${country}`);
 				console.log("Welcome, your id is " + playerId);
 ep_id.textContent = `Hello PlayerID:\n${playerId}`;
 ep_id.style.color = "";
@@ -369,7 +373,7 @@ setTimeout(() => {
 	
 	// joinedSessionId;
 				// sends the opponent which faction you're playing with
-				comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: dm.faction }));
+				comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: dm.faction, info: { "me_id": playerId, "me_flag": country} }));
 				break;
 
 			// Opponent has left and the session is no longer ready
@@ -450,6 +454,7 @@ setTimeout(() => {
 
 			case "opChangeFaction":
 				twoPlayersConnected = true;
+				current_op = data.info
 				if (twoPlayersConnected === true){
 					ui.stopYouTube();
 					play_wait_music();
@@ -461,7 +466,7 @@ setTimeout(() => {
 				 showTooltip(`Opponent changed his faction to ${factions[data.faction]?.name || data.faction}`);
 				 op_icon_faction = `img/icons/deck_shield_${data.faction}.png`;
 				updateOpponentUI({
- 								 "name": "Opponent",
+ 								 "name": `${current_op.me_flag === null ? "" : "( "}${current_op.me_flag === null ? players.noflag : current_op.me_flag}${current_op.me_flag === null ? "" : " ) "}${players.op}`,
  								 "state": op_icon_faction,
  								 "status": `Ready: ${opponentReady}`
 								});
@@ -472,7 +477,7 @@ setTimeout(() => {
 				opponentReady = false;
 				amReady = false;
 								updateOpponentUI({
- 								 "name": "Opponent",
+ 								 "name": `${current_op.me_flag === null ? "" : "( "}${current_op.me_flag === null ? players.noflag : current_op.me_flag}${current_op.me_flag === null ? "" : " ) "}${players.op}`,
  								 "state": op_icon_faction,
  								 "status": `Ready: ${opponentReady}`
 								});
@@ -3047,7 +3052,7 @@ class DeckMaker {
 				return false;
 			}
 
-			comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: faction_name }));
+			comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: faction_name, info: { "me_id": playerId, "me_flag": country} }));
 		}
 
 		this.elem.getElementsByTagName("h1")[0].innerHTML = factions[faction_name].name;
@@ -3429,7 +3434,7 @@ if (2 < descString.length) {
 		if (warning && !confirm(warning + "\n\n\Continue importing deck?"))
 			return;
 		this.setFaction(deck.faction, true);
-		comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: deck.faction }));
+		comp_and_send(socket, JSON.stringify({ type: "opChangeFaction", faction: deck.faction, info: { "me_id": playerId, "me_flag": country} }));
 		if (card_dict[deck.leader].row === "leader" && deck.faction === card_dict[deck.leader].deck){
 			this.leader = this.leaders.find(c => c.index === deck.leader);
 			var tmp = this.leader.card.deck + "_" + this.leader.card.filename;
