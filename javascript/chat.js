@@ -176,6 +176,7 @@ async function sendChatMessageStrig(atext) {
 
 
 function addMessage(type, text){
+    console.log("[CHAT] NEW MESSAGE", type, text);
     let parse_type = type;
     const div = document.createElement("div");
 
