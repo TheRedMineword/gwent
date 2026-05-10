@@ -103,6 +103,8 @@ async function init_sync_hands(){
     // only ping if tab/page is still visible/open
     if (!document.hidden) {
       pingWakeEndpoint();
+    } else {
+      pingWakeEndpoint(); // console.log("") // idk wanted to write something here
     }
   }, INTERVAL_MS);
 
