@@ -66,3 +66,48 @@ async function init_sync_hands(){
 	await resync_hands();
     return true;
 }
+
+
+
+(() => {
+  // Run only when NOT on localhost / local development
+  const isLocalhost =
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "::1";
+
+  if (isLocalhost) {
+    console.log("Wake ping disabled on localhost.");
+    return;
+  }
+
+  const WAKE_URL = "https://drmineword-gwent.onrender.com/wake";
+  const INTERVAL_MS = 90 * 1000; // 90 seconds
+
+  const pingWakeEndpoint = () => {
+    // fire-and-forget request
+    fetch(WAKE_URL, {
+      method: "GET",
+      mode: "no-cors",
+      keepalive: true,
+    }).catch(() => {
+      // ignore errors completely
+    });
+  };
+
+  // Initial ping
+  pingWakeEndpoint();
+
+  // Continue while page is open
+  const intervalId = setInterval(() => {
+    // only ping if tab/page is still visible/open
+    if (!document.hidden) {
+      pingWakeEndpoint();
+    }
+  }, INTERVAL_MS);
+
+  // Optional cleanup
+  window.addEventListener("beforeunload", () => {
+    clearInterval(intervalId);
+  });
+})();
