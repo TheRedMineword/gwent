@@ -1,4 +1,6 @@
 "use strict"
+
+// const { json } = require("express");
 const chatBtn2 = document.getElementById("chat-toggle");
 const menuBtn2 = document.getElementById("top-menu-btn");
 
@@ -10,6 +12,8 @@ const sendBtn2 = document.getElementById("chat-send");
 
 const log = document.getElementById("chat-log");
 
+let chat_dis = 0;
+document.getElementById("chat-toggle").disabled = true;
 let unreadCount = 0;
 let api_url_msg = null;
 if (
@@ -21,7 +25,7 @@ api_url_msg = "http://localhost:8081";
 } else {
 api_url_msg = `https://drmineword-gwent.onrender.com`;
 }
-
+console.log("[CHAT], api url:", api_url_msg);
 chatBtn2.onclick = () => {
 
     overlay2.classList.toggle("hidden");
@@ -90,8 +94,8 @@ async function sendChatMessage() {
 
             return;
         }
-
-        addMessage("me", text);
+        console.log(`[CHAT] response, ${JSON.stringify(data)}`);
+        addMessage("me", data?.sent.message);
         input2.value = "";
 
     } catch (err) {
@@ -135,7 +139,6 @@ async function sendChatMessageStrig(atext) {
 
         // Try to parse response (even for errors)
         const data = await res.json().catch(() => null);
-
         if (!res.ok) {
             console.error("Message send failed:", res.status, data);
 
@@ -153,8 +156,8 @@ async function sendChatMessageStrig(atext) {
 
             return;
         }
-
-        addMessage("me", text);
+        console.log(`[CHAT] response, ${JSON.stringify(data)}`);
+        addMessage("me", data?.sent.message);
         input2.value = "";
 
     } catch (err) {
@@ -205,9 +208,9 @@ function setUnread(){
 
     unreadCount++;
 
-    menuBtn2.classList.add("chat-alert");
+    menuBtn2.classList.add("chat-alert"); menuBtn2.textContent = `(${unreadCount}!)☰`;
 
-    chatBtn2.textContent = `Chat (!${unreadCount})`;
+    chatBtn2.textContent = `Chat (!${unreadCount}!)`;
 }
 
 
@@ -215,11 +218,19 @@ function clearUnread(){
 
     unreadCount = 0;
 
-    menuBtn2.classList.remove("chat-alert");
+    menuBtn2.classList.remove("chat-alert"); menuBtn2.textContent = `☰`;
 
     chatBtn2.textContent = "Chat";
 }
+
 function disableChat(){
+    if ( chat_dis === 0){
+        chat_dis = 1;
+        document.getElementById("chat-toggle").disabled = false;
+    } else {
+        chat_dis = 0;
     overlay2.classList.add("hidden");
+    document.getElementById("chat-toggle").disabled = true; clearUnread();
+    }
 }
-console.log("Chat loaded");
+console.log("[CHAT] Chat loaded");

@@ -481,6 +481,9 @@ setTimeout(() => {
 				break;
 
 			case "opChangeFaction":
+				if ( twoPlayersConnected === false ){
+					disableChat();
+				}
 				twoPlayersConnected = true;
 				current_op = data.info
 			//	current_op.me_flag = "PL";

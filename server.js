@@ -68,6 +68,7 @@ function compressPayload(jsonString) {
 }
 
 function compressString(inputString) {
+  console.log(`Input for session id ${JSON.stringify(inputString)}`);
     const input = Buffer.from(inputString, "utf8");
 
     const compressed = zlib.deflateRawSync(input, {
@@ -202,35 +203,109 @@ app.get("*", (_, res) => {
 app.post("/api/message", (req, res) => {
   const { session_id, player_id, message, type } = req.body;
 
+  // Basic validation
   if (!session_id || !player_id) {
-    return res.status(400).json({ error: "session_id and player_id required" });
+    return res.status(400).json({
+      error: "session_id and player_id required"
+    });
   }
 
+  // Only allow chat messages
+  if (type !== "chat") {
+    return res.status(403).json({
+      error: "You are not allowed to use that type!!!"
+    });
+  }
+
+  // Session validation
   const session = sessions[session_id];
   if (!session) {
-    return res.status(404).json({ error: "Session not found" });
+    return res.status(404).json({
+      error: "Session not found"
+    });
   }
 
-  const targetPlayer = session.players.find(p => p.playerId === player_id);
+  // Player validation
+  const targetPlayer = session.players.find(
+    p => p.playerId === player_id
+  );
 
   if (!targetPlayer) {
-    return res.status(404).json({ error: "Player not found in session" });
+    return res.status(404).json({
+      error: "Player not found in session"
+    });
   }
 
+  // Message validation
+  if (typeof message !== "string") {
+    return res.status(400).json({
+      error: "Message must be text"
+    });
+  }
+
+  // Trim whitespace
+  let cleanMessage = message.trim();
+
+  // Remove control / weird invisible chars
+  cleanMessage = cleanMessage.replace(
+    /[\x00-\x1F\x7F-\x9F]/g,
+    ""
+  );
+
+  // Collapse excessive spaces
+  cleanMessage = cleanMessage.replace(/\s{2,}/g, " ");
+
+  // Limit message length
+  const MAX_MESSAGE_LENGTH = 400;
+
+  if (cleanMessage.length === 0) {
+    return res.status(400).json({
+      error: "Message cannot be empty"
+    });
+  }
+
+  if (cleanMessage.length > MAX_MESSAGE_LENGTH) {
+    return res.status(400).json({
+      error: `Message too long (max ${MAX_MESSAGE_LENGTH} characters)`
+    });
+  }
+
+  // Optional: block suspicious unicode spam
+  // Allows normal unicode text/emojis while filtering odd chars
+  const suspiciousPattern =
+    /[\u202E\u202D\u2066-\u2069]/g;
+
+  cleanMessage = cleanMessage.replace(
+    suspiciousPattern,
+    ""
+  );
+
   const payload = {
-    type: type || "apiMessage",
-    message: message || null,
+    type: "chat",
+    message: cleanMessage,
     session_id,
     player_id
   };
-  if (payload.type != 'chat'){
-    return res.status(500).json({ error: "You are not allowed to use that type!!!" });
-  }
+  const payload_out = {
+    message: cleanMessage
+  };
+
   try {
-    targetPlayer.send(compressPayload(JSON.stringify(payload)));
-    return res.json({ ok: true });
+    targetPlayer.send(
+      compressPayload(JSON.stringify(payload))
+    );
+
+    // Return sent message too
+    return res.json({
+      ok: true,
+      sent: payload_out
+    });
   } catch (e) {
-    return res.status(500).json({ error: "Failed to send message" });
+    console.error(e);
+
+    return res.status(500).json({
+      error: "Failed to send message"
+    });
   }
 });
 function broadcastToSession(sessionId, payload) {
