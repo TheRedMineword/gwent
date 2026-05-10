@@ -210,7 +210,7 @@ function setUnread(){
 
     menuBtn2.classList.add("chat-alert"); menuBtn2.textContent = `(${unreadCount}!)☰`;
 
-    chatBtn2.textContent = `Chat (!${unreadCount}!)`;
+    chatBtn2.textContent = `Chat (${unreadCount}!)`;
 }
 
 
