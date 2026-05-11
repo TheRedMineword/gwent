@@ -70,27 +70,30 @@ async function init_sync_hands(){
 
 
 (() => {
+  console.log("[WAKE] init");
   // Run only when NOT on localhost / local development
   const isLocalhost =
     location.hostname === "localhost" ||
     location.hostname === "127.0.0.1" ||
     location.hostname === "::1";
-
+  console.log("[WAKE] 8080:", isLocalhost);
   if (isLocalhost) {
-    console.log("Wake ping disabled on localhost.");
+    console.log("[WAKE] Wake ping disabled on localhost.");
     return;
   }
 
   const WAKE_URL = "https://drmineword-gwent.onrender.com/wake";
-  const INTERVAL_MS = 90 * 1000; // 90 seconds
-
+  const INTERVAL_MS = 75 * 1000; // 90 seconds
+console.log("[WAKE] 8080:", WAKE_URL, INTERVAL_MS / 1000);
   const pingWakeEndpoint = () => {
+      console.log("[WAKE] PING");
     // fire-and-forget request
     fetch(WAKE_URL, {
       method: "GET",
       mode: "no-cors",
       keepalive: true,
     }).catch(() => {
+      console.log("[WAKE] RES RECIVED, IGNORE");
       // ignore errors completely
     });
   };
@@ -102,14 +105,15 @@ async function init_sync_hands(){
   const intervalId = setInterval(() => {
     // only ping if tab/page is still visible/open
     if (!document.hidden) {
-      pingWakeEndpoint();
+      pingWakeEndpoint(); console.log("[WAKE] PINGING");
     } else {
-      pingWakeEndpoint(); // console.log("") // idk wanted to write something here
+      pingWakeEndpoint(); console.log("[WAKE] PINGING BUT PAGO NOT VIISBLE/ACTIVE/");
     }
   }, INTERVAL_MS);
 
+  console.log("[WAKE] INTERNAL", intervalId);
   // Optional cleanup
-  window.addEventListener("beforeunload", () => {
-    clearInterval(intervalId);
-  });
+ // window.addEventListener("beforeunload", () => {
+//    clearInterval(intervalId);
+//  });
 })();
