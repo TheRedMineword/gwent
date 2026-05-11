@@ -524,6 +524,14 @@ html {
 	content: "Sky Kindom faction ability triggered: \A one Sky Kindom Unit Card stays on the board";
 }
 
+#notif-darkstorm::after {
+	content: "Darkness is here... \A Darkness bring destruction to the close combat row!";
+}
+
+#notif-darkstorm {
+	background-image: url(img/icons/notif_darknessishere.png);
+}
+
 #notif-scoiatael {
 	background-image: url(img/icons/notif_scoiatael.png);
 }

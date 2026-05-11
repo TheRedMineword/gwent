@@ -21,6 +21,8 @@ const ForGameStart = {
  'special': 10,
  'hero': 9
 };
+const killoverpowercard = 999;
+const darknessstorm_await = false;
 const maxhealth = 2; // Dont change it, it also should do nothing
 const thishandsize = 10;
 
@@ -65,7 +67,7 @@ const spy = {
     'sabotage': 1
 };
 const powergain = {
-	'ForEachCardGain': 1.05,
+	'ForEachCardGain': 1.11,
 	'CountSelf': false,
 	'WeatherDebuffPercent': 0.25,
 	'Ceil': false,

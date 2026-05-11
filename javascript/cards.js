@@ -2342,6 +2342,26 @@ var card_dict = [
         "ability": "spy",
         "filename": "crabspy",
         "count": "2"
+    },
+    {
+        "name": "Darkness Storm",
+        "id": "3012",
+        "deck": "sky",
+        "row": "close",
+        "strength": "0",
+        "ability": "hero darkstormegen",
+        "filename": "darkstorm",
+        "count": "0"
+    },
+    {
+        "name": "darkness_storm_leader",
+        "id": "3013",
+        "deck": "sky",
+        "row": "leader",
+        "strength": "0",
+        "ability": "darkness_storm_leader",
+        "filename": "darkness_storm_leader",
+        "count": "1"
     }
 ];
 console.log("Cards array", card_dict);

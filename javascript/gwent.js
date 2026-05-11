@@ -1328,11 +1328,27 @@ class Row extends CardContainer {
 	}
 	
 	// Calculates the current power of a card affected by row affects
-	calcCardScore(card) {
+	calcCardScore(card){
+		let totalpower = 0;
+		totalpower = this.calcCardScore_work(card);
+		if (totalpower >= killoverpowercard){
+			this.scorch_a_card(card);
+			return totalpower;
+		}
+		return totalpower;
+	}
+	calcCardScore_work(card) {
 	// console.log("calcCardScore(card)", card, this); //this.cards[0].holder.leader.abilities to get card 0 leader abilities, could be usefull in future
 		if (card.name === "decoy")
 			return 0;
 		let total = card.basePower;
+		if (this.cards.some(c => c.filename === "darkstorm")) {
+			if (card.hero === false){
+			card.pendingScorch = true;
+			// this.scorch_a_card(card);
+			return card.basePower;
+			}
+		}
 		if (this.cards.some(c => c.filename === "axii")) {
 					if (0 < total && total < axii.IfBasePowerUnder) {
 						total = total - axii.TakeAway
@@ -1347,16 +1363,18 @@ class Row extends CardContainer {
 			}
 
 			let bonus = count * powergain.ForEachCardGain;
+			console.log("[POWERGAIN]", ` Total valid cards: ${count}, making it ${bonus} bonus power by ${powergain.ForEachCardGain} for each card!`);
 
 			// apply weather debuff
 		if (this.effects.weather) {
 			bonus *= powergain.WeatherDebuffPercent;
+			console.log("[POWERGAIN]", ` Total valid cards: ${count}, making it ${bonus} (lost ${powergain.WeatherDebuffPercent} by weather) bonus power by ${powergain.ForEachCardGain} for each card!`);
 			}
 
 			// rounding
 			bonus = powergain.Ceil ? Math.ceil(bonus) : Math.floor(bonus);
-
-			total += bonus;
+			console.log("[POWERGAIN]", ` Return: ${bonus} rounded (Total:${total} = Total+Bonus:${total + bonus})`);
+			total += bonus; 
 			if (count > 1){
 		//	card.animate("powergain");
 			}
@@ -1401,6 +1419,27 @@ class Row extends CardContainer {
 				await board.toGrave(c, this);
 			}));
 	}
+
+	async scorch_a_card(card) {
+	if (!card)
+		return;
+	console.log("scorch_a_card(card)", card);
+	if (card.hero)
+			return;
+
+	// Find the row/container the card is currently in
+	let row = board.row.find(r => r.cards.includes(card));
+
+	if (!row)
+		return;
+
+	// Play scorch animation
+	await card.animate("scorch", true, false);
+
+	// Move card to graveyard
+	await board.toGrave(card, row);
+}
+
 	
 	// Removes all cards and effects from this row
 	clear() {
@@ -1859,6 +1898,27 @@ class Game {
 	
 	// Ends the current turn and may end round. Disables client interraction in client's turn.
 	async endTurn() {
+				if (darknessstorm_await === true) {
+	for (const row of board.row) {
+		for (const card of [...row.cards]) {
+			if (card.pendingScorch) {
+				card.pendingScorch = false;
+				await row.scorch_a_card(card);
+			}
+		}
+	}
+} else {
+	await Promise.all(
+		board.row.flatMap(row =>
+			[...row.cards]
+				.filter(card => card.pendingScorch)
+				.map(async card => {
+					card.pendingScorch = false;
+					await row.scorch_a_card(card);
+				})
+		)
+	);
+}
 		if (this.currPlayer === player_me)
 			ui.enablePlayer(false);
 		await this.runEffects(this.turnEnd);
@@ -2069,7 +2129,8 @@ class Card {
 			"muster" : "ally",
 			"morale" : "moral",
 			"bond" : "moral",
-			"powergain": "moral" //no audio
+			"powergain": "moral", //no audio
+			"darkstrom": "moral"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
@@ -2613,7 +2674,8 @@ async notification(name, duration) {
 			"sv-err": "server_error",
 			"win-opleft" : "round_win", // "opponent_left",
 			"round-start": "round1_start",
-			"gaunter": "necromancy_ability"
+			"gaunter": "necromancy_ability",
+			"darkstorm": "darknessishere"
 		};
 
     const temSom = Object.keys(guia2);

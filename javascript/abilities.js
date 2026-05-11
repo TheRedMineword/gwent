@@ -41,6 +41,11 @@ var ability_dict = {
 		description: "Doubles the strength of all unit cards in that row. Limited to 1 per row. ",
 		placed: async card => await card.animate("horn")
 	},
+	darkstormegen: {
+		name: "Darkness Storm",
+		description: "Darkness rages around this card! All non-hero card around in same row will be destroyed!",
+		placed: async card => await card.animate("darkstrom")
+	},
 	mardroeme: {
 		name: "Mardroeme",
 		description: "Triggers transformation of all Berserker cards on the same row. ",
@@ -452,6 +457,32 @@ if (card.holder.id === player_op.id) {
 	
 
 }
+},	
+	darkness_storm_leader: {
+	description: "Spawn Darkness Storm on both sides that destroys all non-hero cards in the close row",
+	activated: async (card) => {
+
+		// Find the card data in card_dict
+		const targetData = Object.values(card_dict).find(
+			c => c.filename === "darkstorm"
+		);
+
+		if (!targetData) {
+			console.warn("Darkness Storm card not found");
+			return;
+		}
+
+		// Create cards from thin air
+		const myStorm = new Card(targetData, player_me);
+		const opStorm = new Card(targetData, player_op);
+
+		// Spawn onto close rows
+		await Promise.all([
+			board.addCardToRow(myStorm, "close", player_me),
+			board.addCardToRow(opStorm, "close", player_op)
+		]);
+		await ui.notification("darkstorm", ui_display_times.faction_ability);
+	}
 },
 	gaunter_neutral_leader: {
 		description: `On use both sides will gain an additional (${gaunter_lider.revive * 100}%+1)  of the number of cards in the thier grave as additional cards from deck and all players start the game with ${gaunter_lider.extra_cards * 100}% more cards in their hand (based on their starting number)`,
