@@ -15,6 +15,7 @@ const log = document.getElementById("chat-log");
 let chat_dis = 0;
 document.getElementById("chat-toggle").disabled = true;
 let unreadCount = 0;
+let fullcahturl = null;
 const isLocalhost_chat =
     host.startsWith("localhost") ||
     host.startsWith("127.0.0.1") ||
@@ -26,10 +27,16 @@ const isElectronLauncher_chat =
 
 const api_url_msg =
     isElectronLauncher_chat
-        ? "https://drmineword-gwent.onrender.com"
+        ? "drmineword-gwent.onrender.com"
         : isLocalhost_chat
-            ? "http://localhost:8081"
-            : "https://drmineword-gwent.onrender.com";
+            ? "localhost:8081"
+            : "drmineword-gwent.onrender.com";
+const api_url_msg_mode =
+    isElectronLauncher_chat
+        ? "aHR0cHM="
+        : isLocalhost_chat
+            ? "aHR0cA=="
+            : "aHR0cHM=";
 console.log("[CHAT], api url:", api_url_msg);
 chatBtn2.onclick = () => {
 
@@ -56,6 +63,8 @@ input2.addEventListener("keydown", e => {
     }
 });
 
+fullcahturl = `${atob(api_url_msg_mode)}://${api_url_msg}/api/message`;
+console.log("[CHAT]", ` ${fullcahturl}`, ` ${atob(api_url_msg_mode)}://${api_url_msg}/api/message`);
 
 async function sendChatMessage() {
     const text = input2.value.trim();
@@ -66,7 +75,7 @@ async function sendChatMessage() {
     }
 
     try {
-        const res = await fetch(`${api_url_msg}/api/message`, {
+        const res = await fetch(`${atob(api_url_msg_mode)}://${api_url_msg}/api/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -129,7 +138,7 @@ async function sendChatMessageStrig(atext) {
     }
 
     try {
-        const res = await fetch(`${api_url_msg}/api/message`, {
+        const res = await fetch(`${atob(api_url_msg_mode)}://${api_url_msg}/api/message`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

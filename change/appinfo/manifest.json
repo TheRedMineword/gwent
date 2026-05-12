@@ -1,6 +1,6 @@
 {
-  "sha": "ceb42c4b029a3487a9b143f2227262e372b15ca7b7a4368e5422f6a20ab54651",
-  "generatedAt": "2026-05-12T15:09:03.312Z",
+  "sha": "bdfa3d2f9ef596739fbb23f7ca640796444b335f3440d26c1f1c71547db0646a",
+  "generatedAt": "2026-05-12T15:23:52.596Z",
   "files": [
     {
       "path": "404.html",
@@ -3089,8 +3089,8 @@
     },
     {
       "path": "javascript/chat.js",
-      "sha256": "882737998e136a4dcd3a74ca7d2740c7870b572dbe4c0d1b530be42b3e7f852d",
-      "size": 6135
+      "sha256": "6739bea365dbfef944b6ba8eb0afe58a6325f77fefede9a3ca840d0b77c37e34",
+      "size": 6526
     },
     {
       "path": "javascript/decks.js",
@@ -3124,8 +3124,8 @@
     },
     {
       "path": "javascript/session.js",
-      "sha256": "aaf34062210ee712a1e97c8ea4d0c54560b80faf814b5c7b54712dc9310c4e9b",
-      "size": 7587
+      "sha256": "32317427c1a60a984d03b6e38a38886d9b815fa66a8f6a7ca7874e8294565a36",
+      "size": 7594
     },
     {
       "path": "javascript/sync_hands.js",

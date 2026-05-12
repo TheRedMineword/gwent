@@ -128,6 +128,7 @@ socket.addEventListener("message", async (event) => {
      // sessionCodeText.textContent = createdSessionId;
 
       console.log("Session created:", data.id, "\nCode:", createdSessionId);
+      
       ThisSessionId = data.id;
       console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
       break;
