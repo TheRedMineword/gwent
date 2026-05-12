@@ -1,6 +1,6 @@
 {
-  "sha": "bdfa3d2f9ef596739fbb23f7ca640796444b335f3440d26c1f1c71547db0646a",
-  "generatedAt": "2026-05-12T15:23:52.596Z",
+  "sha": "10eaf0bf793beeb7098b75ccda6efc4198cf651443137aefaf6b181d17e97f16",
+  "generatedAt": "2026-05-12T16:16:41.925Z",
   "files": [
     {
       "path": "404.html",
@@ -24,7 +24,7 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "8708fda406db3b0ad66909270febfa6efd586823d685ae2868f4f3852f8f3ae3",
+      "sha256": "d084373d4b74dd42490858754540a84548ae0ef5e7606385a56ec312ab43b431",
       "size": 23
     },
     {
@@ -66,6 +66,11 @@
       "path": "change/log-update6.txt",
       "sha256": "5d37e7b41760282895fac25b2cad38378cb0bdc2d1ff8277504a811ac1414674",
       "size": 194
+    },
+    {
+      "path": "change/log-update7.txt",
+      "sha256": "b7479ba55293b4e7ea97b3f34def6690684b71abd8c40babb9185fb253f3fe7b",
+      "size": 174
     },
     {
       "path": "debug_info.txt",
@@ -3149,8 +3154,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "4edfaa83cf2c9192a7c676ab05fea9bee3dbaa54b19c369ca7df5b912cedeee8",
-      "size": 2489
+      "sha256": "d17b3b2bb6370d1de38dd11e053551dc1ae4e0e61f76b93f4c4711f041e8ccd0",
+      "size": 2693
     },
     {
       "path": "rules.css",
