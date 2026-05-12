@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "GWENT Launcher",
   "main": "main.js",
-  "author": "You",
+  "author": "DrMineword",
   "license": "MIT",
   "scripts": {
     "start": "electron .",
@@ -11,7 +11,11 @@
   },
   "devDependencies": {
     "electron": "^36.0.0",
-    "electron-builder": "^26.0.12"
+    "electron-builder": "^26.8.1"
+  },
+  "dependencies": {
+    "express": "^5.2.1",
+    "fs-extra": "^11.3.5"
   },
   "build": {
     "appId": "gwent.launcher",
@@ -26,12 +30,6 @@
       "!dist/*",
       "!node_modules/.cache/*"
     ],
-    "extraResources": [
-      {
-        "from": "logo.ico",
-        "to": "logo.ico"
-      }
-    ],
     "win": {
       "icon": "logo.ico",
       "target": [
@@ -44,15 +42,13 @@
       ]
     },
     "nsis": {
-      "oneClick": true,
-      "perMachine": false,
-      "allowToChangeInstallationDirectory": false,
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
       "installerIcon": "logo.ico",
       "uninstallerIcon": "logo.ico",
       "installerHeaderIcon": "logo.ico"
     }
-  },
-  "dependencies": {
-    "express": "^5.2.1"
   }
 }
