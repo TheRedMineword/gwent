@@ -97,7 +97,7 @@ document.getElementById("copy-session").onclick = () => {
 };
 
 // Websocket and Server config.
-let wsUrl;
+
 const wakeUrl = "https://drmineword-gwent.onrender.com/wake";
 
 const host = window.location.hostname;
