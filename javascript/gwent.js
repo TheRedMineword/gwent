@@ -102,15 +102,21 @@ const wakeUrl = "https://drmineword-gwent.onrender.com/wake";
 
 const host = window.location.hostname;
 
-if (
-  host.includes("localhost") ||
-  host.includes("127.0.0.1") ||
-  host.includes("::1")
-) {
-  wsUrl = "ws://localhost:8081";
+const isLocalhost =
+    (
+        host.startsWith("localhost") ||
+        host.startsWith("127.0.0.1") ||
+        host.startsWith("[::1]")
+    ) && location.port === "1111";
+
+let wsUrl;
+
+if (isLocalhost) {
+    wsUrl = "ws://localhost:8081";
 } else {
-  wsUrl = `wss://drmineword-gwent.onrender.com`;
+    wsUrl = "wss://drmineword-gwent.onrender.com";
 }
+
 function showBrickScreen() {
   document.documentElement.innerHTML = `
     <style>

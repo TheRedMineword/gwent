@@ -72,16 +72,22 @@ async function init_sync_hands(){
 (() => {
   console.log("[WAKE] init");
   // Run only when NOT on localhost / local development
-  const isLocalhost =
-    location.hostname === "localhost" ||
-    location.hostname === "127.0.0.1" ||
-    location.hostname === "::1";
-  console.log("[WAKE] 8080:", isLocalhost);
-  if (isLocalhost) {
-    console.log("[WAKE] Wake ping disabled on localhost.");
-    return;
-  }
 
+const isLocalhost =
+    (
+        location.hostname === "localhost" ||
+        location.hostname === "127.0.0.1" ||
+        location.hostname === "::1"
+    ) && location.port === "1111";
+
+console.log("[WAKE] 8080:", isLocalhost);
+
+if (isLocalhost) {
+    console.log("[WAKE] Wake ping disabled on localhost");
+    return;
+}
+
+  
   const WAKE_URL = "https://drmineword-gwent.onrender.com/wake";
   const INTERVAL_MS = 75 * 1000; // 90 seconds
 console.log("[WAKE] 8080:", WAKE_URL, INTERVAL_MS / 1000);

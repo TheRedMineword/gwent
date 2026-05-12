@@ -1,6 +1,6 @@
 {
-  "sha": "544a9daefe91373a7579df64961636d4e6e722c2508056af2a5b77e0bec4753b",
-  "generatedAt": "2026-05-12T06:20:36.909Z",
+  "sha": "35f6acad01b9f76d891629d056628263bf084838f7bdb9044fc0d3b3007c2669",
+  "generatedAt": "2026-05-12T07:13:04.237Z",
   "files": [
     {
       "path": "404.html",
@@ -24,13 +24,13 @@
     },
     {
       "path": "change/appinfo/latest-sha.txt",
-      "sha256": "7b744e1669df953191a74f197bc755efd667cc6bd12be639f4994967dd82efbb",
+      "sha256": "aa1d315ae0d190cfa5e3ac0af95337521eb023b27e1276cd54af9e550dffd032",
       "size": 64
     },
     {
       "path": "change/appinfo/manifest.json",
-      "sha256": "23f05e3b46eef80e2e8f1728f0cd3f4dab2b4a96ca2ce7f0c9a7fde6ebe18c46",
-      "size": 110389
+      "sha256": "7304195387dafd32e4a7ce3e97d8bc9290d2a10d07b895366ec9bb008440eb0d",
+      "size": 110714
     },
     {
       "path": "change/index.json",
@@ -3099,8 +3099,8 @@
     },
     {
       "path": "javascript/chat.js",
-      "sha256": "ee5a86e9bfbec28595c31608d06316605f442cad6e84fa617638eae7ad03e405",
-      "size": 5922
+      "sha256": "e0716cea9c362e886a6d82662f6b84b08f449d6e2725a21570b8b12492a68486",
+      "size": 6051
     },
     {
       "path": "javascript/decks.js",
@@ -3119,8 +3119,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "c8d6b8d6e2d30d33e09c7429459b2504ecd33a21dcc8aadf5c28716dc4722f4c",
-      "size": 128876
+      "sha256": "2aa6b91751b3963c162c523dfdaec4fd8ca2e32ad859b1c57bfc9722ecae07f5",
+      "size": 128991
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3134,13 +3134,13 @@
     },
     {
       "path": "javascript/session.js",
-      "sha256": "611828f90330070e11171c6dcd79a29d8726660a0443e4fe27917c4fb4a10a26",
-      "size": 7336
+      "sha256": "42d34ba7fac35248a8bdabd564049cf6e4f757992ff243baea10bb6fdd3d109a",
+      "size": 7427
     },
     {
       "path": "javascript/sync_hands.js",
-      "sha256": "ba6ed1c051b7a76b25536c442ff973487a4458914648bb627c892215ecce3a7d",
-      "size": 2887
+      "sha256": "ec051aab3570a4a3875206e91010e409daeb644ae02f88672f54aa06364910b2",
+      "size": 2942
     },
     {
       "path": "LICENSE",

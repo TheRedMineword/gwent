@@ -16,14 +16,19 @@ let chat_dis = 0;
 document.getElementById("chat-toggle").disabled = true;
 let unreadCount = 0;
 let api_url_msg = null;
-if (
-  host.includes("localhost") ||
-  host.includes("127.0.0.1") ||
-  host.includes("::1")
-) {
-api_url_msg = "http://localhost:8081";
+const isLocalhost =
+    (
+        host.startsWith("localhost") ||
+        host.startsWith("127.0.0.1") ||
+        host.startsWith("[::1]")
+    ) && location.port === "1111";
+
+let api_url_msg;
+
+if (isLocalhost) {
+    api_url_msg = "http://localhost:8081";
 } else {
-api_url_msg = `https://drmineword-gwent.onrender.com`;
+    api_url_msg = "https://drmineword-gwent.onrender.com";
 }
 console.log("[CHAT], api url:", api_url_msg);
 chatBtn2.onclick = () => {

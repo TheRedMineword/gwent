@@ -163,8 +163,13 @@ socket.addEventListener("message", async (event) => {
 
 
 function isLocalhost() {
-	const host = window.location.hostname;
-	return host === "localhost" || host === "127.0.0.1";
+    const host = window.location.hostname;
+    const port = window.location.port;
+
+    return (
+        (host === "localhost" || host === "127.0.0.1") &&
+        port === "1111"
+    );
 }
 
 function openFullscreen() {
