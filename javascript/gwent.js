@@ -100,7 +100,7 @@ document.getElementById("copy-session").onclick = () => {
 
 const wakeUrl = "https://drmineword-gwent.onrender.com/wake";
 
-const host = window.location.hostname;
+const host = window.location.hostname; // wrong define window.location?
 
 const isLocalhost =
     (
@@ -113,7 +113,7 @@ let wsUrl;
 
 if (isLocalhost) {
     wsUrl = "ws://localhost:8081";
-	if (host === "localhost:1111"){
+	if (window.location.href === 'http://localhost:1111/'){
 		wsUrl = "wss://drmineword-gwent.onrender.com";
 	}
 } else {
