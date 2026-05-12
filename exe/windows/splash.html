@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<style>
+
+body{
+    margin:0;
+    background:#101014;
+    color:white;
+    font-family:sans-serif;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    height:100vh;
+}
+
+.box{
+    width:82%;
+}
+
+h1{
+    margin-bottom:20px;
+    font-size:34px;
+}
+
+#status{
+    margin-bottom:10px;
+    opacity:.95;
+    font-size:16px;
+}
+
+#details{
+    margin-bottom:14px;
+    opacity:.6;
+    font-size:13px;
+    word-break:break-all;
+}
+
+progress{
+    width:100%;
+    height:22px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>GWENT</h1>
+
+<div id="status">
+Checking for updates...
+</div>
+
+<div id="details">
+Preparing launcher...
+</div>
+
+<progress
+    id="bar"
+    max="100"
+    value="0">
+</progress>
+
+</div>
+
+<script src="splash.js"></script>
+
+</body>
+</html>
