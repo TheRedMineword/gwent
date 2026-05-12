@@ -103,22 +103,20 @@ const wakeUrl = "https://drmineword-gwent.onrender.com/wake";
 const host = window.location.hostname; // wrong define window.location?
 
 const isLocalhost =
-    (
-        host.startsWith("localhost") ||
-        host.startsWith("127.0.0.1") ||
-        host.startsWith("[::1]")
-    ) && location.port === "1111";
+    host.startsWith("localhost") ||
+    host.startsWith("127.0.0.1") ||
+    host.startsWith("[::1]");
 
-let wsUrl;
+const isElectronLauncher =
+    isLocalhost &&
+    location.port === "1111";
 
-if (isLocalhost) {
-    wsUrl = "ws://localhost:8081";
-	if (window.location.href === 'http://localhost:1111/'){
-		wsUrl = "wss://drmineword-gwent.onrender.com";
-	}
-} else {
-    wsUrl = "wss://drmineword-gwent.onrender.com";
-}
+const wsUrl =
+    isElectronLauncher
+        ? "wss://drmineword-gwent.onrender.com"
+        : isLocalhost
+            ? "ws://localhost:8081"
+            : "wss://drmineword-gwent.onrender.com";
 
 function showBrickScreen() {
   document.documentElement.innerHTML = `

@@ -74,16 +74,21 @@ async function init_sync_hands(){
   // Run only when NOT on localhost / local development
 
 const isLocalhost =
-    (
-        location.hostname === "localhost" ||
-        location.hostname === "127.0.0.1" ||
-        location.hostname === "::1"
-    ) && location.port === "1111";
+    location.hostname === "localhost" ||
+    location.hostname === "127.0.0.1" ||
+    location.hostname === "::1";
+
+const isElectron =
+    isLocalhost &&
+    location.port === "1111";
 
 console.log("[WAKE] 8080:", isLocalhost);
 
-if (isLocalhost) {
-    console.log("[WAKE] Wake ping disabled on localhost");
+// ONLY disable wake ping in true local dev
+if (isLocalhost && !isElectron) {
+
+    console.log("[WAKE] Wake ping disabled on localhost (dev mode)");
+
     return;
 }
 

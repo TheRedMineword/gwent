@@ -1,22 +1,7 @@
 {
-  "sha": "13e76846fcb328cac00573cd634dfe5b93a8ffd218deb7dfd3747ccb45c51a3a",
-  "generatedAt": "2026-05-12T14:56:43.041Z",
+  "sha": "ceb42c4b029a3487a9b143f2227262e372b15ca7b7a4368e5422f6a20ab54651",
+  "generatedAt": "2026-05-12T15:09:03.312Z",
   "files": [
-    {
-      "path": ".init.bat",
-      "sha256": "00c0ff62fb848dd44fe1c7a7af415df7f451780b1f53c3212600cc31b2bd0fcb",
-      "size": 165
-    },
-    {
-      "path": ".replace.env",
-      "sha256": "1ade02cc453d4e6e1fdab52113396356ed115a62ee41c33ae35ce540a8ce8d78",
-      "size": 10
-    },
-    {
-      "path": ".server.js",
-      "sha256": "152aa80117d64b3775b89309f6305c597f548ebcb3fb74ce6ee4116861d11e99",
-      "size": 7470
-    },
     {
       "path": "404.html",
       "sha256": "a3b957f6cd971ab51a17546d2837b68f5fc6ad230491d1128c26f0cedb6dd61d",
@@ -3104,8 +3089,8 @@
     },
     {
       "path": "javascript/chat.js",
-      "sha256": "0e0d8ea291fcedab885f0e7dc97a327c4cf53a8c6b6374c8f401955dc688b295",
-      "size": 6051
+      "sha256": "882737998e136a4dcd3a74ca7d2740c7870b572dbe4c0d1b530be42b3e7f852d",
+      "size": 6135
     },
     {
       "path": "javascript/decks.js",
@@ -3124,8 +3109,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "b3b6382a42f3b02b15049af41c2358a4a7ea1084168e9fab56a70618d3067718",
-      "size": 129123
+      "sha256": "434a544f1830f244b78c4461210cf46c51a3fd53ac916b6edf8982171f74d90d",
+      "size": 129107
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3139,13 +3124,13 @@
     },
     {
       "path": "javascript/session.js",
-      "sha256": "42d34ba7fac35248a8bdabd564049cf6e4f757992ff243baea10bb6fdd3d109a",
-      "size": 7427
+      "sha256": "aaf34062210ee712a1e97c8ea4d0c54560b80faf814b5c7b54712dc9310c4e9b",
+      "size": 7587
     },
     {
       "path": "javascript/sync_hands.js",
-      "sha256": "be9a84b50befcb8c7faff2b566ee244a822eef41f410b5e8e7cd67b0b79c1f6e",
-      "size": 2942
+      "sha256": "d3edd3b0803efa964a4e1a18486d0861c6e23b1ea2887b97bb86ca6b7e97a668",
+      "size": 3036
     },
     {
       "path": "LICENSE",
@@ -3181,11 +3166,6 @@
       "path": "rules.js",
       "sha256": "4330078456160564e267ef95a0ff1d47dbdfdf4152cd99200e2c098546c91537",
       "size": 1513
-    },
-    {
-      "path": "server.js",
-      "sha256": "d68df25b4783caf1ffce9c939427ea3ac8883416950d93030dc3cc2ae5017f85",
-      "size": 16657
     },
     {
       "path": "sfx/ally.mp3",

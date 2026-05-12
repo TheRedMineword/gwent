@@ -162,19 +162,31 @@ socket.addEventListener("message", async (event) => {
 });
 
 
-function isLocalhost() {
-    const host = window.location.hostname;
-    const port = window.location.port;
+function isLocalhost_session() {
+
+    const host =
+        window.location.hostname;
+
+    const port =
+        window.location.port;
+
+    const localhost =
+        host === "localhost" ||
+        host === "127.0.0.1";
+
+    const electronLauncher =
+        localhost &&
+        port === "1111";
 
     return (
-        (host === "localhost" || host === "127.0.0.1") &&
-        port === "1111"
+        localhost &&
+        !electronLauncher
     );
 }
 
 function openFullscreen() {
 	const elem = document.documentElement;
-	const local = isLocalhost();
+	const local = isLocalhost_session();
 
 	console.log("[FS] Attempting fullscreen");
 	console.log("[FS] Element:", elem);

@@ -15,21 +15,21 @@ const log = document.getElementById("chat-log");
 let chat_dis = 0;
 document.getElementById("chat-toggle").disabled = true;
 let unreadCount = 0;
-let api_url_msg = null;
-const isLocalhost =
-    (
-        host.startsWith("localhost") ||
-        host.startsWith("127.0.0.1") ||
-        host.startsWith("[::1]")
-    ) && location.port === "1111";
+const isLocalhost_chat =
+    host.startsWith("localhost") ||
+    host.startsWith("127.0.0.1") ||
+    host.startsWith("[::1]");
 
-let api_url_msg;
+const isElectronLauncher_chat =
+    isLocalhost_chat &&
+    location.port === "1111";
 
-if (isLocalhost) {
-    api_url_msg = "http://localhost:8081";
-} else {
-    api_url_msg = "https://drmineword-gwent.onrender.com";
-}
+const api_url_msg =
+    isElectronLauncher_chat
+        ? "https://drmineword-gwent.onrender.com"
+        : isLocalhost_chat
+            ? "http://localhost:8081"
+            : "https://drmineword-gwent.onrender.com";
 console.log("[CHAT], api url:", api_url_msg);
 chatBtn2.onclick = () => {
 
