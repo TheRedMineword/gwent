@@ -6,6 +6,35 @@ function serializeCards(cards) {
     }));
 }
 
+
+async function toSafeJSON(obj) {
+    const seen = new WeakSet();
+
+    return JSON.stringify(obj, (key, value) => {
+        // skip functions
+        if (typeof value === "function") return undefined;
+
+        // skip DOM elements
+        if (value instanceof Element) return undefined;
+
+        // handle circular references
+        if (typeof value === "object" && value !== null) {
+            if (seen.has(value)) return undefined;
+            seen.add(value);
+        }
+
+        return value;
+    });
+}
+async function sha256(str) {
+    const encoder = new TextEncoder();
+    const data = encoder.encode(str);
+    const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+
+    const hashArray = Array.from(new Uint8Array(hashBuffer));
+    return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
 // usage seralize
 //const handData = serializeCards(player_me.hand.cards);
 //

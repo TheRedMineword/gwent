@@ -1268,7 +1268,8 @@ var card_dict = [
         "strength": "10",
         "ability": "hero",
         "filename": "leshen",
-        "count": "1"
+        "count": "1",
+        "avenger": "Eskel"
     },
     {
         "name": "Nekker",
@@ -2229,6 +2230,16 @@ var card_dict = [
         "strength": "9",
         "ability": "hero axii",
         "filename": "lambert",
+        "count": "1"
+    },
+    {
+        "name": "Eskel",
+        "id": "1009",
+        "deck": "neutral",
+        "row": "close",
+        "strength": "6",
+        "ability": "hero avenger",
+        "filename": "eskel",
         "count": "1"
     },
     // New cards for sky

@@ -321,12 +321,14 @@ if (card.holder.id === player_op.id) {
 			}
 
 			let bdf = new Card(targetData, card.holder);
+			console.log("AVENGER bdf/target data", bdf, targetData)
 
 			bdf.removed.push(() =>
 				setTimeout(() => bdf.holder.grave.removeCard(bdf), 1001)
 			);
 
 			await board.addCardToRow(bdf, targetData.row, card.holder);
+			await bdf.animate("Avenger");
 
 		} catch (e) {
 			console.log(e);

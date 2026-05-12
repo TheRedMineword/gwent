@@ -1,6 +1,6 @@
 {
-  "sha": "10eaf0bf793beeb7098b75ccda6efc4198cf651443137aefaf6b181d17e97f16",
-  "generatedAt": "2026-05-12T16:16:41.925Z",
+  "sha": "da853e29bc6938d7e48af65f0420722c8e55a302d18376a72929947011bd2ea0",
+  "generatedAt": "2026-05-12T19:10:30.085Z",
   "files": [
     {
       "path": "404.html",
@@ -69,8 +69,8 @@
     },
     {
       "path": "change/log-update7.txt",
-      "sha256": "b7479ba55293b4e7ea97b3f34def6690684b71abd8c40babb9185fb253f3fe7b",
-      "size": 174
+      "sha256": "ec1f9682f44de295083ed13459f31c02e97f7632bc1cd381915e96c4ef02ab45",
+      "size": 278
     },
     {
       "path": "debug_info.txt",
@@ -108,6 +108,11 @@
       "size": 494975
     },
     {
+      "path": "img/icons/anim_avenger.png",
+      "sha256": "36cdb6fdcf4ab42754f5cbbd428f1aa391e5eecbd98c0bcd429d1bb052634e30",
+      "size": 17008
+    },
+    {
       "path": "img/icons/anim_axii.png",
       "sha256": "12db597662f43fbcd00917ebf935e1647686b3fbe064bafc758d50d23193a487",
       "size": 5927
@@ -126,6 +131,11 @@
       "path": "img/icons/anim_debuff.png",
       "sha256": "e1ed080033085e8c6ce07b8eacba26b59e02fef2f96e6e6ad9c05b5516ff286e",
       "size": 1507
+    },
+    {
+      "path": "img/icons/anim_hero.png",
+      "sha256": "425219f84dd98b853f09db8517810ef6c9fcfe9ead79d96c1571719006bb6513",
+      "size": 9880
     },
     {
       "path": "img/icons/anim_horn.png",
@@ -941,6 +951,11 @@
       "path": "img/lg/neutral_emiel.jpg",
       "sha256": "62771f967c05ab6ecec0ba93b4134c61e85d00fcbc36318d95c762a8b3b87277",
       "size": 76761
+    },
+    {
+      "path": "img/lg/neutral_eskel.jpg",
+      "sha256": "f810a810c41d796e52c73ddc4a6c5026c3d00b3087c24e4b16e5a4202d209798",
+      "size": 151292
     },
     {
       "path": "img/lg/neutral_Gaunter_Leader.jpg",
@@ -2138,6 +2153,11 @@
       "size": 28615
     },
     {
+      "path": "img/sm/neutral_eskel.jpg",
+      "sha256": "44e0a73a0db7be009b14528bd0c8449eb3419d431d9cdadad8fcb5e0e76bef65",
+      "size": 339526
+    },
+    {
       "path": "img/sm/neutral_Gaunter_Leader.jpg",
       "sha256": "1748a9518dbe74d8d37c9fa96e6385e3271cce4bba90a8536d780d6066f68537",
       "size": 113548
@@ -3084,13 +3104,13 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "597e9daaf1f3fa70ea05ff43d7a9dfdf38b79bd19d57abf87fcc619d93d8630b",
-      "size": 33104
+      "sha256": "75c09b564a56152236be6e983da9532bfbad12200cc30baf2342ccfcfec29b25",
+      "size": 33196
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "689d43899e4f4860788d170536044aded9683ddb950110df445ee7caf0fdb4a4",
-      "size": 54782
+      "sha256": "1a3a5c5ec603b253a51ff18c5eb7eabe86c095d0f7c0ed6078e3dfc0965d6386",
+      "size": 55031
     },
     {
       "path": "javascript/chat.js",
@@ -3104,8 +3124,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "6dd0c8448f26d4b1bdb2508ea731c22c2a745a77698213c9cfedf23812d71fd0",
-      "size": 5767
+      "sha256": "a0ab212a4bc0d1db9eb1c38191bf8e011402000589686edb54e53eaf36f770fc",
+      "size": 5893
     },
     {
       "path": "javascript/factions.js",
@@ -3114,8 +3134,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "434a544f1830f244b78c4461210cf46c51a3fd53ac916b6edf8982171f74d90d",
-      "size": 129107
+      "sha256": "bda50d66021d004781b41fc581b3d1a03c2cf74eb9694d71898e8fcfb73f36c4",
+      "size": 129626
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3134,8 +3154,8 @@
     },
     {
       "path": "javascript/sync_hands.js",
-      "sha256": "d3edd3b0803efa964a4e1a18486d0861c6e23b1ea2887b97bb86ca6b7e97a668",
-      "size": 3036
+      "sha256": "6a7c4a460c1fb119a948649acd7050b9bc4dd26b94dc4a8084d3a32f1146128e",
+      "size": 3886
     },
     {
       "path": "LICENSE",
@@ -3154,8 +3174,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "d17b3b2bb6370d1de38dd11e053551dc1ae4e0e61f76b93f4c4711f041e8ccd0",
-      "size": 2693
+      "sha256": "c22320352c70715a38f195d2ef1826dfdab6ab9abb724c2bc6e86a5dce0a45f4",
+      "size": 2796
     },
     {
       "path": "rules.css",
@@ -3176,6 +3196,11 @@
       "path": "sfx/ally.mp3",
       "sha256": "9adedf4b342f0e8770076c5318bc5677fc8252145f88e53c47e2761bf6c0a597",
       "size": 31135
+    },
+    {
+      "path": "sfx/avenger.mp3",
+      "sha256": "441ab7c21f74e4088536e74019fb933177857c423ed7231d7ddb2cf14ae1fb27",
+      "size": 61440
     },
     {
       "path": "sfx/card.mp3",
@@ -3314,8 +3339,8 @@
     },
     {
       "path": "sfx/packed.zip",
-      "sha256": "25c7e05cbb53c22035c22dd2078912d7029e380fb3f45200c6ce14fe4d8be01d",
-      "size": 2234244
+      "sha256": "942e9463f6ba4fca666394757e798b21a77dbe008e18cfd018f7b05c91be1a5f",
+      "size": 2294719
     },
     {
       "path": "sfx/pass.mp3",

@@ -24,6 +24,7 @@ https://fontmeme.com/fonts/gwent-font/
 - Game ends: draw - [TF2 Stealmate](https://www.youtube.com/watch?v=Gz7l7d7otIs)
 - Game waiting for both players ready: [INFO](https://github.com/TheRedMineword/GWENT/blob/main/sfx/oldgwent)
 - Gaunter necromance sound effect: Start of "Geralt of Rivia - Sonya Belousova & Giona Ostinelli"
+- Avenger card sound effect: https://pixabay.com/pl/sound-effects/przera%c5%bcenie-beast-growl-494304/
 
 
 # Sky Kindom Faction

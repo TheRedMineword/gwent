@@ -1344,7 +1344,7 @@ class Row extends CardContainer {
 		}
 		return totalpower;
 	}
-	calcCardScore_work(card) {
+calcCardScore_work(card) {
 	// console.log("calcCardScore(card)", card, this); //this.cards[0].holder.leader.abilities to get card 0 leader abilities, could be usefull in future
 		if (card.name === "decoy")
 			return 0;
@@ -1389,6 +1389,18 @@ class Row extends CardContainer {
 		}
 		// card.animate("powergain");
 		if (card.hero)
+			var card_info = `${JSON.stringify({"a": card.faciton + "_" + card.filename, "b": card.holder.id, "c": card.holder.tag, "d": card.name, "f": card.row })}-${gameID}`;
+		var card_id_for_hero = card_info;
+			if (!herocardsdb.includes(card_id_for_hero)) {
+    herocardsdb.push(card_id_for_hero);
+	if (herocardanim === true){
+	console.log("NEW HERO", card, card_id_for_hero, card_info, " ARRAY NOW", herocardsdb);
+
+    // run your command here
+				card.animate("hero");
+}
+}
+
 			return total;
 		if (this.effects.weather) 
 			total = Math.min(1, total);
@@ -1716,6 +1728,7 @@ class Game {
 		btnJoinElem.classList.add("hidden");
 		gameStartControlsElem.classList.add("hide");
 		// isOpponentReadyElem.classList.add("hidden");
+		gameID = gameID + 1;
 		ui.resumeYouTube();
 		await sleep(20);
 		ui.youtubePlay(audio_yt_vid_soundtrack, audio_yt_vid_soundtrack_volume, true); stop_wait_music();
@@ -2137,7 +2150,8 @@ class Card {
 			"morale" : "moral",
 			"bond" : "moral",
 			"powergain": "moral", //no audio
-			"darkstrom": "moral"
+			"darkstrom": "moral",
+			"Avenger": "avenger"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
