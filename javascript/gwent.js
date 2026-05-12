@@ -113,6 +113,9 @@ let wsUrl;
 
 if (isLocalhost) {
     wsUrl = "ws://localhost:8081";
+	if (host === "localhost:1111"){
+		wsUrl = "wss://drmineword-gwent.onrender.com";
+	}
 } else {
     wsUrl = "wss://drmineword-gwent.onrender.com";
 }
