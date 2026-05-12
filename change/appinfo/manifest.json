@@ -1,6 +1,6 @@
 {
-  "sha": "b90099f0844a446698340637a544485ad91b36681dd58c35bebf40d36b287c4c",
-  "generatedAt": "2026-05-12T07:33:27.423Z",
+  "sha": "4aa932d7a1717511613ea40d8f5d43ebb258686201afc1abba99cc934e249b9c",
+  "generatedAt": "2026-05-12T14:42:11.732Z",
   "files": [
     {
       "path": "404.html",
@@ -21,16 +21,6 @@
       "path": "apple-touch-icon.png",
       "sha256": "7ef8a5531a4a2c83f2e25ce0c0762874c9654e11b3c63a1213f914c943661f5b",
       "size": 9919
-    },
-    {
-      "path": "change/appinfo/latest-sha.txt",
-      "sha256": "6cd2d113ab4db51e6025d8140d346468b98b0bf6d3c1bfff34bbb4e327796877",
-      "size": 64
-    },
-    {
-      "path": "change/appinfo/manifest.json",
-      "sha256": "fc18a53a64744a5b83647e664e93458ed397b651bb9c3988fec941d869b7656c",
-      "size": 110714
     },
     {
       "path": "change/index.json",
@@ -568,14 +558,14 @@
       "size": 304030
     },
     {
-      "path": "img/icons/overlay_rain.png",
-      "sha256": "70ef7690fc07d5370e726877f3f879a732843c9cc797f669bceee8284a2bce61",
-      "size": 463527
-    },
-    {
       "path": "img/icons/overlay_rain_classic.png",
       "sha256": "5161b9fe36eed46e361c8fcb760b7f867b609432f4ed70302be44b5d960996db",
       "size": 241038
+    },
+    {
+      "path": "img/icons/overlay_rain.png",
+      "sha256": "70ef7690fc07d5370e726877f3f879a732843c9cc797f669bceee8284a2bce61",
+      "size": 463527
     },
     {
       "path": "img/icons/power_clear.png",
@@ -683,11 +673,6 @@
       "size": 33641
     },
     {
-      "path": "img/lg/monsters_arachas.jpg",
-      "sha256": "ee7e81e84aceb4f6ddc684c287e9567700448ee3cebfad42837ed43ac72b2b32",
-      "size": 95139
-    },
-    {
       "path": "img/lg/monsters_arachas_1.jpg",
       "sha256": "4943fe807e4ea11a2257f70929dd7b677dc7698dcbe1f7d525e8c59a186a1277",
       "size": 94540
@@ -701,6 +686,11 @@
       "path": "img/lg/monsters_arachas_behemoth.jpg",
       "sha256": "d9d46fb46a75b24932b02103c68804e1f0677826c4f6330564c7bbf00e600cc0",
       "size": 99657
+    },
+    {
+      "path": "img/lg/monsters_arachas.jpg",
+      "sha256": "ee7e81e84aceb4f6ddc684c287e9567700448ee3cebfad42837ed43ac72b2b32",
+      "size": 95139
     },
     {
       "path": "img/lg/monsters_bruxa.jpg",
@@ -808,11 +798,6 @@
       "size": 93179
     },
     {
-      "path": "img/lg/monsters_ghoul.jpg",
-      "sha256": "25cfc6d7b79f0388150737f51e6e92ff848e460812d6fc9f607d1819c0d25367",
-      "size": 89209
-    },
-    {
       "path": "img/lg/monsters_ghoul_1.jpg",
       "sha256": "a385c1743576f21aa4d111f7c9ec094fc65d8de26952c890f91f1f0a7722ef80",
       "size": 89753
@@ -821,6 +806,11 @@
       "path": "img/lg/monsters_ghoul_2.jpg",
       "sha256": "635a8f4ff6ae79ab897d2e62de2d30716fd3c5d61946180ded237a854a325b5d",
       "size": 95061
+    },
+    {
+      "path": "img/lg/monsters_ghoul.jpg",
+      "sha256": "25cfc6d7b79f0388150737f51e6e92ff848e460812d6fc9f607d1819c0d25367",
+      "size": 89209
     },
     {
       "path": "img/lg/monsters_gravehag.jpg",
@@ -863,11 +853,6 @@
       "size": 100804
     },
     {
-      "path": "img/lg/monsters_nekker.jpg",
-      "sha256": "47680c0a5f6b20ac3b644c53e40b16b8f7f6288b993a455ed6a1ccbec1154977",
-      "size": 103235
-    },
-    {
       "path": "img/lg/monsters_nekker_1.jpg",
       "sha256": "a0238eb6a7c409b7b031ec1b063d8b9c24532e5bee7b4d34aa0b8df5f2b61ae4",
       "size": 101279
@@ -876,6 +861,11 @@
       "path": "img/lg/monsters_nekker_2.jpg",
       "sha256": "5a1c0980918bb8c93273d53fb8369ca3a8b735bc6febe24ab6bfdfeafe8dc5ff",
       "size": 100931
+    },
+    {
+      "path": "img/lg/monsters_nekker.jpg",
+      "sha256": "47680c0a5f6b20ac3b644c53e40b16b8f7f6288b993a455ed6a1ccbec1154977",
+      "size": 103235
     },
     {
       "path": "img/lg/monsters_poroniec.jpg",
@@ -893,11 +883,6 @@
       "size": 88841
     },
     {
-      "path": "img/lg/monsters_witch_velen.jpg",
-      "sha256": "332a031bfd454355343c644acab54139c53d837485b7d95075a06c913824267f",
-      "size": 92300
-    },
-    {
       "path": "img/lg/monsters_witch_velen_1.jpg",
       "sha256": "7cdfe3a713e7ff4b978f98552b0c46ed4afc20e4ca85ac4dc2ecb3869ae980af",
       "size": 89257
@@ -906,6 +891,11 @@
       "path": "img/lg/monsters_witch_velen_2.jpg",
       "sha256": "0aa3d9199ea1275e91c6e372b3b35ca9894f721aafe23679bfef7fcd4e067feb",
       "size": 93666
+    },
+    {
+      "path": "img/lg/monsters_witch_velen.jpg",
+      "sha256": "332a031bfd454355343c644acab54139c53d837485b7d95075a06c913824267f",
+      "size": 92300
     },
     {
       "path": "img/lg/monsters_wyvern.jpg",
@@ -953,14 +943,14 @@
       "size": 207094
     },
     {
-      "path": "img/lg/neutral_gaunter_odimm.jpg",
-      "sha256": "174cea22f7cf32a0907f50c6579df59f8d50a709cc91824a635bd3c89f0881f7",
-      "size": 88877
-    },
-    {
       "path": "img/lg/neutral_gaunter_odimm_darkness.jpg",
       "sha256": "717888b06aea0baf6213430a174e62507514a291b24ede39d62d4b29a173fe96",
       "size": 69519
+    },
+    {
+      "path": "img/lg/neutral_gaunter_odimm.jpg",
+      "sha256": "174cea22f7cf32a0907f50c6579df59f8d50a709cc91824a635bd3c89f0881f7",
+      "size": 88877
     },
     {
       "path": "img/lg/neutral_geralt.jpg",
@@ -1023,14 +1013,14 @@
       "size": 103242
     },
     {
-      "path": "img/lg/nilfgaard_archer_support.jpg",
-      "sha256": "8b1d1cc08744ba00edcfee9aad6c30a3755d4341091f109c35d927e60fa889d9",
-      "size": 85052
-    },
-    {
       "path": "img/lg/nilfgaard_archer_support_1.jpg",
       "sha256": "71dfc6c039388236c7980c358a2d4b96a92d704fb4a01887d8ee1d70e66a4adc",
       "size": 89304
+    },
+    {
+      "path": "img/lg/nilfgaard_archer_support.jpg",
+      "sha256": "8b1d1cc08744ba00edcfee9aad6c30a3755d4341091f109c35d927e60fa889d9",
+      "size": 85052
     },
     {
       "path": "img/lg/nilfgaard_assire.jpg",
@@ -1038,14 +1028,14 @@
       "size": 113423
     },
     {
-      "path": "img/lg/nilfgaard_black_archer.jpg",
-      "sha256": "85852fde944de3e1289ada5b4f27e346c2a5726449e9e27845b52ce0cac376e5",
-      "size": 92180
-    },
-    {
       "path": "img/lg/nilfgaard_black_archer_1.jpg",
       "sha256": "c53e733e86b2356d1849fc677c48b211f2a4a2e53337b8f1c73f132176c68a1a",
       "size": 89949
+    },
+    {
+      "path": "img/lg/nilfgaard_black_archer.jpg",
+      "sha256": "85852fde944de3e1289ada5b4f27e346c2a5726449e9e27845b52ce0cac376e5",
+      "size": 92180
     },
     {
       "path": "img/lg/nilfgaard_cahir.jpg",
@@ -1193,14 +1183,14 @@
       "size": 97601
     },
     {
-      "path": "img/lg/nilfgaard_young_emissary.jpg",
-      "sha256": "a275024485564f7691477867aa798f87f63a0876108e623a73b210a4fe4166e5",
-      "size": 116754
-    },
-    {
       "path": "img/lg/nilfgaard_young_emissary_1.jpg",
       "sha256": "3f5e2c04e6b8a0414557748664726af5235db7626dd73728a3a1278aa1a6a62d",
       "size": 105511
+    },
+    {
+      "path": "img/lg/nilfgaard_young_emissary.jpg",
+      "sha256": "a275024485564f7691477867aa798f87f63a0876108e623a73b210a4fe4166e5",
+      "size": 116754
     },
     {
       "path": "img/lg/nilfgaard_zerri.jpg",
@@ -1273,11 +1263,6 @@
       "size": 106269
     },
     {
-      "path": "img/lg/realms_kaedwen_siege.jpg",
-      "sha256": "6862d6471ecf075ee5648f19d0e4166beba14d7ed40125bfadeba81005027493",
-      "size": 92699
-    },
-    {
       "path": "img/lg/realms_kaedwen_siege_1.jpg",
       "sha256": "669eb7af05109ed7387a3ae85b247d659c14aac58731fc4783d628a4bf12537f",
       "size": 91380
@@ -1286,6 +1271,11 @@
       "path": "img/lg/realms_kaedwen_siege_2.jpg",
       "sha256": "15cbbd0916b7bbcf2fd84ff727c5befdbd4f5dbd7116c6e1cb669a6b281b8f07",
       "size": 94928
+    },
+    {
+      "path": "img/lg/realms_kaedwen_siege.jpg",
+      "sha256": "6862d6471ecf075ee5648f19d0e4166beba14d7ed40125bfadeba81005027493",
+      "size": 92699
     },
     {
       "path": "img/lg/realms_keira.jpg",
@@ -1308,14 +1298,14 @@
       "size": 91625
     },
     {
-      "path": "img/lg/realms_redania.jpg",
-      "sha256": "98968a6db4792c7a5cf53b4a3ecf807d2615f1de615c11d7ebd8700089856564",
-      "size": 96217
-    },
-    {
       "path": "img/lg/realms_redania_1.jpg",
       "sha256": "55a37b69f1032c0c34b4e8e41fe52044423c3a6cc564feeafe57d7e32847fc96",
       "size": 96792
+    },
+    {
+      "path": "img/lg/realms_redania.jpg",
+      "sha256": "98968a6db4792c7a5cf53b4a3ecf807d2615f1de615c11d7ebd8700089856564",
+      "size": 96217
     },
     {
       "path": "img/lg/realms_sabrina.jpg",
@@ -1358,14 +1348,14 @@
       "size": 100364
     },
     {
-      "path": "img/lg/realms_trebuchet.jpg",
-      "sha256": "e3285e83262400c75c087a44689bdd9caac50a5fea42591d5fcaf28544d118db",
-      "size": 85686
-    },
-    {
       "path": "img/lg/realms_trebuchet_1.jpg",
       "sha256": "4af02f1f618137f908c319592492d0af3ad69722adc01257e92be9d8092492e6",
       "size": 97190
+    },
+    {
+      "path": "img/lg/realms_trebuchet.jpg",
+      "sha256": "e3285e83262400c75c087a44689bdd9caac50a5fea42591d5fcaf28544d118db",
+      "size": 85686
     },
     {
       "path": "img/lg/realms_vernon.jpg",
@@ -1403,11 +1393,6 @@
       "size": 110278
     },
     {
-      "path": "img/lg/scoiatael_dol_infantry.jpg",
-      "sha256": "a219acab316fa05f6ab43e9d022242087482648d157f9ac21f4dc5e20f06e566",
-      "size": 110095
-    },
-    {
       "path": "img/lg/scoiatael_dol_infantry_1.jpg",
       "sha256": "e661022687a16f0c009b6e32054e836b41c37ab0793effa428fcd14053c60c2f",
       "size": 108695
@@ -1418,9 +1403,9 @@
       "size": 99588
     },
     {
-      "path": "img/lg/scoiatael_dwarf.jpg",
-      "sha256": "2628d05d4b299df2ec6d210f4b929f08f462818a862fcc5db50eaeab2260e39d",
-      "size": 94297
+      "path": "img/lg/scoiatael_dol_infantry.jpg",
+      "sha256": "a219acab316fa05f6ab43e9d022242087482648d157f9ac21f4dc5e20f06e566",
+      "size": 110095
     },
     {
       "path": "img/lg/scoiatael_dwarf_1.jpg",
@@ -1433,14 +1418,14 @@
       "size": 101293
     },
     {
+      "path": "img/lg/scoiatael_dwarf.jpg",
+      "sha256": "2628d05d4b299df2ec6d210f4b929f08f462818a862fcc5db50eaeab2260e39d",
+      "size": 94297
+    },
+    {
       "path": "img/lg/scoiatael_eithne.jpg",
       "sha256": "4bc85c9951f31b4eb15534a6577a73d86983aaba2b479911be08d198ff4ecce6",
       "size": 95689
-    },
-    {
-      "path": "img/lg/scoiatael_elf_skirmisher.jpg",
-      "sha256": "6697fa74148f9bd7cbeb5b365bdfaeb8d15181eca20c4961cf61e2876fb7c8c4",
-      "size": 105136
     },
     {
       "path": "img/lg/scoiatael_elf_skirmisher_1.jpg",
@@ -1451,6 +1436,11 @@
       "path": "img/lg/scoiatael_elf_skirmisher_2.jpg",
       "sha256": "486d36a46bf6de0db3b03dd78b3fff775e46010a6c79522d94f17a2ee6669afe",
       "size": 113930
+    },
+    {
+      "path": "img/lg/scoiatael_elf_skirmisher.jpg",
+      "sha256": "6697fa74148f9bd7cbeb5b365bdfaeb8d15181eca20c4961cf61e2876fb7c8c4",
+      "size": 105136
     },
     {
       "path": "img/lg/scoiatael_filavandrel.jpg",
@@ -1483,11 +1473,6 @@
       "size": 107478
     },
     {
-      "path": "img/lg/scoiatael_havekar_nurse.jpg",
-      "sha256": "cbefe69f5d0f855efc22f8910170d97245878f28ec52b83feca50a6651a90bdf",
-      "size": 100324
-    },
-    {
       "path": "img/lg/scoiatael_havekar_nurse_1.jpg",
       "sha256": "91201e57721514651f2ce4af753d4c1e953bef0dfc7f6ec7d370e05bfa2c30c0",
       "size": 101031
@@ -1498,9 +1483,9 @@
       "size": 110108
     },
     {
-      "path": "img/lg/scoiatael_havekar_support.jpg",
-      "sha256": "22e88a8d0058fea0c97a05e3cd4a6a03742285596e42fd0ed0fd6c08351a76cd",
-      "size": 95103
+      "path": "img/lg/scoiatael_havekar_nurse.jpg",
+      "sha256": "cbefe69f5d0f855efc22f8910170d97245878f28ec52b83feca50a6651a90bdf",
+      "size": 100324
     },
     {
       "path": "img/lg/scoiatael_havekar_support_1.jpg",
@@ -1511,6 +1496,11 @@
       "path": "img/lg/scoiatael_havekar_support_2.jpg",
       "sha256": "f75d3db62146d8784565fe0e20be050a239379565fcd12cd976ac8799235ca1b",
       "size": 99286
+    },
+    {
+      "path": "img/lg/scoiatael_havekar_support.jpg",
+      "sha256": "22e88a8d0058fea0c97a05e3cd4a6a03742285596e42fd0ed0fd6c08351a76cd",
+      "size": 95103
     },
     {
       "path": "img/lg/scoiatael_ida.jpg",
@@ -1526,11 +1516,6 @@
       "path": "img/lg/scoiatael_isengrim.jpg",
       "sha256": "83bc98fc37fe2c0655f90ad6dcdb5553fb955dde2057b693e66032d8eddc5966",
       "size": 89881
-    },
-    {
-      "path": "img/lg/scoiatael_mahakam.jpg",
-      "sha256": "6b6c68ce9d999f0e6788217cf0b4c094140e040854e0e4b750b0530cbf6a4285",
-      "size": 99424
     },
     {
       "path": "img/lg/scoiatael_mahakam_1.jpg",
@@ -1551,6 +1536,11 @@
       "path": "img/lg/scoiatael_mahakam_4.jpg",
       "sha256": "51d737764702db6124b71ae9e0263ebd5bd66684a4ae295b45acd4b6e29af370",
       "size": 94982
+    },
+    {
+      "path": "img/lg/scoiatael_mahakam.jpg",
+      "sha256": "6b6c68ce9d999f0e6788217cf0b4c094140e040854e0e4b750b0530cbf6a4285",
+      "size": 99424
     },
     {
       "path": "img/lg/scoiatael_milva.jpg",
@@ -1578,14 +1568,14 @@
       "size": 92066
     },
     {
-      "path": "img/lg/scoiatael_vrihedd_brigade.jpg",
-      "sha256": "c91323ee572c0f94c4970252af9e7d9b13e3fcdaeb0297b52f802224fd50b2c0",
-      "size": 98880
-    },
-    {
       "path": "img/lg/scoiatael_vrihedd_brigade_1.jpg",
       "sha256": "56b7bdaaeb690037e22c4921cd444c2d3d146a64d276a4c386a96634b3ce5970",
       "size": 92895
+    },
+    {
+      "path": "img/lg/scoiatael_vrihedd_brigade.jpg",
+      "sha256": "c91323ee572c0f94c4970252af9e7d9b13e3fcdaeb0297b52f802224fd50b2c0",
+      "size": 98880
     },
     {
       "path": "img/lg/scoiatael_vrihedd_cadet.jpg",
@@ -1703,11 +1693,6 @@
       "size": 77190
     },
     {
-      "path": "img/lg/skellige_shield_maiden.jpg",
-      "sha256": "bf4d94f3d0608c592651704c7d0f902c0ff83441ba0b63e24039f2cd0597791a",
-      "size": 76233
-    },
-    {
       "path": "img/lg/skellige_shield_maiden_1.jpg",
       "sha256": "dcbfed7ae016eb7b7de2d8c562e2f1d8cb1f96d0562de53305898952c6ca0aae",
       "size": 81147
@@ -1716,6 +1701,11 @@
       "path": "img/lg/skellige_shield_maiden_2.jpg",
       "sha256": "94e1e708c566805c4881f65a9195f472b27d67bb58e59fa42908287864c5ed3e",
       "size": 82962
+    },
+    {
+      "path": "img/lg/skellige_shield_maiden.jpg",
+      "sha256": "bf4d94f3d0608c592651704c7d0f902c0ff83441ba0b63e24039f2cd0597791a",
+      "size": 76233
     },
     {
       "path": "img/lg/skellige_svanrige.jpg",
@@ -1868,19 +1858,14 @@
       "size": 134817
     },
     {
-      "path": "img/rules/gwent_card_legend.png",
-      "sha256": "8b2263c69a449b650b743cc6ca4375a85e6289285c4b979e12a588cc13d4b123",
-      "size": 529511
-    },
-    {
       "path": "img/rules/gwent_card_legend_2.png",
       "sha256": "5bce036538d37cde18a1ec661e6432b934907512e0b9b08bac10bdf03ac51bfc",
       "size": 396368
     },
     {
-      "path": "img/sm/monsters_arachas.jpg",
-      "sha256": "8f87f34e430443ce395adf2f71263c9e95a04b692c7700e58ee32890c07dc9bb",
-      "size": 39097
+      "path": "img/rules/gwent_card_legend.png",
+      "sha256": "8b2263c69a449b650b743cc6ca4375a85e6289285c4b979e12a588cc13d4b123",
+      "size": 529511
     },
     {
       "path": "img/sm/monsters_arachas_1.jpg",
@@ -1896,6 +1881,11 @@
       "path": "img/sm/monsters_arachas_behemoth.jpg",
       "sha256": "5b4242cac8ef98b902a80afd512c3b5162d7a731182a0e5ec7b60784a51bb8b2",
       "size": 42891
+    },
+    {
+      "path": "img/sm/monsters_arachas.jpg",
+      "sha256": "8f87f34e430443ce395adf2f71263c9e95a04b692c7700e58ee32890c07dc9bb",
+      "size": 39097
     },
     {
       "path": "img/sm/monsters_bruxa.jpg",
@@ -2003,11 +1993,6 @@
       "size": 31456
     },
     {
-      "path": "img/sm/monsters_ghoul.jpg",
-      "sha256": "2cf5413ec2ccc35e9762add3f38acb838a081cf85d412f517b051f889c9ec5cd",
-      "size": 29743
-    },
-    {
       "path": "img/sm/monsters_ghoul_1.jpg",
       "sha256": "88e2b0e87e463fdb867352e59ba68e9136b466bd9ef11a1fb5f188e9be9534d4",
       "size": 31369
@@ -2016,6 +2001,11 @@
       "path": "img/sm/monsters_ghoul_2.jpg",
       "sha256": "da83f214924940e5432f9cf7a3e3ee772c460b5d044425ce72790ea7574d47bc",
       "size": 35438
+    },
+    {
+      "path": "img/sm/monsters_ghoul.jpg",
+      "sha256": "2cf5413ec2ccc35e9762add3f38acb838a081cf85d412f517b051f889c9ec5cd",
+      "size": 29743
     },
     {
       "path": "img/sm/monsters_gravehag.jpg",
@@ -2058,11 +2048,6 @@
       "size": 46654
     },
     {
-      "path": "img/sm/monsters_nekker.jpg",
-      "sha256": "e34c351be9cc17a47a46aa9bd0fe675ef2f0656be876a4d436a400612c4c0bd6",
-      "size": 45282
-    },
-    {
       "path": "img/sm/monsters_nekker_1.jpg",
       "sha256": "c621a92ef03800aa534c05d7d30875a2a1539d483da8f740f1465a566d3ed8ec",
       "size": 42745
@@ -2071,6 +2056,11 @@
       "path": "img/sm/monsters_nekker_2.jpg",
       "sha256": "6855eb785405a4a15d17d50fa21712dbd98b46f960ae335fac618b11519f45f4",
       "size": 43144
+    },
+    {
+      "path": "img/sm/monsters_nekker.jpg",
+      "sha256": "e34c351be9cc17a47a46aa9bd0fe675ef2f0656be876a4d436a400612c4c0bd6",
+      "size": 45282
     },
     {
       "path": "img/sm/monsters_poroniec.jpg",
@@ -2088,11 +2078,6 @@
       "size": 31428
     },
     {
-      "path": "img/sm/monsters_witch_velen.jpg",
-      "sha256": "0c5fcc059ce70bee52dc5d7408a6cbeb748113851cd2d7b703cd36c01f8b0299",
-      "size": 33317
-    },
-    {
       "path": "img/sm/monsters_witch_velen_1.jpg",
       "sha256": "15ea8cf6486a9789f941cfd6c2e2a4b2541cf19797f89586629ab58290d087cf",
       "size": 31653
@@ -2101,6 +2086,11 @@
       "path": "img/sm/monsters_witch_velen_2.jpg",
       "sha256": "f007b3d7f59e29f40c2a6ff9541af746031ff3662275046de05627c80a9f0424",
       "size": 39864
+    },
+    {
+      "path": "img/sm/monsters_witch_velen.jpg",
+      "sha256": "0c5fcc059ce70bee52dc5d7408a6cbeb748113851cd2d7b703cd36c01f8b0299",
+      "size": 33317
     },
     {
       "path": "img/sm/monsters_wyvern.jpg",
@@ -2148,14 +2138,14 @@
       "size": 113548
     },
     {
-      "path": "img/sm/neutral_gaunter_odimm.jpg",
-      "sha256": "021186b4313bd1b9194b6a1d3315b13f77c40a071a5d68636138fb22fd2898f8",
-      "size": 42584
-    },
-    {
       "path": "img/sm/neutral_gaunter_odimm_darkness.jpg",
       "sha256": "b7bbf0501a9e7791ccf01b48c06aad5908f1502b48792fc471e24cb397dd8530",
       "size": 20999
+    },
+    {
+      "path": "img/sm/neutral_gaunter_odimm.jpg",
+      "sha256": "021186b4313bd1b9194b6a1d3315b13f77c40a071a5d68636138fb22fd2898f8",
+      "size": 42584
     },
     {
       "path": "img/sm/neutral_geralt.jpg",
@@ -2218,14 +2208,14 @@
       "size": 43445
     },
     {
-      "path": "img/sm/nilfgaard_archer_support.jpg",
-      "sha256": "92ca02352ef69b93e3355953098e432fb57cdbd64b5243d567a8517562cc2dd1",
-      "size": 24512
-    },
-    {
       "path": "img/sm/nilfgaard_archer_support_1.jpg",
       "sha256": "7d09fb1639c767c057dc4c9291576db5b3ed5a1cc05b368960add2b203790060",
       "size": 28973
+    },
+    {
+      "path": "img/sm/nilfgaard_archer_support.jpg",
+      "sha256": "92ca02352ef69b93e3355953098e432fb57cdbd64b5243d567a8517562cc2dd1",
+      "size": 24512
     },
     {
       "path": "img/sm/nilfgaard_assire.jpg",
@@ -2233,14 +2223,14 @@
       "size": 54500
     },
     {
-      "path": "img/sm/nilfgaard_black_archer.jpg",
-      "sha256": "90ab6b6f12cc369f859bef672d2c3e68b9e405e71eca12b455f65da7b4a248b7",
-      "size": 37944
-    },
-    {
       "path": "img/sm/nilfgaard_black_archer_1.jpg",
       "sha256": "85caf12ee67de781eda759a1f204bbc0b299f06ecc9c0689bc16a214af37f976",
       "size": 38623
+    },
+    {
+      "path": "img/sm/nilfgaard_black_archer.jpg",
+      "sha256": "90ab6b6f12cc369f859bef672d2c3e68b9e405e71eca12b455f65da7b4a248b7",
+      "size": 37944
     },
     {
       "path": "img/sm/nilfgaard_cahir.jpg",
@@ -2388,14 +2378,14 @@
       "size": 48052
     },
     {
-      "path": "img/sm/nilfgaard_young_emissary.jpg",
-      "sha256": "de506ccca062921c61c81a8ffe322eb371ac31206a7c2b013eabd12e6b1bc16d",
-      "size": 59385
-    },
-    {
       "path": "img/sm/nilfgaard_young_emissary_1.jpg",
       "sha256": "ab66d91abbf023e6465a23e61bf89ec92703e07ef13f2fc68a3504c8a38d35a7",
       "size": 45160
+    },
+    {
+      "path": "img/sm/nilfgaard_young_emissary.jpg",
+      "sha256": "de506ccca062921c61c81a8ffe322eb371ac31206a7c2b013eabd12e6b1bc16d",
+      "size": 59385
     },
     {
       "path": "img/sm/nilfgaard_zerri.jpg",
@@ -2468,11 +2458,6 @@
       "size": 66605
     },
     {
-      "path": "img/sm/realms_kaedwen_siege.jpg",
-      "sha256": "e9d551994180a63671ed1a617c73c999f81b759c82b0697ed2634aa7c2ab7e7a",
-      "size": 31383
-    },
-    {
       "path": "img/sm/realms_kaedwen_siege_1.jpg",
       "sha256": "0e14681b76032d801ed38b5073c0b27ebf6ed3589c1b8beab1e720d791ca9e37",
       "size": 30279
@@ -2481,6 +2466,11 @@
       "path": "img/sm/realms_kaedwen_siege_2.jpg",
       "sha256": "1d5cbd7ed082068f80ad8fe172c7dacb9e58615676dd33811eca68b0bad4a4f7",
       "size": 32554
+    },
+    {
+      "path": "img/sm/realms_kaedwen_siege.jpg",
+      "sha256": "e9d551994180a63671ed1a617c73c999f81b759c82b0697ed2634aa7c2ab7e7a",
+      "size": 31383
     },
     {
       "path": "img/sm/realms_keira.jpg",
@@ -2503,14 +2493,14 @@
       "size": 35335
     },
     {
-      "path": "img/sm/realms_redania.jpg",
-      "sha256": "6dde9b06d60576ee299bea000796d3e0e56274e57e9aa67ba56cde68bf93b39a",
-      "size": 33235
-    },
-    {
       "path": "img/sm/realms_redania_1.jpg",
       "sha256": "380a25e52345150147823df6ae83b40c012ce746b60033567b84ee6ceddeb1ac",
       "size": 36279
+    },
+    {
+      "path": "img/sm/realms_redania.jpg",
+      "sha256": "6dde9b06d60576ee299bea000796d3e0e56274e57e9aa67ba56cde68bf93b39a",
+      "size": 33235
     },
     {
       "path": "img/sm/realms_sabrina.jpg",
@@ -2553,14 +2543,14 @@
       "size": 39125
     },
     {
-      "path": "img/sm/realms_trebuchet.jpg",
-      "sha256": "dd164a69a92034c3eb84ba72d30a9913f91850701c24bfbbab0fa09acbe65917",
-      "size": 27178
-    },
-    {
       "path": "img/sm/realms_trebuchet_1.jpg",
       "sha256": "84a9c7b3b4ced00e20f0183cd0aa241349e2553e6ecce985b98b03a634ecee42",
       "size": 37823
+    },
+    {
+      "path": "img/sm/realms_trebuchet.jpg",
+      "sha256": "dd164a69a92034c3eb84ba72d30a9913f91850701c24bfbbab0fa09acbe65917",
+      "size": 27178
     },
     {
       "path": "img/sm/realms_vernon.jpg",
@@ -2598,11 +2588,6 @@
       "size": 50996
     },
     {
-      "path": "img/sm/scoiatael_dol_infantry.jpg",
-      "sha256": "27d3221f1cbfd3195517597e8107649521f7b3eddfeb839e295d17f1807447fd",
-      "size": 49445
-    },
-    {
       "path": "img/sm/scoiatael_dol_infantry_1.jpg",
       "sha256": "fbbad92766109dc1f3a800b3fa2598d65ead64f367b296d95ade3500c7c783de",
       "size": 45482
@@ -2613,9 +2598,9 @@
       "size": 37961
     },
     {
-      "path": "img/sm/scoiatael_dwarf.jpg",
-      "sha256": "e7580823cf85cef2e001655bc795b1f1760175cfb57874dedba2590063ddeb76",
-      "size": 36729
+      "path": "img/sm/scoiatael_dol_infantry.jpg",
+      "sha256": "27d3221f1cbfd3195517597e8107649521f7b3eddfeb839e295d17f1807447fd",
+      "size": 49445
     },
     {
       "path": "img/sm/scoiatael_dwarf_1.jpg",
@@ -2628,14 +2613,14 @@
       "size": 43828
     },
     {
+      "path": "img/sm/scoiatael_dwarf.jpg",
+      "sha256": "e7580823cf85cef2e001655bc795b1f1760175cfb57874dedba2590063ddeb76",
+      "size": 36729
+    },
+    {
       "path": "img/sm/scoiatael_eithne.jpg",
       "sha256": "9b3eb89323ee23dd6e816b9c06865c7fdbc27cc682c93eb8cd0af2d5b608d567",
       "size": 30259
-    },
-    {
-      "path": "img/sm/scoiatael_elf_skirmisher.jpg",
-      "sha256": "6b2d99c04673833ac4bed1e6ac734272a0218c8a1aaacf0cd8b032013ba9679b",
-      "size": 45648
     },
     {
       "path": "img/sm/scoiatael_elf_skirmisher_1.jpg",
@@ -2646,6 +2631,11 @@
       "path": "img/sm/scoiatael_elf_skirmisher_2.jpg",
       "sha256": "554054002c8f6db3deafa060f3bd0352a77a49298069d9ed4a68ef68ee607709",
       "size": 53796
+    },
+    {
+      "path": "img/sm/scoiatael_elf_skirmisher.jpg",
+      "sha256": "6b2d99c04673833ac4bed1e6ac734272a0218c8a1aaacf0cd8b032013ba9679b",
+      "size": 45648
     },
     {
       "path": "img/sm/scoiatael_filavandrel.jpg",
@@ -2678,11 +2668,6 @@
       "size": 62420
     },
     {
-      "path": "img/sm/scoiatael_havekar_nurse.jpg",
-      "sha256": "579f033b11e0e43962f8e92271b3e744c2dab4c49d8b263d894d738c0b3d8677",
-      "size": 46174
-    },
-    {
       "path": "img/sm/scoiatael_havekar_nurse_1.jpg",
       "sha256": "c77109c934fba8664e5f061caff1871cfdb6c0737cae5ebfc3e6946b97ebd688",
       "size": 45824
@@ -2693,9 +2678,9 @@
       "size": 56646
     },
     {
-      "path": "img/sm/scoiatael_havekar_support.jpg",
-      "sha256": "c64af473f586f9859c81e53a774118be55d8d98107d280448efb5d152f67159b",
-      "size": 35930
+      "path": "img/sm/scoiatael_havekar_nurse.jpg",
+      "sha256": "579f033b11e0e43962f8e92271b3e744c2dab4c49d8b263d894d738c0b3d8677",
+      "size": 46174
     },
     {
       "path": "img/sm/scoiatael_havekar_support_1.jpg",
@@ -2706,6 +2691,11 @@
       "path": "img/sm/scoiatael_havekar_support_2.jpg",
       "sha256": "a0ea9cc05ecd9209cd299297d77ede7e6c3bad159b91eb57205996f26fb4f92e",
       "size": 40846
+    },
+    {
+      "path": "img/sm/scoiatael_havekar_support.jpg",
+      "sha256": "c64af473f586f9859c81e53a774118be55d8d98107d280448efb5d152f67159b",
+      "size": 35930
     },
     {
       "path": "img/sm/scoiatael_ida.jpg",
@@ -2721,11 +2711,6 @@
       "path": "img/sm/scoiatael_isengrim.jpg",
       "sha256": "957accf9a6122e720fb25b4b346199e3e9decb2be9bd95582d54ba8170877f08",
       "size": 24578
-    },
-    {
-      "path": "img/sm/scoiatael_mahakam.jpg",
-      "sha256": "00832582c854560f687d27a917dfdb792bc817f602986cb74208d4e2cdaa54dc",
-      "size": 44580
     },
     {
       "path": "img/sm/scoiatael_mahakam_1.jpg",
@@ -2746,6 +2731,11 @@
       "path": "img/sm/scoiatael_mahakam_4.jpg",
       "sha256": "dc193cee1dc8c9ce829d27de1ab3d546badb1b9b68ef78ce74c549cae58e98c0",
       "size": 39121
+    },
+    {
+      "path": "img/sm/scoiatael_mahakam.jpg",
+      "sha256": "00832582c854560f687d27a917dfdb792bc817f602986cb74208d4e2cdaa54dc",
+      "size": 44580
     },
     {
       "path": "img/sm/scoiatael_milva.jpg",
@@ -2773,14 +2763,14 @@
       "size": 32595
     },
     {
-      "path": "img/sm/scoiatael_vrihedd_brigade.jpg",
-      "sha256": "6954d8f8f2303b393330dee4041220324329ecb03722afb18b40db428b73b95e",
-      "size": 40334
-    },
-    {
       "path": "img/sm/scoiatael_vrihedd_brigade_1.jpg",
       "sha256": "297b89edd9e4cea98c971f3844b9cb7a01319c3955c7e9893516f595f1259379",
       "size": 34770
+    },
+    {
+      "path": "img/sm/scoiatael_vrihedd_brigade.jpg",
+      "sha256": "6954d8f8f2303b393330dee4041220324329ecb03722afb18b40db428b73b95e",
+      "size": 40334
     },
     {
       "path": "img/sm/scoiatael_vrihedd_cadet.jpg",
@@ -2898,11 +2888,6 @@
       "size": 27130
     },
     {
-      "path": "img/sm/skellige_shield_maiden.jpg",
-      "sha256": "5fd619aed566b49b1f59d2719b28ebac74081fe89aab29773c3b9f16295ed089",
-      "size": 25774
-    },
-    {
       "path": "img/sm/skellige_shield_maiden_1.jpg",
       "sha256": "91e18d5e06721164fcfbbf6421e07aca3c9ce031ca7ab2e3ef86deface8f2a52",
       "size": 32565
@@ -2911,6 +2896,11 @@
       "path": "img/sm/skellige_shield_maiden_2.jpg",
       "sha256": "e34563b2bc4de8f075e26bd61029b6a9b017cb819cc6c552c8bbc85783bbe04c",
       "size": 32652
+    },
+    {
+      "path": "img/sm/skellige_shield_maiden.jpg",
+      "sha256": "5fd619aed566b49b1f59d2719b28ebac74081fe89aab29773c3b9f16295ed089",
+      "size": 25774
     },
     {
       "path": "img/sm/skellige_svanrige.jpg",
@@ -3343,11 +3333,6 @@
       "size": 82048
     },
     {
-      "path": "sfx/round1_start.mp3",
-      "sha256": "70301230ca00a8eb18eff8a21ddcfa8b1ba945773108e11470d9ad53458e6382",
-      "size": 25089
-    },
-    {
       "path": "sfx/round_lose.mp3",
       "sha256": "105aa6116b04a7ce74bad555be82802cc35f159cf75ac435cb3166efee0cba84",
       "size": 37168
@@ -3356,6 +3341,11 @@
       "path": "sfx/round_win.mp3",
       "sha256": "8fa271d03b88dcd01f8de7f649b4fabaa24c7eafb2af19345f083601993b9aeb",
       "size": 33074
+    },
+    {
+      "path": "sfx/round1_start.mp3",
+      "sha256": "70301230ca00a8eb18eff8a21ddcfa8b1ba945773108e11470d9ad53458e6382",
+      "size": 25089
     },
     {
       "path": "sfx/scorch.mp3",
