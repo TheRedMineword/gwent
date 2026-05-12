@@ -1,6 +1,6 @@
 {
-  "sha": "f1bd6cfe54668ab27c7b9367052e6f4e7efde7a14e65be3c99b5181b9d8ec35d",
-  "generatedAt": "2026-05-12T14:49:33.761Z",
+  "sha": "13e76846fcb328cac00573cd634dfe5b93a8ffd218deb7dfd3747ccb45c51a3a",
+  "generatedAt": "2026-05-12T14:56:43.041Z",
   "files": [
     {
       "path": ".init.bat",
@@ -39,47 +39,47 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "8f10e01133d23409a6c8212ffbdecf17549136ebba12774d5d478b0f939dd90d",
+      "sha256": "8708fda406db3b0ad66909270febfa6efd586823d685ae2868f4f3852f8f3ae3",
       "size": 23
     },
     {
       "path": "change/log-ai-summary-becuase-i-did-a-lot-of-github-commits.txt",
-      "sha256": "e94fc349a5681027fff3273902752ccd39ea4509ee7c47bf7e05a3636ffb6f5a",
+      "sha256": "2953e139d486bde5c4f8bd98925f8b93cdc64694201e0cf361d1be67a6e3a711",
       "size": 2758
     },
     {
       "path": "change/log-update1.txt",
-      "sha256": "e84926d9b6632e91176b574b8478664643705121bc51abe035105c767fa673f4",
+      "sha256": "9e529e09e58ecaa752618b06def674299870995adeb9463f717ee29feb248397",
       "size": 149
     },
     {
       "path": "change/log-update2.txt",
-      "sha256": "f37058f212ece3df68df596ba2bcc3fb3963d73feb9cc3cfb5149cee60525d47",
+      "sha256": "2f1524493e1393af0e9959c15657dcb2f85b99eede2ac7b670f80ed0b1ae8cc2",
       "size": 619
     },
     {
       "path": "change/log-update3.txt",
-      "sha256": "55d612004ca6b07540168e836a6e4ac0960d6f9392b34b889f2735b4b0db20c4",
+      "sha256": "308177582276206899b2b4af9825b09def574dbb66b282b68a5af46e201863f5",
       "size": 550
     },
     {
       "path": "change/log-update4.txt",
-      "sha256": "0902ed1987fbc2a94a2ffb523545b4026617a6aae53789d2092ccb40d26cf7ef",
+      "sha256": "61b180156285dc8e9e07608de9c401f0c48d04589e9a15597ba92e96cfea9ea0",
       "size": 168
     },
     {
       "path": "change/log-update5.1.txt",
-      "sha256": "bf1df514b3268db39eb0e3bfae0cf53241fd87d8a49ba3649e26a37b3a7844d2",
+      "sha256": "00ba46d377f7fabd3cefe70d23c33b9f0d9386f09db97478a5e33e3d915ee32e",
       "size": 63
     },
     {
       "path": "change/log-update5.txt",
-      "sha256": "42028b9934a70cb9607dd7fc795839b074cd93a1eb83262cb6ba2e66ee11e0ae",
+      "sha256": "087e53d211199e9441455173d7b1322d667b0585596939600cbc473a02519ae8",
       "size": 100
     },
     {
       "path": "change/log-update6.txt",
-      "sha256": "06131ca006f68d7aac7e99e7f6b9e2ca0e9fa813dc2376400d3ba80eb8fbc227",
+      "sha256": "5d37e7b41760282895fac25b2cad38378cb0bdc2d1ff8277504a811ac1414674",
       "size": 194
     },
     {
@@ -3084,7 +3084,7 @@
     },
     {
       "path": "img/web/readme.md",
-      "sha256": "15246d5d6b1a3e2fad141ed76c20652d507a9d5793e0cdef0e2fe70975d77e69",
+      "sha256": "ec9fea14af2c4d9c8a25d0b08e7485647c08db2c538be22685cc578569050976",
       "size": 124
     },
     {
@@ -3104,12 +3104,12 @@
     },
     {
       "path": "javascript/chat.js",
-      "sha256": "e0716cea9c362e886a6d82662f6b84b08f449d6e2725a21570b8b12492a68486",
+      "sha256": "0e0d8ea291fcedab885f0e7dc97a327c4cf53a8c6b6374c8f401955dc688b295",
       "size": 6051
     },
     {
       "path": "javascript/decks.js",
-      "sha256": "1cad6096fe11f6aff2941e6cbe13615b661d35e1841594ccd230df57609d34bb",
+      "sha256": "363ea301f53ec32c6afaacaf9b6cab04c972330e0562334fc8246a9e8322bdb9",
       "size": 522
     },
     {
@@ -3119,7 +3119,7 @@
     },
     {
       "path": "javascript/factions.js",
-      "sha256": "f92f989a39a191732acb478e0886944f7a9e0e7bf3c4a08a0140f3a7711ce4b7",
+      "sha256": "f6e0f0fcd836ec7321706047588a65cb2b1f35cf5094b2af8b48b9073bda2e9e",
       "size": 5020
     },
     {
@@ -3134,7 +3134,7 @@
     },
     {
       "path": "javascript/patchnotes.js",
-      "sha256": "13ee0a2909204d115f46aaeb076592a510cc8038e1edd3f1c08404c493b28294",
+      "sha256": "e697bd583ed90ff4c215f044945be86b569b76224aefbdbb8cf1f3603b0b625a",
       "size": 2945
     },
     {
@@ -3144,7 +3144,7 @@
     },
     {
       "path": "javascript/sync_hands.js",
-      "sha256": "ec051aab3570a4a3875206e91010e409daeb644ae02f88672f54aa06364910b2",
+      "sha256": "be9a84b50befcb8c7faff2b566ee244a822eef41f410b5e8e7cd67b0b79c1f6e",
       "size": 2942
     },
     {
