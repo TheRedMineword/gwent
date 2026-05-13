@@ -1,6 +1,6 @@
 {
-  "sha": "58dacd65f181685fec01065857519514486b51bc7f2ddd85f9d665694cf37179",
-  "generatedAt": "2026-05-13T07:06:17.561Z",
+  "sha": "b40c347ecf7467d267754aef5152ee101f67a4f01326428295972114e0075e17",
+  "generatedAt": "2026-05-13T07:31:44.147Z",
   "files": [
     {
       "path": "404.html",
@@ -69,8 +69,8 @@
     },
     {
       "path": "change/log-update7.1.txt",
-      "sha256": "dfdf4207b8e80c3e9f39f2378fc0cf8d476620ab3e6d7b3c400517ec9e5e9ff6",
-      "size": 74
+      "sha256": "8013bec2beb859f54bf006bd8e0d3055f96994cee3110e0f9028ddf3a610f81d",
+      "size": 165
     },
     {
       "path": "change/log-update7.txt",
@@ -176,6 +176,16 @@
       "path": "img/icons/anim_spy.png",
       "sha256": "2cf62c88f6eda87e80f274b5843612bb21c250495c3cfe4019cec49811bfb604",
       "size": 12655
+    },
+    {
+      "path": "img/icons/anim_stay_sky.png",
+      "sha256": "526e97c54c7aae477646897f931ba193c4fa96de59865a86a68b1a623ac2389b",
+      "size": 9997
+    },
+    {
+      "path": "img/icons/anim_stay.png",
+      "sha256": "bbd5001e63adb2c06231459ecbced72290cb572acfbfd6073013da0a5e1cb43d",
+      "size": 5934
     },
     {
       "path": "img/icons/card_ability_agile.png",
@@ -3139,8 +3149,8 @@
     },
     {
       "path": "javascript/factions.js",
-      "sha256": "f6e0f0fcd836ec7321706047588a65cb2b1f35cf5094b2af8b48b9073bda2e9e",
-      "size": 5020
+      "sha256": "0383306146aba3fea8eef9f4d05bb1607096fe9cf8e60bdca37f6f1b9ab406c5",
+      "size": 5068
     },
     {
       "path": "javascript/gwent.js",

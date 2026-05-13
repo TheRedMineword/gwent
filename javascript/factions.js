@@ -34,7 +34,7 @@ var factions = {
 				if (powerDiff !== 0) return powerDiff;
 				return a.filename.localeCompare(b.filename);	// Fallback, if points are tied then use filename as a tiebreaker.
 			});
-			let card = units[0];
+			let card = units[0]; card.animate("stay");
 			
 			card.noRemove = true;
 			
@@ -101,7 +101,7 @@ var factions = {
 				if (powerDiff !== 0) return powerDiff;
 				return a.filename.localeCompare(b.filename);	// Fallback, if points are tied then use filename as a tiebreaker.
 			});
-			let card = units[0];
+			let card = units[0]; card.animate("stay_sky");
 			
 			card.noRemove = true;
 			
