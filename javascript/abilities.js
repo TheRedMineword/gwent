@@ -234,6 +234,73 @@ if (card.holder.id === player_op.id) {
 		description: `${axii.desc} `,
 		placed: async card => await card.animate("debuff")
 	},
+	axii2_desc_playable: {
+		name: "witcher Signs: Axii",
+		description: `${axii.desc} `,
+		placed: async (card) => {
+			await card.animate("debuff");
+			//for (let i=0;i< spy.spy ;i++) {
+			//	if (card.holder.deck.cards.length > 0)
+			//		await card.holder.deck.draw(card.holder.hand);
+			//}
+			card.holder = card.holder.opponent();
+		}
+	},
+	gryffinSchool: {
+	name: "Griffin School",
+	description: "Choose one Witcher Sign card and add it to your hand.",
+
+	placed: async (card) => {
+		let wrapper = { card: null };
+
+		// Don't simulate opponent
+		if (player_me.id !== card.holder.id) {
+			card.animate(gryffinschool_conf.anim);
+			console.log("Opponent played Gryffin School, waiting for sync.");
+			return;
+		}
+
+		if (!witcher_signs || witcher_signs.length <= 0)
+			return;
+
+		// Create TEMP cards for preview carousel
+		let previewCards = witcher_signs.map(sign => {
+			return new Card(sign, card.holder);
+		});
+
+		let container = {
+			cards: previewCards
+		};
+
+		await ui.queueCarousel(
+			container,
+			1,
+			(c, i) => wrapper.card = c.cards[i],
+			() => true,
+			true,
+			false,
+			gryffinschool_conf.topic
+		);
+
+		let picked = wrapper.card;
+
+		if (!picked)
+			return;
+
+		// Create REAL spawned copy
+		let cardData = Object.values(card_dict)
+	.find(c => c.filename === picked.filename);
+
+if (!cardData)
+	return;
+
+let created = new Card(cardData, card.holder);
+
+card.holder.hand.addCard(created);
+created.animate(gryffinschool_conf.anim_hand);
+card.animate(gryffinschool_conf.anim);
+}
+},
 	medic: {
 		name: "medic",
 		description: "Choose one card from your discard pile and play it instantly (no Heroes or Special Cards). ",

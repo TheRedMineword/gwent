@@ -2242,6 +2242,27 @@ var card_dict = [
         "filename": "eskel",
         "count": "1"
     },
+    {
+        "name": "Griffin School Witcher",
+        "id": "1010",
+        "deck": "neutral",
+        "row": "agile",
+        "strength": "5",
+        "ability": "gryffinSchool",
+        "filename": "GryffinWitcher",
+        "count": "2"
+    },
+    {
+        "name": "witcher Signs: Axii",
+        "id": "1011",
+        "deck": "neutral",
+        "row": "close",
+        "strength": "0",
+        "ability": "hero axii2_desc_playable",
+        "filename": "axii_p",
+        "count": "0",
+        "witcher_sign": true
+    },
     // New cards for sky
     {
         "name": "Hopeful Steward",
@@ -2375,4 +2396,10 @@ var card_dict = [
         "count": "1"
     }
 ];
-console.log("Cards array", card_dict);
+const witcher_signs = Object.entries(card_dict)
+    .filter(([_, card]) => card.witcher_sign)
+    .map(([key, card]) => ({
+        id: key,
+        ...card
+    }));
+console.log("Cards array", card_dict, witcher_signs);

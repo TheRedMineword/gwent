@@ -125,6 +125,11 @@ nilfard_drawmaster.drawiffail =
 
 console.log("nilfard_drawmaster", nilfard_drawmaster);
 
+const gryffinschool_conf = {
+	"anim": "griffin",
+	"anim_hand": "griffin_hand",
+	"topic": "Choose a Witcher Sign"
+}
 
 const audio_cache = {};
 let buttonmutemode = 1;

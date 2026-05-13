@@ -1362,13 +1362,13 @@ class Row extends CardContainer {
 		if (card.hero){
 			var card_info = `${JSON.stringify({"a": card.faciton + "_" + card.filename, "b": card.holder.id, "c": card.holder.tag, "d": card.name, "f": card.row })}-${gameID}`;
 			var card_id_for_hero = card_info;
-			if (!herocardsdb.includes(card_id_for_hero)) {
-			    herocardsdb.push(card_id_for_hero);
+			//if (!herocardsdb.includes(card_id_for_hero)) {
+			  //  herocardsdb.push(card_id_for_hero);
 			    if (herocardanim === true) {
 			        console.log("NEW HERO", card, card_id_for_hero, card_info, " ARRAY NOW", herocardsdb);
 					card.animate2("hero");
 			    }
-			}
+		//	}
 		}
 		if (card.isSpecial()) {
 			this.special = card;
@@ -1490,6 +1490,11 @@ calcCardScore_work(card) {
 			}
 		}
 		if (this.cards.some(c => c.filename === "axii")) {
+					if (0 < total && total < axii.IfBasePowerUnder) {
+						total = total - axii.TakeAway
+					}
+		}
+		if (this.cards.some(c => c.filename === "axii_p")) {
 					if (0 < total && total < axii.IfBasePowerUnder) {
 						total = total - axii.TakeAway
 					}
@@ -1762,7 +1767,7 @@ class Board {
 	getRow(card, row_name, player){
 		player = player ? player : card ? card.holder : player_me;
 		let isMe = player === player_me;
-		let isSpy = card.abilities.includes("spy") || card.abilities.includes("sabotage");
+		let isSpy = card.abilities.includes("spy") || card.abilities.includes("sabotage") || card.abilities.includes("axii2_desc_playable");
 		switch (row_name) {
 			case "weather": return weather; break;
 			case "close":  return this.row[ isMe^isSpy ? 3 : 2];
@@ -2275,7 +2280,8 @@ class Card {
 			"powergain": "moral", //no audio
 			"darkstrom": "moral",
 			"Avenger": "avenger",
-			"hero": "hero_anim"
+			"hero": "hero_anim",
+			"griffin": "moral"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
@@ -2318,7 +2324,8 @@ class Card {
 		"powergain": "moral",
 		"darkstrom": "moral",
 		"Avenger": "avenger",
-		"hero": "hero_anim"
+		"hero": "hero_anim",
+		"griffin": "moral"
 	};
 
 	const literais = [
@@ -2715,6 +2722,7 @@ youtubePlay(video_id, volume_int = 100, repeat = false) {
 			const nomeColuna = this.lastRow.elem_parent.id	
 			const playedCard = removeCircularReferences(this.previewCard);
 			const targetCard = removeCircularReferences(card);
+			// targetCard.animate("horn"); //Uncaught (in promise) TypeError: targetCard.animate is not a function at UI.selectCard
 
 			//console.log("You played the card", this.previewCard)
 			//comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData }));
