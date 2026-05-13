@@ -1,5 +1,5 @@
 This is copied and modified version of [Rickvs64 gwent multiplayer](https://github.com/Rickvs64/gwent-multiplayer)
-An exe app (BETA) was added: [Dowland (Ver.615ecd2f189b.2026-05-12T16-02-15-416Z)](https://github.com/TheRedMineword/GWENT/raw/refs/heads/main/exe/dowland/GWENT@615ecd2f189b.2026-05-12T16-02-15-416Z.zip)
+An exe app (BETA) was added: [Dowland](https://theredmineword.github.io/exe/dowland/init)
 
 
 

@@ -1,0 +1,130 @@
+{
+  "originalFile": "GWENT.zip",
+  "totalSize": 121982147,
+  "fragmentCount": 24,
+  "fragmentSize": 5242880,
+  "sha256": "3d81dd51b1c38ebebffb0511b3f6eaaf6fe27789385b7be072494e708405032a",
+  "createdAt": "2026-05-13T14:08:50.934Z",
+  "fragments": [
+    {
+      "id": 0,
+      "file": "fragment_map/fragment0.bin",
+      "size": 5242880
+    },
+    {
+      "id": 1,
+      "file": "fragment_map/fragment1.bin",
+      "size": 5242880
+    },
+    {
+      "id": 2,
+      "file": "fragment_map/fragment2.bin",
+      "size": 5242880
+    },
+    {
+      "id": 3,
+      "file": "fragment_map/fragment3.bin",
+      "size": 5242880
+    },
+    {
+      "id": 4,
+      "file": "fragment_map/fragment4.bin",
+      "size": 5242880
+    },
+    {
+      "id": 5,
+      "file": "fragment_map/fragment5.bin",
+      "size": 5242880
+    },
+    {
+      "id": 6,
+      "file": "fragment_map/fragment6.bin",
+      "size": 5242880
+    },
+    {
+      "id": 7,
+      "file": "fragment_map/fragment7.bin",
+      "size": 5242880
+    },
+    {
+      "id": 8,
+      "file": "fragment_map/fragment8.bin",
+      "size": 5242880
+    },
+    {
+      "id": 9,
+      "file": "fragment_map/fragment9.bin",
+      "size": 5242880
+    },
+    {
+      "id": 10,
+      "file": "fragment_map/fragment10.bin",
+      "size": 5242880
+    },
+    {
+      "id": 11,
+      "file": "fragment_map/fragment11.bin",
+      "size": 5242880
+    },
+    {
+      "id": 12,
+      "file": "fragment_map/fragment12.bin",
+      "size": 5242880
+    },
+    {
+      "id": 13,
+      "file": "fragment_map/fragment13.bin",
+      "size": 5242880
+    },
+    {
+      "id": 14,
+      "file": "fragment_map/fragment14.bin",
+      "size": 5242880
+    },
+    {
+      "id": 15,
+      "file": "fragment_map/fragment15.bin",
+      "size": 5242880
+    },
+    {
+      "id": 16,
+      "file": "fragment_map/fragment16.bin",
+      "size": 5242880
+    },
+    {
+      "id": 17,
+      "file": "fragment_map/fragment17.bin",
+      "size": 5242880
+    },
+    {
+      "id": 18,
+      "file": "fragment_map/fragment18.bin",
+      "size": 5242880
+    },
+    {
+      "id": 19,
+      "file": "fragment_map/fragment19.bin",
+      "size": 5242880
+    },
+    {
+      "id": 20,
+      "file": "fragment_map/fragment20.bin",
+      "size": 5242880
+    },
+    {
+      "id": 21,
+      "file": "fragment_map/fragment21.bin",
+      "size": 5242880
+    },
+    {
+      "id": 22,
+      "file": "fragment_map/fragment22.bin",
+      "size": 5242880
+    },
+    {
+      "id": 23,
+      "file": "fragment_map/fragment23.bin",
+      "size": 1395907
+    }
+  ]
+}

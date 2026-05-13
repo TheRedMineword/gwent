@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>GWENT Downloader</title>
+	<link rel="icon" href="https://theredmineword.github.io/GWENT/favicon.ico">
+	<meta charset="utf-8" />
+	<meta name="author" content="Arun Sundaram, Leo-Felde, DrMineword" />
+	<meta name="description" content="Play the Gwent minigame from The Witcher 3 against your friends in your browser!" />
+	<meta name="theme-color" content="#DAA520">
+	<meta property="og:image" content="https://theredmineword.github.io/GWENT/img/web/bar.png" />
+	<meta property="og:image:width" content="16000">
+	<meta property="og:image:height" content="690">
+
+	<meta property="og:type" content="website">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<style>
+:root{
+    --bg:#0b0f0a;
+    --card:#151812;
+    --gold:#CE8D09;
+    --gold2:#CF8E09;
+    --green:#227B1B;
+    --green-dark:#1D5D1A;
+    --brown:#332F16;
+    --text:#f5f2e8;
+    --muted:#bdb7a3;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+
+    font-family:Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+
+    background:
+        radial-gradient(circle at top, rgba(206,141,9,0.15), transparent 35%),
+        radial-gradient(circle at bottom, rgba(34,123,27,0.18), transparent 35%),
+        linear-gradient(135deg, #050705 0%, #0c1209 100%);
+
+    color:var(--text);
+}
+
+/* Decorative glow */
+body::before{
+    content:"";
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle, rgba(206,141,9,0.08), transparent 70%);
+    filter:blur(40px);
+    z-index:0;
+}
+
+.container{
+    position:relative;
+    z-index:1;
+
+    width:540px;
+    padding:36px;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(51,47,22,0.92),
+            rgba(21,24,18,0.96)
+        );
+
+    border:1px solid rgba(206,141,9,0.25);
+
+    box-shadow:
+        0 0 60px rgba(0,0,0,0.55),
+        0 0 30px rgba(206,141,9,0.08);
+
+    backdrop-filter:blur(10px);
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    margin-bottom:30px;
+}
+
+.logo{
+    width:72px;
+    height:72px;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--gold),
+            var(--green)
+        );
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    box-shadow:
+        0 0 20px rgba(206,141,9,0.25),
+        inset 0 0 12px rgba(255,255,255,0.08);
+}
+
+.logo img{
+    width:42px;
+    height:42px;
+    object-fit:contain;
+}
+
+h1{
+    margin:0;
+    font-size:32px;
+    font-weight:800;
+    letter-spacing:1px;
+}
+
+.subtitle{
+    margin-top:6px;
+    color:var(--muted);
+    font-size:14px;
+    letter-spacing:0.5px;
+}
+
+.download-card{
+    padding:22px;
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.03),
+            rgba(255,255,255,0.01)
+        );
+
+    border:1px solid rgba(255,255,255,0.06);
+}
+
+.file-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    margin-bottom:18px;
+}
+
+.file-name{
+    font-size:18px;
+    font-weight:700;
+}
+
+.file-type{
+    padding:6px 12px;
+    border-radius:999px;
+
+    background:rgba(34,123,27,0.2);
+    border:1px solid rgba(34,123,27,0.4);
+
+    color:#a8f0a0;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1px;
+}
+
+button{
+    width:100%;
+    border:none;
+    border-radius:16px;
+
+    padding:16px;
+
+    cursor:pointer;
+
+    font-size:17px;
+    font-weight:800;
+    letter-spacing:0.8px;
+
+    color:white;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold2)
+        );
+
+    transition:all 0.25s ease;
+
+    box-shadow:
+        0 10px 24px rgba(206,141,9,0.28);
+}
+
+button:hover{
+    transform:translateY(-2px);
+    filter:brightness(1.05);
+
+    box-shadow:
+        0 14px 30px rgba(206,141,9,0.38);
+}
+
+button:disabled{
+    opacity:0.65;
+    cursor:not-allowed;
+    transform:none;
+}
+
+.progress-box{
+    margin-top:24px;
+}
+
+.progress-top{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+
+    font-size:14px;
+    color:var(--muted);
+}
+
+.progress-bar{
+    width:100%;
+    height:18px;
+
+    overflow:hidden;
+
+    border-radius:999px;
+
+    background:#0d120c;
+
+    border:1px solid rgba(255,255,255,0.05);
+
+    box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.4);
+}
+
+.progress-fill{
+    width:0%;
+    height:100%;
+
+    border-radius:999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--green-dark),
+            var(--green),
+            var(--gold)
+        );
+
+    box-shadow:
+        0 0 14px rgba(34,123,27,0.45);
+
+    transition:width 0.2s ease;
+}
+
+#status{
+    margin-top:16px;
+    font-size:15px;
+    font-weight:600;
+}
+
+.info{
+    margin-top:10px;
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+}
+
+.footer{
+    margin-top:28px;
+    text-align:center;
+    color:#7f7a68;
+    font-size:12px;
+    letter-spacing:1px;
+}
+
+/* Subtle animated shine */
+.container::after{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            120deg,
+            transparent 20%,
+            rgba(255,255,255,0.03) 40%,
+            transparent 60%
+        );
+
+    pointer-events:none;
+}
+
+@media(max-width:600px){
+    .container{
+        width:92%;
+        padding:24px;
+    }
+
+    h1{
+        font-size:26px;
+    }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+        <div class="logo">
+            <img src="./dowland_icon.png" alt="GWENT">
+        </div>
+
+
+        <div>
+            <h1>Gwent Downloader</h1>
+            <div class="subtitle">
+                The zip file contains GWENT.exe and all the necessary resources, mainly Chromium
+            </div>
+        </div>
+    </div>
+
+    <div class="download-card">
+
+        <div class="file-row">
+            <div class="file-name">
+                GWENT.zip
+            </div>
+        </div>
+
+        <button id="downloadBtn">
+            DOWNLOAD
+        </button>
+
+        <div class="progress-box">
+
+            <div class="progress-top">
+                <span>Download Progress</span>
+                <span id="percentText">0%</span>
+            </div>
+
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="status">
+                Waiting to start...
+            </div>
+
+            <div class="info" id="info"></div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+        Oryginal Multiplayer Version Made By @Rickvs64
+    </div>
+
+</div>
+
+<script>
+const progressFill = document.getElementById('progressFill');
+const statusText = document.getElementById('status');
+const infoText = document.getElementById('info');
+const downloadBtn = document.getElementById('downloadBtn');
+const percentText = document.getElementById('percentText');
+
+function formatBytes(bytes) {
+    const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+
+    if (bytes === 0) return '0 Byte';
+
+    const i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+
+    return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+}
+
+async function downloadFragments() {
+
+    downloadBtn.disabled = true;
+
+    statusText.innerText = 'Loading package index...';
+
+    const indexResponse = await fetch('index.json');
+    const indexData = await indexResponse.json();
+
+    const totalFragments = indexData.fragmentCount;
+    const totalSize = indexData.totalSize;
+
+    infoText.innerHTML = `
+        Total Size: <strong>${formatBytes(totalSize)}</strong><br>
+        Fragments: <strong>${totalFragments}</strong>
+    `;
+
+    const chunks = [];
+    let downloadedBytes = 0;
+
+    for (let i = 0; i < totalFragments; i++) {
+
+        const fragment = indexData.fragments[i];
+
+        statusText.innerText =
+            `Downloading fragment ${i + 1} of ${totalFragments}`;
+
+        const response = await fetch(fragment.file);
+
+        const arrayBuffer = await response.arrayBuffer();
+
+        chunks.push(arrayBuffer);
+
+        downloadedBytes += fragment.size;
+
+        const percent = (
+            downloadedBytes / totalSize
+        ) * 100;
+
+        progressFill.style.width = `${percent}%`;
+
+        percentText.innerText =
+            `${Math.floor(percent)}%`;
+
+        statusText.innerText =
+            `Downloaded ${formatBytes(downloadedBytes)} / ${formatBytes(totalSize)}`;
+    }
+
+    statusText.innerText = 'Assembling ZIP package...';
+
+    const blob = new Blob(chunks, {
+        type: 'application/zip'
+    });
+
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = indexData.originalFile;
+
+    document.body.appendChild(a);
+
+    a.click();
+
+    a.remove();
+
+    URL.revokeObjectURL(url);
+
+    progressFill.style.width = '100%';
+
+    percentText.innerText = '100%';
+
+    statusText.innerText = 'Download Complete';
+
+    downloadBtn.disabled = false;
+}
+
+downloadBtn.addEventListener(
+    'click',
+    downloadFragments
+);
+</script>
+
+</body>
+</html>
