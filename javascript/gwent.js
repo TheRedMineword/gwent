@@ -649,7 +649,61 @@ op_counter.innerHTML = player_op.hand.cards.length
 
 
 
+async function sunlightEffect(duration = 1900) {
+	const sun = document.createElement("div");
 
+	sun.style.position = "fixed";
+	sun.style.top = "0";
+	sun.style.left = "0";
+
+	sun.style.width = "40vw";
+	sun.style.height = "40vw";
+
+	sun.style.pointerEvents = "none";
+	sun.style.zIndex = "999999999999";
+
+	sun.style.background = `
+		radial-gradient(
+			circle at top left,
+			rgba(255,255,220,0.95) 0%,
+			rgba(255,240,180,0.55) 18%,
+			rgba(255,220,120,0.18) 35%,
+			rgba(255,255,255,0) 60%
+		)
+	`;
+
+	sun.style.filter = "blur(6px)";
+	sun.style.mixBlendMode = "screen";
+
+	// remove scaling animation
+	sun.style.opacity = "0";
+	sun.style.transition = "opacity 0.35s ease";
+
+	document.body.appendChild(sun);
+
+	await sleep(20);
+
+	// fade in only
+	sun.style.opacity = "1";
+
+	let pulse = setInterval(() => {
+		sun.style.filter =
+			Math.random() > 0.5
+				? "blur(8px)"
+				: "blur(5px)";
+	}, 120);
+
+	await sleep(duration - 500);
+
+	clearInterval(pulse);
+
+	// fade out only
+	sun.style.opacity = "0";
+
+	await sleep(400);
+
+	sun.remove();
+}
 
 
 function fillCardElements (cards, player) {
@@ -1237,6 +1291,18 @@ class Row extends CardContainer {
 	
 	// Override
 	async addCard(card) {
+//		console.log("ADD CARD", card);
+		if (card.hero){
+			var card_info = `${JSON.stringify({"a": card.faciton + "_" + card.filename, "b": card.holder.id, "c": card.holder.tag, "d": card.name, "f": card.row })}-${gameID}`;
+			var card_id_for_hero = card_info;
+			if (!herocardsdb.includes(card_id_for_hero)) {
+			    herocardsdb.push(card_id_for_hero);
+			    if (herocardanim === true) {
+			        console.log("NEW HERO", card, card_id_for_hero, card_info, " ARRAY NOW", herocardsdb);
+					card.animate2("hero");
+			    }
+			}
+		}
 		if (card.isSpecial()) {
 			this.special = card;
 			this.elem_special.appendChild(card.elem);
@@ -1389,18 +1455,6 @@ calcCardScore_work(card) {
 		}
 		// card.animate("powergain");
 		if (card.hero)
-			var card_info = `${JSON.stringify({"a": card.faciton + "_" + card.filename, "b": card.holder.id, "c": card.holder.tag, "d": card.name, "f": card.row })}-${gameID}`;
-		var card_id_for_hero = card_info;
-			if (!herocardsdb.includes(card_id_for_hero)) {
-    herocardsdb.push(card_id_for_hero);
-	if (herocardanim === true){
-	console.log("NEW HERO", card, card_id_for_hero, card_info, " ARRAY NOW", herocardsdb);
-
-    // run your command here
-				card.animate("hero");
-}
-}
-
 			return total;
 		if (this.effects.weather) 
 			total = Math.min(1, total);
@@ -1517,6 +1571,8 @@ class Weather extends CardContainer {
 		card.elem.classList.add("noclick");
 		if (card.name === "Clear Weather"){
 			// TODO Sunlight animation
+			sunlightEffect();
+			// idk what it is
 			tocar("clear", false);
 			await sleep(500);
 			this.clearWeather();
@@ -2151,7 +2207,8 @@ class Card {
 			"bond" : "moral",
 			"powergain": "moral", //no audio
 			"darkstrom": "moral",
-			"Avenger": "avenger"
+			"Avenger": "avenger",
+			"hero": "hero_anim"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
@@ -2164,6 +2221,10 @@ class Card {
 		}
 		let anim = this.elem.children[3];
 		anim.style.backgroundImage = iconURL("anim_" + name);
+		anim.style.position = "absolute";
+		anim.style.inset = "0";
+		anim.style.zIndex = "50";
+		// console.log("ANIM", anim);
 		await sleep(50);
 		
 		if (bFade) fadeIn(anim, 300);
@@ -2178,7 +2239,93 @@ class Card {
 		await sleep(300);
 		
 		anim.style.backgroundImage = "";
+		return;
 	}
+
+	async animate2(name, bFade = true) {
+	const guia = {
+		"medic": "med",
+		"muster": "ally",
+		"morale": "moral",
+		"bond": "moral",
+		"powergain": "moral",
+		"darkstrom": "moral",
+		"Avenger": "avenger",
+		"hero": "hero_anim"
+	};
+
+	const literais = [
+		"scorch",
+		"spy",
+		"horn",
+		"shield",
+		"lock",
+		"seize",
+		"knockback",
+		"resilience"
+	];
+
+	let som = "";
+
+	if (literais.includes(name)) {
+		som = name;
+	} else if (guia[name]) {
+		som = guia[name];
+	}
+
+	if (som) tocar(som, false);
+
+	// IMPORTANT
+	if (getComputedStyle(this.elem).position === "static") {
+		this.elem.style.position = "relative";
+	}
+
+	// create overlay
+	const anim = document.createElement("div");
+	// console.log("ANIM2", anim);
+	anim.style.width = "100%";
+anim.style.height = "100%";
+
+anim.style.backgroundSize = "contain";
+anim.style.backgroundRepeat = "no-repeat";
+anim.style.backgroundPosition = "center";
+
+anim.style.position = "absolute";
+anim.style.top = "0";
+anim.style.left = "0";
+
+	// IMPORTANT
+	anim.style.backgroundColor = "transparent";
+
+	anim.style.backgroundImage = iconURL("anim_" + name);
+	anim.style.backgroundRepeat = "no-repeat";
+	anim.style.backgroundPosition = "center";
+
+	// use contain instead of cover
+	anim.style.backgroundSize = "contain";
+
+	anim.style.pointerEvents = "none";
+
+	// IMPORTANT
+	anim.style.zIndex = "49";
+
+	// opacity
+	anim.style.opacity = bFade ? "0" : "1";
+
+	this.elem.appendChild(anim);
+
+	await sleep(50);
+
+	if (bFade) fadeIn(anim, 300);
+
+	await sleep(1300);
+
+	if (bFade) fadeOut(anim, 300);
+
+	await sleep(300);
+
+	anim.remove();
+}
 	
 	// Animates the scorch effect
 	async scorch(name){

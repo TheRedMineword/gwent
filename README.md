@@ -25,6 +25,7 @@ https://fontmeme.com/fonts/gwent-font/
 - Game waiting for both players ready: [INFO](https://github.com/TheRedMineword/GWENT/blob/main/sfx/oldgwent)
 - Gaunter necromance sound effect: Start of "Geralt of Rivia - Sonya Belousova & Giona Ostinelli"
 - Avenger card sound effect: https://pixabay.com/pl/sound-effects/przera%c5%bcenie-beast-growl-494304/
+- Hero cards place sound effect: https://pixabay.com/pl/sound-effects/filmy-i-efekty-specjalne-burn-flesh-01-266302/
 
 
 # Sky Kindom Faction

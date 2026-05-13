@@ -31,7 +31,7 @@ let queueRunning = false;
 
 
 let herocardsdb = [];
-const herocardanim = false; // Disabled before i can fix aniamtion to be schorch like
+const herocardanim = true; // Disabled before i can fix aniamtion to be schorch like
 let gameID = 0;
 
 const SEND_INTERVAL_MS = 700; // change this to desired wait time

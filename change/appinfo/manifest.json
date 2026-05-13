@@ -1,6 +1,6 @@
 {
-  "sha": "da853e29bc6938d7e48af65f0420722c8e55a302d18376a72929947011bd2ea0",
-  "generatedAt": "2026-05-12T19:10:30.085Z",
+  "sha": "58dacd65f181685fec01065857519514486b51bc7f2ddd85f9d665694cf37179",
+  "generatedAt": "2026-05-13T07:06:17.561Z",
   "files": [
     {
       "path": "404.html",
@@ -24,8 +24,8 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "d084373d4b74dd42490858754540a84548ae0ef5e7606385a56ec312ab43b431",
-      "size": 23
+      "sha256": "8091fb430ab170f637664eb68d1d9814aa99ccfe6dd8b9cb6787ff4211f562be",
+      "size": 25
     },
     {
       "path": "change/log-ai-summary-becuase-i-did-a-lot-of-github-commits.txt",
@@ -66,6 +66,11 @@
       "path": "change/log-update6.txt",
       "sha256": "5d37e7b41760282895fac25b2cad38378cb0bdc2d1ff8277504a811ac1414674",
       "size": 194
+    },
+    {
+      "path": "change/log-update7.1.txt",
+      "sha256": "dfdf4207b8e80c3e9f39f2378fc0cf8d476620ab3e6d7b3c400517ec9e5e9ff6",
+      "size": 74
     },
     {
       "path": "change/log-update7.txt",
@@ -134,8 +139,8 @@
     },
     {
       "path": "img/icons/anim_hero.png",
-      "sha256": "425219f84dd98b853f09db8517810ef6c9fcfe9ead79d96c1571719006bb6513",
-      "size": 9880
+      "sha256": "b3d50c4c975c99f92bcce4f88f460b96f865693108d7b4fb995583b36e73153d",
+      "size": 10797
     },
     {
       "path": "img/icons/anim_horn.png",
@@ -656,6 +661,11 @@
       "path": "img/icons/score_total_op.png",
       "sha256": "ab7e5e4e147d55395ad5cfd58b3e5543a249067aa610283ba2b03898016bfaea",
       "size": 8199
+    },
+    {
+      "path": "img/icons/sunlight.png",
+      "sha256": "357707522719987390a443eac7eba334ca23211e9ed5efe26157e8cd76306cf2",
+      "size": 2244
     },
     {
       "path": "img/lg/faction_monsters.jpg",
@@ -3124,8 +3134,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "a0ab212a4bc0d1db9eb1c38191bf8e011402000589686edb54e53eaf36f770fc",
-      "size": 5893
+      "sha256": "a8222988a4286d3e2fffda8fe44673d14476e936e2cc875f4b3aabda357224d4",
+      "size": 5892
     },
     {
       "path": "javascript/factions.js",
@@ -3134,8 +3144,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "bda50d66021d004781b41fc581b3d1a03c2cf74eb9694d71898e8fcfb73f36c4",
-      "size": 129626
+      "sha256": "fcc44b98db6a81810f05650bc37e9576e98abf00877399fac51bd5e76b62a562",
+      "size": 132460
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3174,8 +3184,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "c22320352c70715a38f195d2ef1826dfdab6ab9abb724c2bc6e86a5dce0a45f4",
-      "size": 2796
+      "sha256": "e0e599e68c13e97927ba71b3909100c4083e28580b05b188085e9de8e4f2bba3",
+      "size": 2913
     },
     {
       "path": "rules.css",
@@ -3283,6 +3293,11 @@
       "size": 87046
     },
     {
+      "path": "sfx/hero_anim.mp3",
+      "sha256": "380607aad802ec85059b3cf877c00bb86b06c87d0badf6cbffdd2e6ba3840134",
+      "size": 56064
+    },
+    {
       "path": "sfx/hero.mp3",
       "sha256": "53e82b29b087555f45efbdf331b86e46275f465d022d34b68a236bce770229ba",
       "size": 44829
@@ -3339,8 +3354,8 @@
     },
     {
       "path": "sfx/packed.zip",
-      "sha256": "942e9463f6ba4fca666394757e798b21a77dbe008e18cfd018f7b05c91be1a5f",
-      "size": 2294719
+      "sha256": "947c6c0cd98b3eff1381a61050c12ce9d3d491855159e28329aa5a75d6918746",
+      "size": 2350219
     },
     {
       "path": "sfx/pass.mp3",
