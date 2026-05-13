@@ -12,9 +12,76 @@ menuBtn.onclick = () => {
 };
 
 
-document.getElementById("join-game").onclick = () => {
-    const code = prompt("Enter Session ID:");
+function askForSessionId() {
+    return new Promise((resolve) => {
+        // overlay background
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = "9999";
 
+        // dialog box
+        const box = document.createElement("div");
+        box.style.background = "white";
+        box.style.padding = "20px";
+        box.style.borderRadius = "10px";
+        box.style.minWidth = "250px";
+        box.style.textAlign = "center";
+
+        // input
+        const input = document.createElement("input");
+        input.type = "text";
+        input.placeholder = "Enter Session ID";
+        input.style.width = "100%";
+        input.style.marginBottom = "10px";
+
+        // buttons
+        const ok = document.createElement("button");
+        ok.textContent = "Join";
+        ok.style.marginRight = "10px";
+
+        const cancel = document.createElement("button");
+        cancel.textContent = "Cancel";
+
+        function cleanup(value) {
+            document.body.removeChild(overlay);
+            resolve(value);
+        }
+
+        ok.onclick = () => {
+            const value = input.value.trim();
+            cleanup(value || null);
+        };
+
+        cancel.onclick = () => cleanup(null);
+
+        // allow Enter key
+        input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") ok.click();
+            if (e.key === "Escape") cancel.click();
+        });
+
+        // assemble
+        box.appendChild(input);
+        box.appendChild(ok);
+        box.appendChild(cancel);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        input.focus();
+    });
+}
+
+
+document.getElementById("join-game").onclick = async () => {
+    const code = await askForSessionId();
     if (!code) return;
 
     comp_and_send(socket, JSON.stringify({
