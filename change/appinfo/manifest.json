@@ -1,6 +1,6 @@
 {
-  "sha": "7b05fb849a3fcb1377b3e2717f9918f2eee74788e3905f31f4f7ccab4897bd2c",
-  "generatedAt": "2026-05-14T06:41:45.467Z",
+  "sha": "96c66ae0ab714d98b915164997af5d7e45ff5e4f70bd401527b72445626fa728",
+  "generatedAt": "2026-05-14T13:05:31.590Z",
   "files": [
     {
       "path": "404.html",
@@ -118,7 +118,7 @@
       "size": 494975
     },
     {
-      "path": "img/icons/anim_avenger.png",
+      "path": "img/icons/anim_Avenger.png",
       "sha256": "36cdb6fdcf4ab42754f5cbbd428f1aa391e5eecbd98c0bcd429d1bb052634e30",
       "size": 17008
     },
@@ -3174,8 +3174,8 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "e40a4e77cfb4d2b0f165ce5517a8b7a37598151480607294e673358755e72e9b",
-      "size": 36636
+      "sha256": "eba95f25674cdb8024c3ef0b6cf148a6f1d1d1f6d6289bf55eb40f815588861a",
+      "size": 36856
     },
     {
       "path": "javascript/cards.js",
@@ -3204,8 +3204,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "bcae65a4189024c4dc4222e46019cee78800383a0025bc78c12cc4fde10fef71",
-      "size": 134857
+      "sha256": "d3d26f387248deb9c4cc5022bbe75b38e95398e1b39ee31ccdc3cf8f09d80f93",
+      "size": 134887
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3244,7 +3244,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "73200c18f7a81532e18c514ac059b8d4454ade05bcd11b44c0843c30ee4695dd",
+      "sha256": "53228e7b9c37745198021fa44ff375ab8b27bc95b570a6d79f7b52e0010a339f",
       "size": 2965
     },
     {

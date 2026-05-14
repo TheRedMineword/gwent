@@ -1489,12 +1489,7 @@ calcCardScore_work(card) {
 			return card.basePower;
 			}
 		}
-		if (this.cards.some(c => c.filename === "axii")) {
-					if (0 < total && total < axii.IfBasePowerUnder) {
-						total = total - axii.TakeAway
-					}
-		}
-		if (this.cards.some(c => c.filename === "axii_p")) {
+		if (this.cards.some(c => c.filename === "axii" || c.filename === "axii_p")) {
 					if (0 < total && total < axii.IfBasePowerUnder) {
 						total = total - axii.TakeAway
 					}
@@ -3116,6 +3111,12 @@ async notificationLoop() {
 			for (let i=0; i<6; ++i) {
 				let r = board.row[i];
 				let units = r.cards.filter(c => c.isUnit());
+				units = units.filter(unit =>
+    !unit.abilities.some(ability =>
+        NotPickUpAbilities.includes(ability)
+    )
+)
+				console.log("DECOY UNITS", units)
 				if (i < 3 || units.length === 0) {
 					r.elem.classList.add("noclick");
 					r.elem_special.classList.add("noclick");

@@ -5,7 +5,7 @@ function findAvengerTarget(cardName) {
 	return card_dict.find(c => c.avenger === cardName);
 }
 
-
+const NotPickUpAbilities = ["axii2_desc", "gryffinSchool", "magicthegathering"];
 
 var ability_dict = {
 	clear: {
@@ -248,7 +248,7 @@ if (card.holder.id === player_op.id) {
 	},
 	gryffinSchool: {
 	name: "Griffin School",
-	description: "Choose one Witcher Sign card and add it to your hand.",
+	description: "Choose one Witcher Sign card and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! ",
 	placed: async (card) => {
 		let wrapper = { card: null };
 
@@ -302,7 +302,7 @@ card.animate(gryffinschool_conf.anim);
 },
 	magicthegathering: {
 	name: "Magic Gathering",
-	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand.`,
+	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! `,
 	placed: async (card) => {
 		let wrapper = { card: null };
 

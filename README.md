@@ -25,7 +25,7 @@ https://fontmeme.com/fonts/gwent-font/
 - Game waiting for both players ready: [INFO](https://github.com/TheRedMineword/GWENT/blob/main/sfx/oldgwent)
 - Gaunter necromance sound effect: Start of "Geralt of Rivia - Sonya Belousova & Giona Ostinelli"
 - Avenger card sound effect: https://pixabay.com/pl/sound-effects/przera%c5%bcenie-beast-growl-494304/
-- Hero cards place sound effect: https://mixkit.co/free-sound-effects/fire/ ((Short fire whoosh)[https://assets.mixkit.co/active_storage/sfx/1345/1345-preview.mp3])
+- Hero cards place sound effect: https://mixkit.co/free-sound-effects/fire/ ([Short fire whoosh](https://assets.mixkit.co/active_storage/sfx/1345/1345-preview.mp3))
 - Gryffin School icon: https://www.deviantart.com/ari-m94/art/THE-WITCHER-SCHOOL-OF-THE-GRIFFIN-LOGO-1035014639
 
 
