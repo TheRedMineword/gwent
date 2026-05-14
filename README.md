@@ -27,6 +27,7 @@ https://fontmeme.com/fonts/gwent-font/
 - Avenger card sound effect: https://pixabay.com/pl/sound-effects/przera%c5%bcenie-beast-growl-494304/
 - Hero cards place sound effect: https://mixkit.co/free-sound-effects/fire/ ([Short fire whoosh](https://assets.mixkit.co/active_storage/sfx/1345/1345-preview.mp3))
 - Gryffin School icon: https://www.deviantart.com/ari-m94/art/THE-WITCHER-SCHOOL-OF-THE-GRIFFIN-LOGO-1035014639
+- Conjunction of the Spheres sound effect: https://pixabay.com/sound-effects/film-special-effects-warp-magic-2-382390/
 
 
 # Sky Kindom Faction

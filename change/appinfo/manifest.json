@@ -1,6 +1,6 @@
 {
-  "sha": "d659b8d596991405c5251337f5d49d5e1bab6de68883080fc6feb3a2cae9d205",
-  "generatedAt": "2026-05-14T13:17:03.026Z",
+  "sha": "2f342bb1a03f11790377c593531446a66758b41149930116a6839c13cde16992",
+  "generatedAt": "2026-05-14T16:44:00.259Z",
   "files": [
     {
       "path": "404.html",
@@ -24,7 +24,7 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "10f0d94e0d455b4d834f51a0546136e3e4c64f7f422c83f7eaff152d19b2148f",
+      "sha256": "5b4bc014801d9d2906dd6d4901d0e98fac02132b37dc72af3f3251ff90576d6d",
       "size": 23
     },
     {
@@ -81,6 +81,11 @@
       "path": "change/log-update8.txt",
       "sha256": "4d503cdc8e19ba1f789d50df150481f0edde67d5ce17c4c02e2054480bee168a",
       "size": 190
+    },
+    {
+      "path": "change/log-update9.txt",
+      "sha256": "a2a03ac2518b8806258da2184b1477b941fb28138fa584b5de009f4f27bd087f",
+      "size": 126
     },
     {
       "path": "debug_info.txt",
@@ -174,13 +179,13 @@
     },
     {
       "path": "img/icons/anim_mtg_hand.png",
-      "sha256": "2cf62c88f6eda87e80f274b5843612bb21c250495c3cfe4019cec49811bfb604",
-      "size": 12655
+      "sha256": "26c1ea413f72ca1eb8d507b3d5cb9b0bce0dfd6712c9d9d1c916261a5945128c",
+      "size": 6923
     },
     {
       "path": "img/icons/anim_mtg.png",
-      "sha256": "9b2ef998dee95c87e10e468affef01b7821b0af5264ac6dc6f842afd974ef385",
-      "size": 5886
+      "sha256": "6a7ce03f4ba0cd0336baa6b1269ef011eec4df542483771f63af2b16f2a6db8d",
+      "size": 3658
     },
     {
       "path": "img/icons/anim_muster.png",
@@ -191,6 +196,11 @@
       "path": "img/icons/anim_powergain.png",
       "sha256": "f5d4ac6044ba40345e86249216fa742d3e3e76d68b76059d291b773d9754fd44",
       "size": 1053
+    },
+    {
+      "path": "img/icons/anim_sab.png",
+      "sha256": "4346b6f1edff30493c2d64e55d2b1f960e237bb2fd7ec46c4d09c71e668fe9d9",
+      "size": 12927
     },
     {
       "path": "img/icons/anim_scorch.png",
@@ -266,6 +276,11 @@
       "path": "img/icons/card_ability_horn.png",
       "sha256": "a0e5703f5329967e5ffe6b2a3bba926eb33e0470f90d53ebd35719b70d353a70",
       "size": 21591
+    },
+    {
+      "path": "img/icons/card_ability_magicthegathering.png",
+      "sha256": "6ae69c036f08a7e283b79ceae81c65c52c470f487ca846841c1262872d21d473",
+      "size": 10728
     },
     {
       "path": "img/icons/card_ability_mardroeme.png",
@@ -991,6 +1006,11 @@
       "path": "img/lg/neutral_ciri.jpg",
       "sha256": "27c0b238a9cd67b9b6f98cab804769cd29d06b9d07ed7fdc65b7e0a21f4da7a5",
       "size": 94386
+    },
+    {
+      "path": "img/lg/neutral_cos.jpg",
+      "sha256": "8c3ef1363197605d1458eff6d64c814a95c829d8599312668a61fb3d4436a34f",
+      "size": 158704
     },
     {
       "path": "img/lg/neutral_cow.jpg",
@@ -2203,6 +2223,11 @@
       "size": 41093
     },
     {
+      "path": "img/sm/neutral_cos.jpg",
+      "sha256": "0ddcda2d20bfee454373bcfa53edc9a6155bf5d9d7aedb6e50aa85517a34ed6c",
+      "size": 82390
+    },
+    {
       "path": "img/sm/neutral_cow.jpg",
       "sha256": "9d303f0121d9b18d0cc477e646a1f661e3e9fd9c6420de7970dec57ce00ed59d",
       "size": 48703
@@ -3174,13 +3199,13 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "eed435c64419a70690451b1e6e2acaf55a491e906df51dd405eca5d105307520",
-      "size": 36871
+      "sha256": "30374036641d552717340f1b9c42992b4a45eb66adc60e32ac2f9a209294e12c",
+      "size": 36882
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "85b430c5d3a66eaea7174a386d56e411600bc380a1e107664428824fbb644839",
-      "size": 55987
+      "sha256": "c34dca621b0ccb450dd18eedea55a0610d03f2813aa51def67452bb480d1f4db",
+      "size": 55994
     },
     {
       "path": "javascript/chat.js",
@@ -3204,8 +3229,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "f18967ced5523dc0563e703e03d3f073cb864fa1c44488fdff24d1cc9ba7cb72",
-      "size": 134917
+      "sha256": "130e8672008e454e51e6c491adac82848de752e13324a5a4981626653417aa77",
+      "size": 134950
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3244,8 +3269,8 @@
     },
     {
       "path": "README.md",
-      "sha256": "53228e7b9c37745198021fa44ff375ab8b27bc95b570a6d79f7b52e0010a339f",
-      "size": 2965
+      "sha256": "eebc1c56ac8c221a2801d9a4574dcf8f86c8cba5458416ca7ae42ab0e59bc96c",
+      "size": 3084
     },
     {
       "path": "rules.css",
@@ -3301,6 +3326,11 @@
       "path": "sfx/common3.mp3",
       "sha256": "02b656d1ae414e7dc461725e77ecd4d24264e59bec53c75055d7113cf85313c2",
       "size": 38022
+    },
+    {
+      "path": "sfx/cos.mp3",
+      "sha256": "2fb49935599a6aa13d74f224c4b257ec5fcf0e569717fffa07f795a3f567579b",
+      "size": 257280
     },
     {
       "path": "sfx/darknessishere.mp3",
@@ -3414,8 +3444,8 @@
     },
     {
       "path": "sfx/packed.zip",
-      "sha256": "cb489bacf90be80e0612cb88be946d106f99985fabfcd4d68082bf5ccdbe281e",
-      "size": 2367353
+      "sha256": "03668241f581d6c7478ecc5540f9aaf7bd24acda955a4ea4024590d9e7d2b5b7",
+      "size": 2623003
     },
     {
       "path": "sfx/pass.mp3",

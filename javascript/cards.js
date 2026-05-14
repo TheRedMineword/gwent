@@ -2253,14 +2253,14 @@ var card_dict = [
         "count": "2"
     },
     {
-        "name": "magicthegathering",
+        "name": "Conjunction of the Spheres",
         "id": "1011",
         "deck": "neutral",
-        "row": "agile",
-        "strength": "2",
+        "row": "siege",
+        "strength": "0",
         "ability": "magicthegathering",
-        "filename": "magicthegathering",
-        "count": "0"
+        "filename": "cos",
+        "count": "9999999999999"
     },
     {
         "name": "witcher Signs: Axii",

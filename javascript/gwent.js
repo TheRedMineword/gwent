@@ -2276,7 +2276,8 @@ class Card {
 			"darkstrom": "moral",
 			"avenger_spawn_creature": "avenger",
 			"hero": "hero_anim",
-			"griffin": "moral"
+			"griffin": "moral",
+			"mtg": "cos"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
@@ -2320,7 +2321,8 @@ class Card {
 		"darkstrom": "moral",
 		"avenger_spawn_creature": "avenger",
 		"hero": "hero_anim",
-		"griffin": "moral"
+		"griffin": "moral",
+		"mtg": "cos"
 	};
 
 	const literais = [

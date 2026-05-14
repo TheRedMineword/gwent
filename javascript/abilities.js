@@ -149,7 +149,7 @@ var ability_dict = {
         name: "sabotage",
         description: `Send to enemy fields this cards to lower their score and draw extra ${spy.sabotage} card\(s\). `,
         placed: async (card) => {
-            await card.animate("spy");
+            await card.animate("sab");
             for (let i=0;i< spy.sabotage ;i++) {
                 if (card.holder.deck.cards.length > 0)
                     await card.holder.deck.draw(card.holder.hand);
@@ -301,7 +301,7 @@ card.animate(gryffinschool_conf.anim);
 }
 },
 	magicthegathering: {
-	name: "Magic Gathering",
+	name: "Conjunction of the Spheres",
 	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! `,
 	placed: async (card) => {
 		let wrapper = { card: null };
