@@ -249,7 +249,6 @@ if (card.holder.id === player_op.id) {
 	gryffinSchool: {
 	name: "Griffin School",
 	description: "Choose one Witcher Sign card and add it to your hand.",
-
 	placed: async (card) => {
 		let wrapper = { card: null };
 
@@ -300,6 +299,95 @@ card.holder.hand.addCard(created);
 created.animate(gryffinschool_conf.anim_hand);
 card.animate(gryffinschool_conf.anim);
 }
+},
+	magicthegathering: {
+	name: "Magic Gathering",
+	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand.`,
+	placed: async (card) => {
+		let wrapper = { card: null };
+
+		// Don't simulate opponent
+		if (player_me.id !== card.holder.id) {
+			card.animate(mtg_conf.anim);
+			console.log("Opponent played mtg, waiting for sync.");
+			return;
+		}
+
+		// Get cards directly from card_dict
+		let filteredCards = Object.values(card_dict)
+	.filter(c => {
+		let strength = Number(c.strength);
+		let count = Number(c.count);
+
+		return (
+			!isNaN(strength) &&
+			!isNaN(count) &&
+
+			count > mtg_conf.count_needed &&
+
+			strength > mtg_conf.min_power &&
+			strength < mtg_conf.max_power &&
+
+			c.row !== "leader" //&&
+			//c.deck !== "special" &&
+			//c.deck !== "weather" &&	//Lets keep that
+
+			//!c.witcher_sign &&
+			//!c.token &&
+			//!c.generated &&
+
+			//!c.ability?.includes("hero")
+		);
+	});
+
+		// Shuffle multiple times
+		for (let i = 0; i < 4; i++) {
+			filteredCards.sort(() => Math.random() - 0.5);
+		}
+		console.log("MTG CARDS ", filteredCards, " OR ", filteredCards.slice(0, mtg_conf.random_max));
+		
+		filteredCards = filteredCards.slice(0, mtg_conf.random_max);
+
+		if (filteredCards.length <= 0)
+			return;
+
+		// Create TEMP cards for preview carousel
+		let previewCards = filteredCards.map(data => {
+			return new Card(data, card.holder);
+		});
+
+		let container = {
+			cards: previewCards
+		};
+
+		await ui.queueCarousel(
+			container,
+			1,
+			(c, i) => wrapper.card = c.cards[i],
+			() => true,
+			true,
+			false,
+			mtg_conf.topic
+		);
+
+		let picked = wrapper.card;
+
+		if (!picked)
+			return;
+
+		// Create REAL spawned copy
+		let cardData = Object.values(card_dict)
+			.find(c => c.filename === picked.filename);
+
+		if (!cardData)
+			return;
+
+		let created = new Card(cardData, card.holder);
+
+		card.holder.hand.addCard(created);
+		created.animate(mtg_conf.anim_hand);
+		card.animate(mtg_conf.anim);
+	}
 },
 	medic: {
 		name: "medic",

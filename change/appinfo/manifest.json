@@ -1,6 +1,6 @@
 {
-  "sha": "189b0e5ffd6f50d1ad4e5dc1ad4410c683e0b7a0c5467de1c3e8444a5bbdd98b",
-  "generatedAt": "2026-05-13T16:15:12.580Z",
+  "sha": "7b05fb849a3fcb1377b3e2717f9918f2eee74788e3905f31f4f7ccab4897bd2c",
+  "generatedAt": "2026-05-14T06:41:45.467Z",
   "files": [
     {
       "path": "404.html",
@@ -171,6 +171,16 @@
       "path": "img/icons/anim_morale.png",
       "sha256": "95825668ba81b3dbf1ba8932a8486987881fa56d47b83b0251fd3f8a2082541d",
       "size": 12199
+    },
+    {
+      "path": "img/icons/anim_mtg_hand.png",
+      "sha256": "2cf62c88f6eda87e80f274b5843612bb21c250495c3cfe4019cec49811bfb604",
+      "size": 12655
+    },
+    {
+      "path": "img/icons/anim_mtg.png",
+      "sha256": "9b2ef998dee95c87e10e468affef01b7821b0af5264ac6dc6f842afd974ef385",
+      "size": 5886
     },
     {
       "path": "img/icons/anim_muster.png",
@@ -3164,13 +3174,13 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "075393892e4e124a8d226c918e63e5d44ed060f97c518b05f5b3c2d301cffb06",
-      "size": 34687
+      "sha256": "e40a4e77cfb4d2b0f165ce5517a8b7a37598151480607294e673358755e72e9b",
+      "size": 36636
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "e27b7dbb411c02d8527d9098c7d53e3d99a66ecf1342a1a0a854081003e107d3",
-      "size": 55737
+      "sha256": "85b430c5d3a66eaea7174a386d56e411600bc380a1e107664428824fbb644839",
+      "size": 55987
     },
     {
       "path": "javascript/chat.js",
@@ -3184,8 +3194,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "85ca21c5187e4df6efc2c9d64872c2f02db482039c12235106fcff13823ee4c6",
-      "size": 6007
+      "sha256": "1da7125f66911e40faa4f932b86df0718b86ff8357eef2cc62453d8d8b3824b3",
+      "size": 6203
     },
     {
       "path": "javascript/factions.js",

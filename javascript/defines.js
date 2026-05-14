@@ -129,7 +129,17 @@ const gryffinschool_conf = {
 	"anim": "griffin",
 	"anim_hand": "griffin_hand",
 	"topic": "Choose a Witcher Sign"
+};
+const mtg_conf = {
+	"anim": "mtg",
+	"anim_hand": "mtg_hand",
+	"topic": "Pick a card to draw",
+	"random_max": 25,
+	"min_power": -7,
+	"max_power": 10,
+	"count_needed": 0 // count > count_needed
 }
+
 
 const audio_cache = {};
 let buttonmutemode = 1;

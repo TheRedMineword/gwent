@@ -2253,6 +2253,16 @@ var card_dict = [
         "count": "2"
     },
     {
+        "name": "magicthegathering",
+        "id": "1011",
+        "deck": "neutral",
+        "row": "agile",
+        "strength": "2",
+        "ability": "magicthegathering",
+        "filename": "magicthegathering",
+        "count": "0"
+    },
+    {
         "name": "witcher Signs: Axii",
         "id": "1011",
         "deck": "neutral",
