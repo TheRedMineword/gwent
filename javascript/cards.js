@@ -2260,7 +2260,7 @@ var card_dict = [
         "strength": "0",
         "ability": "magicthegathering",
         "filename": "cos",
-        "count": "9999999999999"
+        "count": "3"
     },
     {
         "name": "witcher Signs: Axii",
