@@ -483,7 +483,7 @@ card.animate(gryffinschool_conf.anim);
 			);
 
 			await board.addCardToRow(bdf, targetData.row, card.holder);
-			await bdf.animate("Avenger");
+			await bdf.animate("avenger_spawn_creature");
 
 		} catch (e) {
 			console.log(e);

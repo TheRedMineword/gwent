@@ -2274,7 +2274,7 @@ class Card {
 			"bond" : "moral",
 			"powergain": "moral", //no audio
 			"darkstrom": "moral",
-			"Avenger": "avenger",
+			"avenger_spawn_creature": "avenger",
 			"hero": "hero_anim",
 			"griffin": "moral"
 		}
@@ -2318,7 +2318,7 @@ class Card {
 		"bond": "moral",
 		"powergain": "moral",
 		"darkstrom": "moral",
-		"Avenger": "avenger",
+		"avenger_spawn_creature": "avenger",
 		"hero": "hero_anim",
 		"griffin": "moral"
 	};
