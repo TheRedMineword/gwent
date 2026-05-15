@@ -16,7 +16,8 @@ const IGNORE_DIRS = new Set([
     'build',
     'exe',
     'commits_gen',
-    'MyDecks'
+    'MyDecks',
+    'ALPHA_API'
 ]);
 
 const IGNORE_FILES = new Set([
