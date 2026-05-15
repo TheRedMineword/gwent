@@ -521,7 +521,7 @@ html {
 }
 
 #notif-sky::after {
-	content: "Sky Kindom faction ability triggered: \A one Sky Kindom Unit Card stays on the board";
+	content: "Sky Kindom faction ability triggered: \A One Sky Kindom Unit Card stays on the board";
 }
 
 #notif-darkstorm::after {

@@ -3353,7 +3353,68 @@ class Popup {
 }
 
 
+function add_card_count(deck) {
+  deck.forEach(item => {
+    if (!item || !item.elem) return;
 
+    const el = item.elem;
+
+    // ensure badge exists
+    let badge = el.querySelector('.card-count-badge');
+
+    if (!badge) {
+      badge = document.createElement('div');
+      badge.className = 'card-count-badge';
+
+      badge.style.position = 'absolute';
+badge.style.bottom = '6px';
+badge.style.right = '6px';
+
+badge.style.display = 'flex';
+badge.style.alignItems = 'center';
+badge.style.gap = '5px';
+
+badge.style.fontSize = '14px';
+badge.style.fontWeight = '700';
+
+badge.style.padding = '4px 6px';
+badge.style.borderRadius = '6px';
+
+badge.style.background = 'rgb(33, 31, 29)'; // darker, less transparent #8e8880
+badge.style.color = '#5f4923'; // brighter gold
+badge.style.boxShadow = '0 2px 6px rgba(0,0,0,0.6)';
+badge.style.backdropFilter = 'blur(2px)';
+badge.style.border = '1px solid rgba(255, 210, 122, 0.25)';
+
+      const img = document.createElement('img');
+      img.src = './img/icons/preview_count.png';
+      img.style.width = '16px';
+img.style.height = '16px';
+// img.style.filter = 'brightness(1.2)';
+
+      const text = document.createElement('span');
+
+      badge.appendChild(img);
+      badge.appendChild(text);
+      el.appendChild(badge);
+
+      if (getComputedStyle(el).position === 'static') {
+        el.style.position = 'relative';
+      }
+    }
+
+    // 🔥 SOURCE OF TRUTH = existing <div>1</div>
+    const sourceDiv = el.querySelector(':scope > div');
+    const value = sourceDiv ? sourceDiv.textContent.trim() : "0";
+
+    const span = badge.querySelector('span');
+    if (span) {
+      span.textContent = value;
+    }
+
+    console.log("DECK UPDATE", value);
+  });
+}
 // Screen used to customize, import and export deck contents
 class DeckMaker {
 	constructor() {
@@ -3456,6 +3517,7 @@ this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 			this.makePreview(p.index, Number.parseInt(p.card.count) - count, this.bank_elem, this.bank,);
 			this.makePreview(p.index, count, this.deck_elem, this.deck);
 		});
+		add_card_count(this.bank); add_card_count(this.deck);
 	}
 	
 	// Creates HTML elements for the card previews
@@ -3583,6 +3645,7 @@ this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 		Carousel.curr.update();
 	}
 	
+
 	// Called when client selects s a preview card. Moves it from bank to deck or vice-versa then updates;
 	select(index, isBank){
 		if (isBank) {
@@ -3594,6 +3657,8 @@ this.leader_elem.children[1].style.backgroundImage = largeURL(tmp);
 			this.add(index, this.bank);
 			this.remove(index, this.deck);
 		}
+		console.log("BANK/DECK UPDATE", "DECK", this.deck, "BANK", this.bank);
+		add_card_count(this.deck); add_card_count(this.bank);
 		this.update();
 	}
 	

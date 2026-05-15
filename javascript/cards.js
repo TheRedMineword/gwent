@@ -2273,6 +2273,46 @@ var card_dict = [
         "count": "0",
         "witcher_sign": true
     },
+    {
+        "name": "Vattier de Rideaux",
+        "id": "1012",
+        "deck": "nilfgaard",
+        "row": "close",
+        "strength": "-5",
+        "ability": "hero sabotage",
+        "filename": "sab",
+        "count": "1"
+    },
+    {
+        "name": "Iorveth",
+        "id": "1013",
+        "deck": "scoiatael",
+        "row": "ranged",
+        "strength": "-5",
+        "ability": "hero sabotage",
+        "filename": "scol_sab",
+        "count": "1"
+    },
+    {
+        "name": "Birna Bran",
+        "id": "1014",
+        "deck": "skellige",
+        "row": "siege",
+        "strength": "-5",
+        "ability": "hero sabotage",
+        "filename": "bad_lady",
+        "count": "1"
+    },
+    {
+        "name": "Beast Of Tussant",
+        "id": "1015",
+        "deck": "monsters",
+        "row": "agile",
+        "strength": "-5",
+        "ability": "hero sabotage",
+        "filename": "beast_of_tussant",
+        "count": "1"
+    },
     // New cards for sky
     {
         "name": "Hopeful Steward",
@@ -2403,6 +2443,16 @@ var card_dict = [
         "strength": "0",
         "ability": "darkness_storm_leader",
         "filename": "darkness_storm_leader",
+        "count": "1"
+    },
+    {
+        "name": "Reassuring Ranger",
+        "id": "3014",
+        "deck": "sky",
+        "row": "agile",
+        "strength": "4",
+        "ability": "medic",
+        "filename": "ranger",
         "count": "1"
     }
 ];
