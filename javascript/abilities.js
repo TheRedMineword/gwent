@@ -305,15 +305,7 @@ card.animate(gryffinschool_conf.anim);
 	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! `,
 	placed: async (card) => {
 		let wrapper = { card: null };
-
-		// Don't simulate opponent
-		if (player_me.id !== card.holder.id) {
-			card.animate(mtg_conf.anim);
-			console.log("Opponent played mtg, waiting for sync.");
-			return;
-		}
-
-		// Get cards directly from card_dict
+				// Get cards directly from card_dict
 		let filteredCards = Object.values(card_dict)
 	.filter(c => {
 		let strength = Number(c.strength);
@@ -339,15 +331,28 @@ card.animate(gryffinschool_conf.anim);
 			//!c.ability?.includes("hero")
 		);
 	});
+		// Don't simulate opponent
+		if (player_me.id !== card.holder.id) {
+			card.animate(mtg_conf.anim);
+			console.log("Opponent played mtg, waiting for sync.");
+			if (!mtg_conf.shuffle_few_times){
+				console.log(`Op cards for this GameID and turn to pick from: `, shuffleSeeded(filteredCards, btoa(`${mtg_conf.version}${turncount}${gameID}`), `MTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`).array.slice(0, mtg_conf.random_max), `\nMTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`);
+			}
+			return;
+		}
 
 		// Shuffle multiple times
+		if (mtg_conf.shuffle_few_times){
 		for (let i = 0; i < 4; i++) {
 			filteredCards.sort(() => Math.random() - 0.5);
 		}
+	}
 		console.log("MTG CARDS ", filteredCards, " OR ", filteredCards.slice(0, mtg_conf.random_max));
 		
-		filteredCards = filteredCards.slice(0, mtg_conf.random_max);
-
+		 var tmp_c = shuffleSeeded(filteredCards, btoa(`${mtg_conf.version}${turncount}${gameID}`), `MTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`);
+		 filteredCards = tmp_c.array;
+		 tmp_c = null;
+		 filteredCards = filteredCards.slice(0, mtg_conf.random_max);
 		if (filteredCards.length <= 0)
 			return;
 

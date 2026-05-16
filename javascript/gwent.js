@@ -790,12 +790,79 @@ class ControllerOpponent {
 	}
 }
 
+function for_seed_hashString(str) {
+	let h = 2166136261;
+
+	for (let i = 0; i < str.length; i++) {
+		h ^= str.charCodeAt(i);
+		h = Math.imul(h, 16777619);
+	}
+
+	return h >>> 0;
+}
+
+function mulberry32(seed) {
+	return function() {
+		let t = seed += 0x6D2B79F5;
+		t = Math.imul(t ^ t >>> 15, t | 1);
+		t ^= t + Math.imul(t ^ t >>> 7, t | 61);
+		return ((t ^ t >>> 14) >>> 0) / 4294967296;
+	}
+}
+
+function shuffleSeeded(array, seed, debug = null) {
+	let seed_init = seed;
+	seed = for_seed_hashString(seed);
+	console.log(`Shuffle new seed ${seed} from ${seed_init}`);
+	let rng = mulberry32(seed);
+	if (debug === "THAT_IS_OP__RETURN_THIS"){
+		console.log(
+		"SHUFFLE ON SEED",
+		seed,
+		`\nStarted: ${fasthash(btoa(JSON.stringify(array)))}`,
+		`\nOutput: ${fasthash(btoa(JSON.stringify(array)))}`,
+		debug
+	);
+	 return {"array": array, "seed": seed}; }
+	let arr = [...array];
+
+	for (let i = arr.length - 1; i > 0; i--) {
+		const j = Math.floor(rng() * (i + 1));
+		[arr[i], arr[j]] = [arr[j], arr[i]];
+	}
+
+	console.log(
+		"SHUFFLE ON SEED",
+		seed,
+		`\nStarted: ${fasthash(btoa(JSON.stringify(array)))}`,
+		`\nOutput: ${fasthash(btoa(JSON.stringify(arr)))}`,
+		debug
+	);
+
+	return {"array": arr, "seed": seed};
+}
+
 // Can make actions during turns like playing cards that it owns
 class Player {
 	constructor(id, name, deck) {
+		// console.log("PLAYER NEW", id, name, deck);
+		let debug = null;
+		if (name === players.me) {
+		this.ThatPlayerId = playerId;
+		debug = "ME";
+		} else {
+		this.ThatPlayerId = current_op.me_id;
+		debug = "THAT_IS_OP__RETURN_THIS";
+		};
+
+
 		this.id = id;
 		this.tag = "me";
 		this.controller = (id === 0) ? new Controller() : new ControllerOpponent(this);
+		var tmp_cards = shuffleSeeded(deck.cards, this.ThatPlayerId, debug);
+		deck.cards = tmp_cards.array;
+		this.deckseed = tmp_cards.seed;
+		
 
 		this.hand = (id === 0) ? new Hand(document.getElementById("hand-row")) : new HandOpponent();
 		this.grave =  new Grave( document.getElementById("grave-" + this.tag));
@@ -844,6 +911,7 @@ class Player {
 	
 	// Updates the player's total score and notifies the gamee
 	updateTotal(n){
+		// console.log(`UPdtae total this`, this);
 		this.total += n;
 		document.getElementById("score-total-" + this.tag).children[0].innerHTML = this.total;
 		board.updateLeader();
@@ -1851,8 +1919,19 @@ class Game {
 		btnJoinElem.classList.add("hidden");
 		gameStartControlsElem.classList.add("hide");
 		// isOpponentReadyElem.classList.add("hidden");
+		turncount = 1;
 		gameID = gameID + 1;
 		ui.resumeYouTube();
+		// CLEAR OLD BOARD
+		board.row.forEach( row => row.clear() );
+		weather.clearWeather();
+		await sleep(10);
+		player_op.grave.reset();
+		player_me.grave.reset();
+		player_op.total = 0;
+		player_me.total = 0;
+		board.row.forEach(r => r.updateScore());
+		// Cleared i hope
 		await sleep(20);
 		ui.youtubePlay(audio_yt_vid_soundtrack, audio_yt_vid_soundtrack_volume, true); stop_wait_music();
 		updateOpponentUI({
@@ -2018,7 +2097,7 @@ class Game {
 	
 	// Starts a new turn. Enables client interraction in client's turn.
 	async startTurn() {
-		console.log("startTurn()", player_me, player_op);
+		//console.log("startTurn()", player_me, player_op);
 		
 		await this.runEffects(this.turnStart);
 		if (!this.currPlayer.opponent().passed){
@@ -2041,6 +2120,11 @@ class Game {
 	
 	// Ends the current turn and may end round. Disables client interraction in client's turn.
 	async endTurn() {
+				turncount = turncount + 1;
+				console.log(`TURN ENDED: Turn ${turncount - 1}\nNext turn will be: ${turncount}`);
+				if (announce_turn_count){
+					showTooltip(`End of ${ordinal(turncount - 1)} turn`);
+				}
 				if (darknessstorm_await === true) {
 	for (const row of board.row) {
 		for (const card of [...row.cards]) {
@@ -3412,7 +3496,7 @@ img.style.height = '16px';
       span.textContent = value;
     }
 
-    console.log("DECK UPDATE", value);
+    // console.log("DECK UPDATE", value);
   });
 }
 // Screen used to customize, import and export deck contents

@@ -1,6 +1,6 @@
 {
-  "sha": "843d04077b28d0b3c2a077ce1ef430a513a1d72b3bb25e899ac668488b582a79",
-  "generatedAt": "2026-05-16T08:40:29.946Z",
+  "sha": "6d3e634aa940980439f07f63bfb116205cc2ccaf415e104bb80033d6cd33c8e1",
+  "generatedAt": "2026-05-16T15:30:41.802Z",
   "files": [
     {
       "path": "404.html",
@@ -24,7 +24,7 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "5e00ac2f46e5c62aaf3d7d7ac7eb21456733b5f7cba54d6303b65af853f264fd",
+      "sha256": "c3a23498ae5efb0bc0980293d0a09f90766307ae680dcae0d6d960cce9d00c5c",
       "size": 24
     },
     {
@@ -41,6 +41,11 @@
       "path": "change/log-update10.txt",
       "sha256": "beaf309b61e7a71d3e93d218ea59de398a95ff0a121710ffe1e0717c0c09d58d",
       "size": 153
+    },
+    {
+      "path": "change/log-update11.txt",
+      "sha256": "be41809f76859540dbbbbd80e8fd981804ada745c73b50c8b6b4deeb0d463f25",
+      "size": 332
     },
     {
       "path": "change/log-update2.txt",
@@ -3254,8 +3259,8 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "30374036641d552717340f1b9c42992b4a45eb66adc60e32ac2f9a209294e12c",
-      "size": 36882
+      "sha256": "948ad5bd1e69120ca4dfba9b681d47c1a55a36a1e4e3a65f5b4a57ad69fc5cc4",
+      "size": 37497
     },
     {
       "path": "javascript/cards.js",
@@ -3274,8 +3279,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "1da7125f66911e40faa4f932b86df0718b86ff8357eef2cc62453d8d8b3824b3",
-      "size": 6203
+      "sha256": "95c7c57aa31011bb4ffcfc5dda0d36262ced5875d25f1a7da40060023e3c9d33",
+      "size": 6559
     },
     {
       "path": "javascript/factions.js",
@@ -3284,8 +3289,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "259dfd0744411caab5cd5faa91526d905c2625fb93e71b5e629e38154862f412",
-      "size": 136828
+      "sha256": "4ccf926ae071506fce98cfcd199146a8b728f3da53372eaa968a4a50ad30c9b2",
+      "size": 138964
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3304,8 +3309,8 @@
     },
     {
       "path": "javascript/sync_hands.js",
-      "sha256": "6a7c4a460c1fb119a948649acd7050b9bc4dd26b94dc4a8084d3a32f1146128e",
-      "size": 3886
+      "sha256": "b843b0017f1698778bc04649721ff0b0e034e42133b6e6ce2768912241e8ce44",
+      "size": 4101
     },
     {
       "path": "LICENSE",

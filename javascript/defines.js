@@ -33,6 +33,7 @@ let queueRunning = false;
 let herocardsdb = [];
 const herocardanim = true; // Disabled before i can fix aniamtion to be schorch like
 let gameID = 0;
+let turncount = 0; const announce_turn_count = true;
 
 const SEND_INTERVAL_MS = 700; // change this to desired wait time
 
@@ -97,7 +98,7 @@ const nilfard_drawmaster =
 
 	// Maximum bonus draws from graveyard:
 	// Each unit in grave = +1 draw, capped at this value
-	drawdead: 2,
+	drawdead: 3,
 
 	// Base number of cards always drawn from deck
 	drawalive: 1,
@@ -137,7 +138,9 @@ const mtg_conf = {
 	"random_max": 25,
 	"min_power": -7,
 	"max_power": 10,
-	"count_needed": 0 // count > count_needed
+	"count_needed": 0, // count > count_needed
+	'shuffle_few_times': false,
+	'version': 'sanidsayuftusidfgnyudsfgnudsf'
 }
 
 
@@ -212,3 +215,25 @@ monitorVolume();
 
 
 console.log("gaunter_lider", gaunter_lider);
+
+
+
+
+
+
+
+
+
+
+
+
+function ordinal(n) {
+  const j = n % 10;
+  const k = n % 100;
+
+  if (j === 1 && k !== 11) return `${n}st`;
+  if (j === 2 && k !== 12) return `${n}nd`;
+  if (j === 3 && k !== 13) return `${n}rd`;
+
+  return `${n}th`;
+}
