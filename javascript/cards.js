@@ -2454,6 +2454,16 @@ var card_dict = [
         "ability": "medic",
         "filename": "ranger",
         "count": "1"
+    },
+    {
+        "name": "20 Years Of That Game Comapny",
+        "id": "3015",
+        "deck": "sky",
+        "row": "siege",
+        "strength": "0",
+        "ability": "tgc_portal",
+        "filename": "tgc20",
+        "count": "99"
     }
 ];
 const witcher_signs = Object.entries(card_dict)

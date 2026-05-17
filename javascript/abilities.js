@@ -24,7 +24,7 @@ if (mtg_conf.unstable_mode === "random"){
 } else if (mtg_conf.unstable_mode === "unrandom"){
 	magicthegathering_stable = "This card is unstable, after picking card it power will drop to -3 "
 }
-const NotPickUpAbilities = ["axii2_desc", "gryffinSchool", "magicthegathering"];
+const NotPickUpAbilities = ["axii2_desc", "gryffinSchool", "magicthegathering", "tgc_portal"];
 
 var ability_dict = {
 	clear: {
@@ -341,6 +341,100 @@ card.animate(gryffinschool_conf.anim);
 
 			c.row !== "leader" //&&
 			//c.deck !== "special" &&
+			//c.deck !== "weather" &&	//Lets keep that
+
+			//!c.witcher_sign &&
+			//!c.token &&
+			//!c.generated &&
+
+			//!c.ability?.includes("hero")
+		);
+	});
+	var seed_is = `${mtg_conf.daily_seed ? `${time_now_utc_to_b64()}` : ""}${mtg_conf.version}${turncount}${gameID}`
+		// Don't simulate opponent
+		if (player_me.id !== card.holder.id) {
+			card.animate(mtg_conf.anim);
+			console.log("Opponent played mtg, waiting for sync.");
+			if (!mtg_conf.shuffle_few_times){
+				console.log(`Op cards for this GameID and turn to pick from: `, shuffleSeeded(filteredCards, btoa(seed_is), `MTG ABILITY Seeded from ${seed_is}`).array.slice(0, mtg_conf.random_max), `\nMTG ABILITY Seeded from ${seed_is}`);
+			}
+			return;
+		}
+
+		// Shuffle multiple times
+		if (mtg_conf.shuffle_few_times){
+		for (let i = 0; i < 4; i++) {
+			filteredCards.sort(() => Math.random() - 0.5);
+		}
+	}
+		console.log("MTG CARDS ", filteredCards, " OR ", filteredCards.slice(0, mtg_conf.random_max));
+		
+		 var tmp_c = shuffleSeeded(filteredCards, btoa(seed_is), `MTG ABILITY Seeded from ${seed_is}`);
+		 filteredCards = tmp_c.array;
+		 tmp_c = null;
+		 filteredCards = filteredCards.slice(0, mtg_conf.random_max);
+		if (filteredCards.length <= 0)
+			return;
+
+		// Create TEMP cards for preview carousel
+		let previewCards = filteredCards.map(data => {
+			return new Card(data, card.holder);
+		});
+
+		let container = {
+			cards: previewCards
+		};
+
+		await ui.queueCarousel(
+			container,
+			1,
+			(c, i) => wrapper.card = c.cards[i],
+			() => true,
+			true,
+			false,
+			mtg_conf.topic
+		);
+
+		let picked = wrapper.card;
+
+		if (!picked)
+			return;
+
+		// Create REAL spawned copy
+		let cardData = Object.values(card_dict)
+			.find(c => c.filename === picked.filename);
+
+		if (!cardData)
+			return;
+
+		let created = new Card(cardData, card.holder);
+
+		card.holder.hand.addCard(created);
+		created.animate(mtg_conf.anim_hand);
+		card.animate(mtg_conf.anim);
+	}
+},
+	tgc_portal: {
+	name: "That Game Company",
+	description: `Choose one card out of max ${mtg_conf.random_max} Sky Faction cards and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! ${magicthegathering_stable}`,
+	placed: async (card) => {
+		let wrapper = { card: null };
+				// Get cards directly from card_dict
+		let filteredCards = Object.values(card_dict)
+	.filter(c => {
+		let strength = Number(c.strength);
+		let count = Number(c.count);
+
+		return (
+			!isNaN(strength) &&
+			!isNaN(count) &&
+
+			count > mtg_conf.count_needed &&
+
+			strength > mtg_conf.min_power &&
+			strength < mtg_conf.max_power &&
+
+			c.row !== "leader" && c.deck === "sky" && c.ability !== "tgc_portal" //&&
 			//c.deck !== "weather" &&	//Lets keep that
 
 			//!c.witcher_sign &&

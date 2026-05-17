@@ -1563,7 +1563,7 @@ calcCardScore_work(card) {
 						total = total - axii.TakeAway
 					}
 		}
-		if (card.abilities.includes("magicthegathering") === true ){
+		if (card.abilities.includes("magicthegathering") === true || card.abilities.includes("tgc_portal") === true){
 			var holder_is_the = this.cards
     .find(card => card.abilities?.includes("magicthegathering"))
     ?.holder?.ThatPlayerId

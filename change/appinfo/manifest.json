@@ -1,6 +1,6 @@
 {
-  "sha": "15d483306daa9ceacfd2a37f9269f3cae872b5c13da4e2844e51b88343b3a4db",
-  "generatedAt": "2026-05-17T13:32:34.347Z",
+  "sha": "b20c6d848252232e45985802aea577f4d2db4908398f817b73d9dc8dd2e7ae9d",
+  "generatedAt": "2026-05-17T18:22:07.316Z",
   "files": [
     {
       "path": "404.html",
@@ -24,8 +24,8 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "cc1e23c1919c1a7735035343f16af22aab6f517394321a15647f7b61a3d5112a",
-      "size": 24
+      "sha256": "9795e6a87fe722a0e282b74cd9de44ec8d4646c5dfc3521a3e53848600ade563",
+      "size": 26
     },
     {
       "path": "change/log-ai-summary-becuase-i-did-a-lot-of-github-commits.txt",
@@ -46,6 +46,11 @@
       "path": "change/log-update11.txt",
       "sha256": "e83e8a3cb0165ce1038dda12536c7596fc4a6cb9fc09fb317bcdd5cfcf2f8766",
       "size": 333
+    },
+    {
+      "path": "change/log-update12.1.txt",
+      "sha256": "90558a98fe80ced96bb3d3143c2bb7dc397a167fba2fb566716727936fbbb8c6",
+      "size": 214
     },
     {
       "path": "change/log-update12.txt",
@@ -346,6 +351,11 @@
       "path": "img/icons/card_ability_storm.png",
       "sha256": "ee58993bf2a8a97b03adb0a8355488ce6d7091eae1171171f2d9406aa78b0326",
       "size": 24185
+    },
+    {
+      "path": "img/icons/card_ability_tgc_portal.png",
+      "sha256": "6ae69c036f08a7e283b79ceae81c65c52c470f487ca846841c1262872d21d473",
+      "size": 10728
     },
     {
       "path": "img/icons/card_gryffinSchool.png",
@@ -1948,6 +1958,11 @@
       "size": 224123
     },
     {
+      "path": "img/lg/sky_tgc20.jpg",
+      "sha256": "4f9811eafb4482d110250c91928a4d2e11a527b023277843f7ecd895d63c2363",
+      "size": 400851
+    },
+    {
       "path": "img/lg/special_decoy.jpg",
       "sha256": "613d1b911e84d975188d0eecbfcaa4955594482be426aaa42b37cf3defc7d6ff",
       "size": 71398
@@ -3188,6 +3203,11 @@
       "size": 427481
     },
     {
+      "path": "img/sm/sky_tgc20.jpg",
+      "sha256": "5d9986344d8550ad13e91698e0d114a0cf122c1e3ec0714b734fcd06a2cf7094",
+      "size": 134157
+    },
+    {
       "path": "img/sm/special_decoy.jpg",
       "sha256": "4e6b0208d7cee25748443986b709c31ef3db8c0c56825b0617430db96e391793",
       "size": 29973
@@ -3264,13 +3284,13 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "9dcf2b72d6ce1ef8e4b777f466112eb95358f3660dc8d56b31dcf2545f13c0d4",
-      "size": 38309
+      "sha256": "e2b58c9889e6b031bac6070588c76414195f2bd4d8a6093229b53b3e3841babb",
+      "size": 40970
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "42724c183ced1d6e24b4d1a3d9d7cec5b4967bab03fda28790086caf28a1bdfa",
-      "size": 57184
+      "sha256": "746175e8972897c99ce4aef6d253601e7223b52d8e75926789d72506046c07cb",
+      "size": 57424
     },
     {
       "path": "javascript/chat.js",
@@ -3309,8 +3329,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "9cab6312e43fbd35d65128841f73ef9d6213443f98f899ff85b912abf2fad698",
-      "size": 140246
+      "sha256": "b6db05aec985d9632f8a38b30717ea7188f9609691e7a04fd726d36f1188932b",
+      "size": 140295
     },
     {
       "path": "javascript/jszip.min.js",
