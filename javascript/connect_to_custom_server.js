@@ -61,6 +61,8 @@ async function reset_custom(){
     }
     var def = ThisDef;
     def.env_vars.card_dict = card_dict_base;
+    def.env_vars.faction = factions_base;
+    def.env_vars.ability_dict = ability_dict_base;
     await connect_to_custom_server(`data:application/json;base64,${btoa(JSON.stringify(def))}`);
     customSwitch();
 }
@@ -660,9 +662,9 @@ console.log(
         // REFRESH FACTIONS
         // =====================================================
 
-        console.log("[RELOAD] Refreshing faction visuals");
+       // console.log("[RELOAD] Refreshing faction visuals");
 
-        refreshFactionVisuals();
+        //\\refreshFactionVisuals();
 
         // =====================================================
         // FORCE REDRAW

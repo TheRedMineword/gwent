@@ -1055,3 +1055,5 @@ resolve(player_op.grave.cards[0]);
 		placed: card => board.row.filter((c,i) => card.holder === player_me ^ i<3).forEach(r => r.halfWeather = true)
 	}
 };
+
+const ability_dict_base = ability_dict;

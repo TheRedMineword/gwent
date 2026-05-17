@@ -116,3 +116,5 @@ var factions = {
 		description: "Keeps the strongest Unit Card out after each round. \nFactions full of morale boosting cards."
 	}
 }
+
+const factions_base = factions;
