@@ -364,15 +364,21 @@ setInterval(async () => {
         console.log("Payload sha :", hash);
 
         if (socket.readyState !== WebSocket.OPEN) {
+			if (JSON.parse(jsonString).type === "ping"){
+
+			} else {
             throw new Error("socket not open");
-        }
+        }}
 
         socket.send(compressed);
 
     } catch (err) {
         console.error(err);
+		if (JSON.parse(jsonString).type === "ping"){
+
+			} else {
         alert("Socket send failed: " + err.message);
-    }
+    }}
 
 }, SEND_INTERVAL_MS);
 

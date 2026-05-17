@@ -447,7 +447,9 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     const data = JSON.parse(msg_is);
     const msg =  JSON.stringify(data);
     console.log(`|| Message recived: \`\`\`\n${msg}\`\`\``);
-
+if (data.type === "ping"){
+  console.log(`|| Sombody pinged server!!!`);
+}
 if (data.type === "createSession") {
 
     const conf = data.custom_server?.active
