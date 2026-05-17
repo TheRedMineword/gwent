@@ -2463,7 +2463,7 @@ var card_dict = [
         "strength": "0",
         "ability": "tgc_portal",
         "filename": "tgc20",
-        "count": "99"
+        "count": "2"
     }
 ];
 const witcher_signs = Object.entries(card_dict)
