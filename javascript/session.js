@@ -25,6 +25,12 @@ let ThisSessionId = null;
 // --------------------
 // SOCKET EVENTS
 // --------------------
+const custom_url =
+    isElectronLauncher
+        ? "https://drmineword-gwent.onrender.com/"
+        : isLocalhost
+            ? "http://localhost:8081/"
+            : "https://drmineword-gwent.onrender.com/";
 socket.onopen = () => {
   console.log("Connected to the server");
 
@@ -232,6 +238,7 @@ function cancelSession() {
     joinedSessionId = null;
     ThisSessionId = null;
   }
+  reset_custom();
 }
 
 // --------------------
@@ -262,7 +269,7 @@ socket.addEventListener("message", async (event) => {
       ThisSessionId = data.id;
       console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
       if (data.custom === true){
-        connect_to_custom_server(`http://localhost:8081/api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
+        connect_to_custom_server(`${custom_url}api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
       }
       break;
 
@@ -272,7 +279,7 @@ socket.addEventListener("message", async (event) => {
       ThisSessionId = data.id;
       showTooltip(`Joined session: ${data.id}`);
       if (data.custom === true){
-        connect_to_custom_server(`http://localhost:8081/api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
+        connect_to_custom_server(`${custom_url}api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
       }
  //     sessionDisplay.classList.remove("hidden");
   //    sessionCodeText.textContent = joinedSessionId;

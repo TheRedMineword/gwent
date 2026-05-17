@@ -216,8 +216,27 @@ function applyEnvVars(envVars, currentPath = '') {
         setGlobalValue(path, value);
     }
 }
+function isValidPath(path) {
+    if (typeof path !== "string") return false;
+
+    // must be non-empty, no leading/trailing dots, no double dots
+    if (path.length === 0) return false;
+    if (path.startsWith(".") || path.endsWith(".")) return false;
+    if (path.includes("..")) return false;
+
+    const parts = path.split(".");
+
+    // each segment must be a valid JS-safe key
+    const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
+
+    return parts.every(part => validKey.test(part));
+}
 
 function setGlobalValue(path, value) {
+    if (!isValidPath(path)) {
+        console.warn("Invalid path:", path);
+        return;
+    }
     const parts = path.split('.');
 
     let target = globalThis; // instead of window

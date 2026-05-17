@@ -1,6 +1,6 @@
 {
-  "sha": "d810c83ed66c8a0741b9b2a3f960547ec7b9fcb4afad54cbe7e9afae23b76045",
-  "generatedAt": "2026-05-17T11:46:28.509Z",
+  "sha": "fef304ab1b27a229ae0b8138bb8ea53a1bbc3df924ee5a71fa08c5d1f46bd547",
+  "generatedAt": "2026-05-17T12:09:32.429Z",
   "files": [
     {
       "path": "404.html",
@@ -3279,8 +3279,8 @@
     },
     {
       "path": "javascript/connect_to_custom_server.js",
-      "sha256": "e42467b7bc030cf6a6c94287a3a9d3885e43a4713709caaf558329422b7faec7",
-      "size": 24317
+      "sha256": "7fd348ae91a63c4fac7015cdeb0e76a6b2da4f2bce2a29cf8a9ad676ec47a2d2",
+      "size": 24920
     },
     {
       "path": "javascript/custom_server/deafult.txt",
@@ -3294,8 +3294,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "e61e40a52b920db76b1828fbcb742a4d2ecedb4797be8aafa2477357e214dc0b",
-      "size": 8250
+      "sha256": "e7e911294707a285bb4ff222f316a1d6fdada59c89ba3c1fe58d1491b4acb290",
+      "size": 8178
     },
     {
       "path": "javascript/factions.js",
@@ -3319,8 +3319,8 @@
     },
     {
       "path": "javascript/session.js",
-      "sha256": "9a90fa43040a5cc8e3eddeeafc93415c9704b12aa005d9eb0cf45eca69621277",
-      "size": 12106
+      "sha256": "63dbc752f89807bed9e017a1b033275c2c5898b5cbd09fe81e7ab2b59a74d9c0",
+      "size": 12316
     },
     {
       "path": "javascript/sync_hands.js",
