@@ -1,5 +1,3 @@
-"use strict"
-
 let IsNowCustom = false;
 // ===============================
 // CONFIG
@@ -219,14 +217,14 @@ function applyEnvVars(envVars, currentPath = '') {
 function isValidPath(path) {
     if (typeof path !== "string") return false;
 
-    // must be non-empty, no leading/trailing dots, no double dots
+    path = path.trim(); // 👈 important fix
+
     if (path.length === 0) return false;
     if (path.startsWith(".") || path.endsWith(".")) return false;
     if (path.includes("..")) return false;
 
     const parts = path.split(".");
 
-    // each segment must be a valid JS-safe key
     const validKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/;
 
     return parts.every(part => validKey.test(part));
@@ -383,7 +381,9 @@ async function connect_to_custom_server(URL) {
             card_dict = data.env_vars?.card_dict;
             console.log(LOG_PREFIX, data.env_vars?.card_dict, `NEW CARDS`);
         }
-
+        if (data.env_vars?.thishandsize) {
+            thishandsize = data.env_vars?.thishandsize || thishandsize;
+        }
         // ===========================
         // APPLY ENV VARS
         // ===========================
