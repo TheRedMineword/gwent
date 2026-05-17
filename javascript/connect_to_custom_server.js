@@ -59,12 +59,14 @@ async function reset_custom(){
     if (!IsNowCustom){
         return;
     }
+    IsNowCustom = false;
     var def = ThisDef;
     def.env_vars.card_dict = card_dict_base;
     def.env_vars.faction = factions_base;
     def.env_vars.ability_dict = ability_dict_base;
     await connect_to_custom_server(`data:application/json;base64,${btoa(JSON.stringify(def))}`);
-    customSwitch();
+    await sleep(300);
+    IsNowCustom = false;
 }
 function createLoaderOverlay() {
     if (loaderOverlay) return;
@@ -241,18 +243,19 @@ function setGlobalValue(path, value) {
 
     let target = globalThis; // instead of window
 
-    for (let i = 0; i < parts.length - 1; i++) {
-        const part = parts[i];
+//    for (let i = 0; i < parts.length - 1; i++) {
+ //       const part = parts[i];
 
-        if (typeof target[part] !== 'object' || target[part] === null) {
-            target[part] = {};
-        }
+   //     if (typeof target[part] !== 'object' || target[part] === null) {
+    //        target[part] = {};
+     //   }
 
         // target = target[part];
         //if (path = 'card_dict'){
         //    console.log(LOG_PREFIX, `NEW CARDS SKIP`);
        //     return;
        // }
+       try {
         if (typeof value === "object" && value !== null){
         console.log(LOG_PREFIX, `Set global value: ${path}`, `true`);
         eval(`${path} = ${JSON.stringify(value)}`)
@@ -262,13 +265,16 @@ function setGlobalValue(path, value) {
         eval(`${path} = ` + JSON.stringify(value)+ `;`)
         console.log(LOG_PREFIX, `Set global value: ${path}`, `${path} = ` + JSON.stringify(value)+ `;`);
         }
-    }
+} catch (e) {
+    console.log("error", e, " is fatal? idk");
+}
+   // }
 
-    const lastKey = parts[parts.length - 1];
+   // const lastKey = parts[parts.length - 1];
 
     // target[lastKey] = value;
 
-    console.log(LOG_PREFIX, `Set global value: ${path}`, value, `\n`, target);
+    console.log(LOG_PREFIX, `Set global value: ${path}`, value,);
 }
 
 // ===============================
