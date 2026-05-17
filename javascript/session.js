@@ -42,7 +42,7 @@ socket.onclose = () => {
   btnCreateElem.classList.add("disabled");
   btnJoinElem.classList.add("disabled");
 
-  btnReadyElem.classList.add("hidden");
+  document.getElementById("session-start-control").classList.add("hidden");
   btnCancelElem.classList.add("hidden");
  // sessionDisplay.classList.add("hidden");
 
@@ -64,20 +64,150 @@ btnCancelElem.addEventListener("click", cancelSession);
 // --------------------
 // FUNCTIONS
 // --------------------
-function createGame() {
-  btnCreateElem.classList.add("hidden");
-  btnJoinElem.classList.add("hidden");
 
-  btnReadyElem.classList.remove("hidden");
-  btnReadyElem.classList.add("disabled");
 
-  btnCancelElem.classList.remove("hidden");
+function askForSessionMode() {
+    return new Promise((resolve) => {
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = "9999";
 
-  comp_and_send(socket, JSON.stringify({ type: "createSession" }));
+        const box = document.createElement("div");
+        box.style.background = "white";
+        box.style.padding = "20px";
+        box.style.borderRadius = "10px";
+        box.style.minWidth = "260px";
+        box.style.textAlign = "center";
+
+        const title = document.createElement("div");
+        title.textContent = "Choose session type";
+        title.style.marginBottom = "15px";
+        title.style.fontWeight = "bold";
+
+        const createBtn = document.createElement("button");
+        createBtn.textContent = "Create Server";
+        createBtn.style.marginRight = "10px";
+
+        const customBtn = document.createElement("button");
+        customBtn.textContent = "Custom Server";
+
+        function cleanup(value) {
+            document.body.removeChild(overlay);
+            resolve(value);
+        }
+
+        createBtn.onclick = () => cleanup({ type: "create" });
+        customBtn.onclick = () => cleanup({ type: "custom" });
+
+        box.appendChild(title);
+        box.appendChild(createBtn);
+        box.appendChild(customBtn);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+    });
+}
+function askForCustomConfig() {
+    return new Promise((resolve) => {
+        const overlay = document.createElement("div");
+        overlay.style.position = "fixed";
+        overlay.style.top = "0";
+        overlay.style.left = "0";
+        overlay.style.width = "100%";
+        overlay.style.height = "100%";
+        overlay.style.background = "rgba(0,0,0,0.5)";
+        overlay.style.display = "flex";
+        overlay.style.alignItems = "center";
+        overlay.style.justifyContent = "center";
+        overlay.style.zIndex = "9999";
+
+        const box = document.createElement("div");
+        box.style.background = "white";
+        box.style.padding = "20px";
+        box.style.borderRadius = "10px";
+        box.style.minWidth = "300px";
+
+        const input = document.createElement("textarea");
+        input.placeholder = "Enter JSON config...";
+        input.style.width = "100%";
+        input.style.height = "120px";
+        input.style.marginBottom = "10px";
+
+        const ok = document.createElement("button");
+        ok.textContent = "Start";
+
+        const cancel = document.createElement("button");
+        cancel.textContent = "Cancel";
+        cancel.style.marginLeft = "10px";
+
+        function cleanup(value) {
+            document.body.removeChild(overlay);
+            resolve(value);
+        }
+
+        ok.onclick = () => {
+            try {
+                const parsed = JSON.parse(input.value || "{}");
+                cleanup(parsed);
+            } catch (e) {
+                alert("Invalid JSON");
+            }
+        };
+
+        cancel.onclick = () => cleanup(null);
+
+        box.appendChild(input);
+        box.appendChild(ok);
+        box.appendChild(cancel);
+        overlay.appendChild(box);
+        document.body.appendChild(overlay);
+
+        input.focus();
+    });
+}
+async function createGame() {
+    btnCreateElem.classList.add("hidden");
+    btnJoinElem.classList.add("hidden");
+
+    document.getElementById("session-start-control").classList.remove("hidden");
+    document.getElementById("session-start-control").classList.add("disabled");
+
+    btnCancelElem.classList.remove("hidden");
+
+    const mode = await askForSessionMode();
+
+    if (!mode) return;
+
+    if (mode.type === "create") {
+        comp_and_send(socket, JSON.stringify({ type: "createSession", custom_server: { active: false}}));
+    }
+
+    if (mode.type === "custom") {
+        const conf = await askForCustomConfig();
+        if (!conf){
+          cancelSession();
+          return;
+        }
+
+        comp_and_send(socket, JSON.stringify({
+            type: "createSession",
+            custom_server: {
+                active: true,
+                conf
+            }
+        }));
+    }
 }
 
 function cancelSession() {
-  btnReadyElem.classList.add("hidden");
+  document.getElementById("session-start-control").classList.add("hidden");
 
   btnCreateElem.classList.remove("hidden");
   btnJoinElem.classList.remove("hidden");
@@ -131,6 +261,9 @@ socket.addEventListener("message", async (event) => {
       
       ThisSessionId = data.id;
       console.log(`[SD] Session joined data ${data.code}/${data.id}`); var decodedsession = await decompressBase64(data.id);  console.log(`[SD] Session joined data raw: ${decodedsession}`);
+      if (data.custom === true){
+        connect_to_custom_server(`http://localhost:8081/api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
+      }
       break;
 
     case "sessionJoined":
@@ -138,10 +271,13 @@ socket.addEventListener("message", async (event) => {
       joinedSessionId = data.code;
       ThisSessionId = data.id;
       showTooltip(`Joined session: ${data.id}`);
+      if (data.custom === true){
+        connect_to_custom_server(`http://localhost:8081/api/custom_sync?session=${encodeURIComponent(ThisSessionId)}`);
+      }
  //     sessionDisplay.classList.remove("hidden");
   //    sessionCodeText.textContent = joinedSessionId;
 
-      btnReadyElem.classList.remove("hidden");
+      document.getElementById("session-start-control").classList.remove("hidden");
     // hide if joined
     btnCreateElem.classList.add("hidden");
 		btnJoinElem.classList.add("hidden");

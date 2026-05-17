@@ -197,6 +197,27 @@ app.use(express.json());
 app.get("/wake", (req, res) => {
   res.json({ ok: "ok" });
 });
+app.get("/api/custom_sync", (req, res) => {
+    const sessionId = req.query.session;
+
+    if (!sessionId) {
+        return res.status(400).json({ error: "Missing session" });
+    }
+
+    const session = sessions[sessionId];
+
+    if (!session) {
+        return res.status(404).json({ error: "Session not found" });
+    }
+
+    const payload = JSON.stringify(session.custom.conf || null);
+
+    // ✅ manual Content-Length
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Length", Buffer.byteLength(payload));
+
+    return res.end(payload);
+});
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
@@ -427,35 +448,38 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     const msg =  JSON.stringify(data);
     console.log(`|| Message recived: \`\`\`\n${msg}\`\`\``);
 
-    if (data.type === "createSession") {
+if (data.type === "createSession") {
 
-    // Internal unique ID
-    const sessionId = compressString(`Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}\nRandomstring:${generateCode()}`).toString("base64");
+    const conf = data.custom_server?.active
+        ? data.custom_server.conf
+        : null;
 
-    // Human-friendly code
-    const joinCode = sessionIdToJoinCode(sessionId, sessiondigitLength);
+    const sessionId = compressString(
+        `Ip:${ip_censor}-PlayerId:${ws.playerId}(${country_code})-Risk:${riskinfo}-IsCustom:${!!conf}\nRandomstring:${generateCode()}`
+    ).toString("base64");
+
+    const joinCode = `${!!conf ? `!Custom!-` : ""}${sessionIdToJoinCode(sessionId, sessiondigitLength)}`;
 
     sessions[sessionId] = {
         id: sessionId,
         joinCode,
         players: [ws],
-        playersReady: 0
+        playersReady: 0,
+        custom: {
+            active: !!conf,
+            conf: conf || null
+        }
     };
 
-    // Fast lookup
     joinIndex[joinCode] = sessionId;
-
     ws.sessionId = sessionId;
 
     comp_and_send(ws, JSON.stringify({
         type: "sessionCreated",
         id: sessionId,
-        code: joinCode
+        code: joinCode,
+        custom: !!sessions[sessionId].custom?.active
     }));
-
-    console.log(
-        `Session created ${joinCode} -> ${sessionId}`
-    );
 }
 
     if (data.type === "cancelSession") {
@@ -510,7 +534,8 @@ function sessionIdToJoinCode(sessionId, digitLength = 4) {
     comp_and_send(ws, JSON.stringify({
         type: "sessionJoined",
         code: joinCode,
-        id: sessionId
+        id: sessionId,
+        custom: !!session.custom?.active
     }));
     sessions[sessionId].players.forEach((player, index) => {
           player.send(compressPayload(JSON.stringify({ type: 'sessionReady', player: index + 1 })));

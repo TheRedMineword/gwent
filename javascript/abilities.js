@@ -4,7 +4,26 @@ function findAvengerTarget(cardName) {
 	console.log("findAvengerTarget(\"",cardName,"\");");
 	return card_dict.find(c => c.avenger === cardName);
 }
+function time_now_utc_to_b64() {
+    // Get UTC date parts only (day-level uniqueness)
+    const now = new Date();
 
+    const year = now.getUTCFullYear();
+    const month = String(now.getUTCMonth() + 1).padStart(2, "0");
+    const day = String(now.getUTCDate()).padStart(2, "0");
+
+    // stable per-day string
+    const dateStr = `${year}-${month}-${day}`;
+
+    // base64 encode
+    return btoa(dateStr);
+}
+let magicthegathering_stable = null;
+if (mtg_conf.unstable_mode === "random"){
+	magicthegathering_stable = "This card is unstable, each turn it power will change in most of the time negative numbers (On averge power will be -3.27) "
+} else if (mtg_conf.unstable_mode === "unrandom"){
+	magicthegathering_stable = "This card is unstable, after picking card it power will drop to -3 "
+}
 const NotPickUpAbilities = ["axii2_desc", "gryffinSchool", "magicthegathering"];
 
 var ability_dict = {
@@ -302,7 +321,7 @@ card.animate(gryffinschool_conf.anim);
 },
 	magicthegathering: {
 	name: "Conjunction of the Spheres",
-	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! `,
+	description: `Choose one card out of ${mtg_conf.random_max} random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! ${magicthegathering_stable}`,
 	placed: async (card) => {
 		let wrapper = { card: null };
 				// Get cards directly from card_dict
@@ -331,12 +350,13 @@ card.animate(gryffinschool_conf.anim);
 			//!c.ability?.includes("hero")
 		);
 	});
+	var seed_is = `${mtg_conf.daily_seed ? `${time_now_utc_to_b64()}` : ""}${mtg_conf.version}${turncount}${gameID}`
 		// Don't simulate opponent
 		if (player_me.id !== card.holder.id) {
 			card.animate(mtg_conf.anim);
 			console.log("Opponent played mtg, waiting for sync.");
 			if (!mtg_conf.shuffle_few_times){
-				console.log(`Op cards for this GameID and turn to pick from: `, shuffleSeeded(filteredCards, btoa(`${mtg_conf.version}${turncount}${gameID}`), `MTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`).array.slice(0, mtg_conf.random_max), `\nMTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`);
+				console.log(`Op cards for this GameID and turn to pick from: `, shuffleSeeded(filteredCards, btoa(seed_is), `MTG ABILITY Seeded from ${seed_is}`).array.slice(0, mtg_conf.random_max), `\nMTG ABILITY Seeded from ${seed_is}`);
 			}
 			return;
 		}
@@ -349,7 +369,7 @@ card.animate(gryffinschool_conf.anim);
 	}
 		console.log("MTG CARDS ", filteredCards, " OR ", filteredCards.slice(0, mtg_conf.random_max));
 		
-		 var tmp_c = shuffleSeeded(filteredCards, btoa(`${mtg_conf.version}${turncount}${gameID}`), `MTG ABILITY Seeded from ${mtg_conf.version}${turncount}${gameID}`);
+		 var tmp_c = shuffleSeeded(filteredCards, btoa(seed_is), `MTG ABILITY Seeded from ${seed_is}`);
 		 filteredCards = tmp_c.array;
 		 tmp_c = null;
 		 filteredCards = filteredCards.slice(0, mtg_conf.random_max);

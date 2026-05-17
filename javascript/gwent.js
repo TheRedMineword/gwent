@@ -465,7 +465,7 @@ setTimeout(() => {
 				console.log("sessionReady");
 				// showTooltip("Opponent has joined and the session is ready");
 				// [socket raw event.data] {"type":"sessionJoined","code":"XRA2"}
-				readyButtonElem.classList.remove("hidden");
+				document.getElementById("session-start-control").classList.remove("hidden");
 				isOpponentReadyElem.classList.remove("hidden");
 				
 				 // document.getElementById("session-display").classList.remove("hidden");
@@ -481,6 +481,7 @@ setTimeout(() => {
 			case "sessionUnready":
 				console.log("session un ready", gameended);
 				disableChat();
+				reset_custom();
 				if (gameended === false) {
 				showTooltip("Opponent has left and the session is no longer ready");
 				var btn = document.getElementById("session-start-control");
@@ -507,7 +508,7 @@ setTimeout(() => {
 								});
 								await sleep(100);
 				opponentReadyElem.classList.add("disabled");
-				readyButtonElem.classList.add("disabled");
+				document.getElementById("session-start-control").classList.add("disabled");
 				opponentReadyElem.classList.add("disabled");
 				// if (game.roundCound > 0) { //oryginal dev typo X D
 				var game_state = this.game;
@@ -591,7 +592,7 @@ setTimeout(() => {
 				 showTooltip("Opponent is unReady.");
 				// opponentReadyElem.classList.add("disabled");
 				if (amReady) {
-					readyButtonElem.classList.remove("ready");
+					document.getElementById("session-start-control").classList.remove("ready");
 					customizationElem.classList.remove("noclick");
 				}
 				break;
@@ -1562,6 +1563,25 @@ calcCardScore_work(card) {
 						total = total - axii.TakeAway
 					}
 		}
+		if (card.abilities.includes("magicthegathering") === true ){
+			var holder_is_the = this.cards
+    .find(card => card.abilities?.includes("magicthegathering"))
+    ?.holder?.ThatPlayerId
+
+			console.log("magicthegathering", this, mtg_conf.unstable_mode, holder_is_the);
+			if (mtg_conf.unstable_mode === "random"){
+				total = shuffleSeeded([-3,-4,-5,-6,-3,-4,-4,-3,-6,-7,-2,-2,-1,0,1], btoa(`${mtg_conf.daily_seed ? `${time_now_utc_to_b64()}` : ""}${mtg_conf.version}${turncount}${gameID}${holder_is_the}`), `MTG POWER CHECK Seeded from ${mtg_conf.daily_seed ? `${time_now_utc_to_b64()}` : ""}${mtg_conf.version}${turncount}${gameID}${holder_is_the}`).array[0] || 2;
+				if (total > 0){
+				//	card.animate2("powergain"); //animations here are ugly
+				} else if (total < 0){
+				//	card.animate2("debuff");
+				}
+			} else if (mtg_conf.unstable_mode === "unrandom"){
+				return -3;
+			} else {
+				return 0;
+			}
+		}
 		if (card.abilities.includes("powergain") === true ){
 			let count = this.cards.length;
 
@@ -2120,6 +2140,11 @@ class Game {
 	
 	// Ends the current turn and may end round. Disables client interraction in client's turn.
 	async endTurn() {
+				board.row.forEach(r => {
+    if (r.cards.some(card => card.abilities?.includes("magicthegathering"))) {
+        r.updateScore();
+    }
+});
 				turncount = turncount + 1;
 				console.log(`TURN ENDED: Turn ${turncount - 1}\nNext turn will be: ${turncount}`);
 				if (announce_turn_count){
@@ -2191,7 +2216,7 @@ class Game {
 	
 	// Sets up and displays the end-game screen
 	async endGame() {
-		readyButtonElem.classList.remove("ready");
+		document.getElementById("session-start-control").classList.remove("ready");
 		let endScreen = document.getElementById("end-screen");
 		let rows = endScreen.getElementsByTagName("tr");
 		rows[1].children[0].innerHTML = player_me.name;
@@ -2237,7 +2262,7 @@ class Game {
 		comp_and_send(socket, JSON.stringify({ type: "unReady" }));
 		amReady = false;
 		opponentReady = false;
-		readyButtonElem.classList.remove("ready");
+		document.getElementById("session-start-control").classList.remove("ready");
 		
 		ui.toggleMusic_elem.style.left = "20.5vw"
 
@@ -3827,7 +3852,7 @@ if (2 < descString.length) {
 		if (warning != "")
 			return alert(warning);
 		else {
-			readyButtonElem.classList.add("ready");
+			document.getElementById("session-start-control").classList.add("ready");
 			customizationElem.classList.add("noclick");
 		} 
 
