@@ -1,6 +1,6 @@
 {
-  "sha": "ef39c090a83b0feb5578d58caf43353707ed8cd88e6c31183770c50519b66438",
-  "generatedAt": "2026-05-18T07:25:40.537Z",
+  "sha": "e5676ae5eeee0896c998d63bde2dba86f32d9b06273f0feb6f2adaacbcfe7fad",
+  "generatedAt": "2026-05-18T07:41:35.237Z",
   "files": [
     {
       "path": "404.html",
@@ -3309,8 +3309,8 @@
     },
     {
       "path": "javascript/connect_to_custom_server.js",
-      "sha256": "2e4ddd04155cb9a8802447ad04449a887f0a3c73718ff30de3c007eb83fbc174",
-      "size": 25198
+      "sha256": "538c100a3c9d8c50f551c629be3b5fd085fab5eba7b18b5302ed8db484dbeaa6",
+      "size": 25591
     },
     {
       "path": "javascript/custom_server/deafult_expanded.txt",
@@ -3329,7 +3329,7 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "e7e911294707a285bb4ff222f316a1d6fdada59c89ba3c1fe58d1491b4acb290",
+      "sha256": "b9c13e22dc0747167acfad4a6b4ee2bbc4779f62fdd2c60dfb916d56a2614b06",
       "size": 8178
     },
     {

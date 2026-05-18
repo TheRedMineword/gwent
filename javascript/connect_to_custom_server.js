@@ -91,7 +91,7 @@ function createLoaderOverlay() {
     loaderOverlay.style.pointerEvents = 'all';
 
     const title = document.createElement('div');
-    title.innerText = 'CONNECTING TO SERVER';
+    title.innerText = 'CONNECTING TO CUSTOM SERVER';
     title.style.fontSize = '32px';
     title.style.fontWeight = 'bold';
     title.style.marginBottom = '24px';
@@ -287,7 +287,7 @@ async function connect_to_custom_server(URL) {
     createLoaderOverlay();
 
     try {
-        updateLoader('Connecting...', 0, URL);
+        updateLoader('Connecting...', 0, for_seed_hashString(URL));
 
         console.log(LOG_PREFIX, 'Connecting to URL:', URL);
 
@@ -304,7 +304,7 @@ async function connect_to_custom_server(URL) {
         console.log(LOG_PREFIX, 'HEADERS:', [...headResponse.headers.entries()]);
 
         updateLoader(
-            'Connected to server',
+            'Synchronization with the Server',
             5,
             `Content-Length: ${contentLength || 'unknown'}`
         );
@@ -367,8 +367,8 @@ async function connect_to_custom_server(URL) {
         const text = new TextDecoder().decode(merged);
 
         console.log(LOG_PREFIX, 'Downloaded response text length:', text.length);
-
-        updateLoader('Parsing response...', 100);
+        await sleep(600);
+        updateLoader('Parsing response...', 40);
 
         // ===========================
         // PARSE JSON RESPONSE
@@ -384,6 +384,13 @@ async function connect_to_custom_server(URL) {
         }
 
         console.log(LOG_PREFIX, 'Server response:', data);
+        if (data?.name){
+            var s_name = data?.name;
+            var s_name_low = data?.name;
+        } else {
+            var s_name = "Server";
+             var s_name_low = "server";
+        }
 
         if (data.env_vars?.card_dict) {
             card_dict = data.env_vars?.card_dict;
@@ -397,14 +404,15 @@ async function connect_to_custom_server(URL) {
         // ===========================
 
         if (data.env_vars) {
-            updateLoader('Applying env vars...', 100);
+            updateLoader('Applying env vars...', 75, `You are synchronizing with ${s_name_low}`);
 
             applyEnvVars(data.env_vars);
         }
-        updateLoader('Almost There', 99, '');
+        await sleep(300);
+        updateLoader('Almost There', 99, `Finalizing the connection with ${s_name_low}`);
         await reloadRuntimeConfigs();
         await sleep(1500);
-        updateLoader('Done', 100, 'Server fully loaded');
+        updateLoader('Done', 100, `${s_name} Fully Loaded`);
 
         console.log(LOG_PREFIX, 'Custom server connection complete');
 
