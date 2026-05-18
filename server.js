@@ -210,13 +210,13 @@ app.get("/api/custom_sync", (req, res) => {
         return res.status(404).json({ error: "Session not found" });
     }
 
-    const payload = JSON.stringify(session.custom.conf || null);
+    const payload = JSON.stringify(session.custom.conf ?? null);
 
     // ✅ manual Content-Length
     res.setHeader("Content-Type", "application/json");
-    res.setHeader("Content-Length", Buffer.byteLength(payload));
+    res.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
 
-    return res.end(payload);
+    return res.end(JSON.stringify(session.custom.conf ?? null));
 });
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
@@ -364,6 +364,10 @@ wss.on('connection', async (ws, req) => {
   /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
   (_, a, b, c, d) => `${a}.###.###`
 );
+  const ip_censor_log = ip.replace(
+  /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
+  (_, a, b, c, d) => `${a}.###.${c}.${d}`
+);
   console.log(`${ip_censor}`);
   players.push(ws);
 
@@ -396,7 +400,7 @@ wss.on('connection', async (ws, req) => {
   const region = geo.regionName || "Unknown";
   const city = geo.city || "Unknown";
   const isp = geo.isp || "Unknown";
-
+  geo.ThatRealIp = ip_censor_log;
   // Send welcome
   comp_and_send(ws, JSON.stringify({
     type: 'welcome',

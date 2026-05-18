@@ -287,8 +287,8 @@ async function connect_to_custom_server(URL) {
     createLoaderOverlay();
 
     try {
-        updateLoader('Connecting...', 0, for_seed_hashString(URL));
-
+        updateLoader('Connecting...', 0, `Request Hashed: ${btoa(for_seed_hashString(URL))}`);
+        await sleep(1500);
         console.log(LOG_PREFIX, 'Connecting to URL:', URL);
 
         // ===========================
@@ -306,9 +306,8 @@ async function connect_to_custom_server(URL) {
         updateLoader(
             'Synchronization with the Server',
             5,
-            `Content-Length: ${contentLength || 'unknown'}`
+            `Downloading ${contentLength || '?'} bytes`
         );
-
         // ===========================
         // DOWNLOAD RESPONSE STREAM
         // ===========================
@@ -328,28 +327,33 @@ async function connect_to_custom_server(URL) {
         let received = 0;
         let chunks = [];
 
-        while (true) {
-            const { done, value } = await reader.read();
+while (true) {
+    const { done, value } = await reader.read();
 
-            if (done) {
-                break;
-            }
+    if (done) {
+        break;
+    }
 
-            chunks.push(value);
-            received += value.length;
+    chunks.push(value);
+    received += value.length;
 
-            let percent = 0;
+    let percent = 6;
+    let rawPercent = 0;
+    if (total > 0 && Number.isFinite(total)) {
+        rawPercent = total > 0
+    ? Math.min(100, Math.floor((received / total) * 100))
+    : 0;
 
-            if (total > 0) {
-                percent = Math.floor((received / total) * 100);
-            }
+// map 0-100 -> 5-40
+percent = 5 + Math.floor((rawPercent / 100) * (74 - 5));
+    }
 
-            updateLoader(
-                'Downloading server data...',
-                percent,
-                `${received} / ${total || '?'} bytes`
-            );
-        }
+    updateLoader(
+        'Downloading server data...',
+        percent,
+        `${received} / ${total || '?'} bytes`
+    );
+}
 
         // ===========================
         // COMBINE RESPONSE
@@ -368,7 +372,7 @@ async function connect_to_custom_server(URL) {
 
         console.log(LOG_PREFIX, 'Downloaded response text length:', text.length);
         await sleep(600);
-        updateLoader('Parsing response...', 40);
+        updateLoader('Parsing response...', 75);
 
         // ===========================
         // PARSE JSON RESPONSE
@@ -404,7 +408,7 @@ async function connect_to_custom_server(URL) {
         // ===========================
 
         if (data.env_vars) {
-            updateLoader('Applying env vars...', 75, `You are synchronizing with ${s_name_low}`);
+            updateLoader('Applying env vars...', 80, `You are synchronizing with ${s_name_low}`);
 
             applyEnvVars(data.env_vars);
         }

@@ -418,7 +418,54 @@ async function recv_and_decomp(event) {
 }
 
 
+function handleRiskMessage(message) {
+	console.log("HANDLE RISK", message);
+    // Extract JSON part from: risk_is ({...})
+    const match = message;
+    if (!match) return;
 
+    let data;
+    try {
+        data = match;
+    } catch (e) {
+        console.warn("Invalid risk JSON:", e);
+        return;
+    }
+
+    if (data.vpn === "yes") {
+        showVpnWarning();
+		country = null;
+    }
+	return message;
+}
+
+function showVpnWarning() {
+    // Create popup
+    const popup = document.createElement("div");
+    popup.innerText =
+        "⚠ VPN detected.\nVPN usage is not recommended but is supported.\nOpponent country display is disabled for fairness.";
+
+    popup.style.position = "fixed";
+    popup.style.bottom = "20px";
+    popup.style.left = "50%";
+    popup.style.transform = "translateX(-50%)";
+    popup.style.background = "rgba(0,0,0,0.85)";
+    popup.style.color = "#fff";
+    popup.style.padding = "12px 16px";
+    popup.style.borderRadius = "8px";
+    popup.style.fontSize = "14px";
+    popup.style.zIndex = "99999";
+    popup.style.whiteSpace = "pre-line";
+    popup.style.maxWidth = "320px";
+    popup.style.textAlign = "center";
+
+    document.body.appendChild(popup);
+
+    // Auto remove after 4 seconds
+    setTimeout(() => {
+        popup.remove();
+    }, 16000);
+}
 
 
 
@@ -438,6 +485,12 @@ document.getElementById("copy-session").onclick = () => {
 let ip_data = null;
 let country = null;
 let current_op = null;
+let risk_is = {
+    "vpn": "no",
+    "risk": 0,
+    "type": "Wireless",
+    "proxy": "no"
+};
 socket.onmessage = async (event) => {
     console.log('[socket raw event.data]', event.data);
 	const event_parsed = await recv_and_decomp(event);
@@ -448,8 +501,11 @@ console.log("onmsg data:", data)
 			case "welcome":
 				playerId = data.playerId;
 				ip_data = data._ip;
+				console.log("[IP PARSE]", data._ip);
 				country = ip_data.countryCode || null;
-				console.log("[SERVER DROPPED IP DATA", ip_data, ` Country: ${country}`);
+				risk_is = data._ip?.risk || risk_is;
+				handleRiskMessage(risk_is);
+				console.log("[SERVER DROPPED IP DATA", ip_data, ` Country: ${country} || Risk: ${JSON.stringify(risk_is)}`);
 				console.log("Welcome, your id is " + playerId);
 ep_id.textContent = `Hello PlayerID:\n${playerId}`;
 ep_id.style.color = "";
