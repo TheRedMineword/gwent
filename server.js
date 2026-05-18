@@ -492,6 +492,22 @@ if (data.type === "createSession") {
       const sessionId = data.code;
       if (!sessions[sessionId]) return;
 
+  console.log("Try notify all remaining players");
+  sessions[ws.sessionId].players.forEach((player) => {
+    try {
+        console.log(`${player.id} cancelled try`);
+        console.log("SEND unready session");
+        player.send(
+          compressPayload(JSON.stringify({
+            type: "sessionUnready",
+            reason: "sessionCancelled"
+          }))
+        );
+    } catch (e) {
+      console.log("cancelSession notify error:", e);
+    }
+  });
+
       console.log(`|| Player ${ws.playerId} cancelled Session ${sessionId}`);
       delete sessions[ws.sessionId];
     }

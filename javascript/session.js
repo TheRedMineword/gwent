@@ -56,7 +56,7 @@ socket.onclose = () => {
   joinedSessionId = null;
   ThisSessionId = null;
   alert("Disconnected from the server");
-  showBrickScreen();
+  showBrickScreen()
 };
 
 // --------------------
@@ -226,7 +226,7 @@ function cancelSession() {
     console.log("Cancelled Session:", createdSessionId);
     comp_and_send(socket, JSON.stringify({
       type: "cancelSession",
-      code: createdSessionId
+      code: ThisSessionId
     }));
     createdSessionId = null;
     ThisSessionId = null;
@@ -234,7 +234,7 @@ function cancelSession() {
     console.log("Left Session:", joinedSessionId);
     comp_and_send(socket, JSON.stringify({
       type: "leaveSession",
-      code: joinedSessionId
+      code: ThisSessionId
     }));
     joinedSessionId = null;
     ThisSessionId = null;
