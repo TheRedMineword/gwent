@@ -56,6 +56,7 @@ socket.onclose = () => {
   joinedSessionId = null;
   ThisSessionId = null;
   alert("Disconnected from the server");
+  showBrickScreen();
 };
 
 // --------------------
