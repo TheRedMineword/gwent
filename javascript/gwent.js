@@ -505,6 +505,7 @@ console.log("onmsg data:", data)
 				country = ip_data.countryCode || null;
 				risk_is = data._ip?.risk || risk_is;
 				handleRiskMessage(risk_is);
+				ip_data = null;
 				console.log("[SERVER DROPPED IP DATA", ip_data, ` Country: ${country} || Risk: ${JSON.stringify(risk_is)}`);
 				console.log("Welcome, your id is " + playerId);
 ep_id.textContent = `Hello PlayerID:\n${playerId}`;

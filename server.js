@@ -360,15 +360,15 @@ wss.on('connection', async (ws, req) => {
   ws.playerId = await generatePlayerId(req);
   
   const ip = getClientIp(req);
+  const ip2 = crypto
+    .createHash("sha256")
+    .update(ip)
+    .digest("hex")
   const ip_censor = ip.replace(
   /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
-  (_, a, b, c, d) => `${a}.###.###`
-);
-  const ip_censor_log = ip.replace(
-  /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
-  (_, a, b, c, d) => `${a}.###.${c}.${d}`
-);
-  console.log(`${ip_censor}`);
+  (_, a, b, c, d) => `${a}.###.###.###`
+);;
+  console.log(`-# Ip connected: ${ip_censor} hash ${ip2}`);
   players.push(ws);
 
   // optional geo lookup
@@ -400,7 +400,7 @@ wss.on('connection', async (ws, req) => {
   const region = geo.regionName || "Unknown";
   const city = geo.city || "Unknown";
   const isp = geo.isp || "Unknown";
-  geo.ThatRealIp = ip_censor_log;
+  geo.ThatRealIp = ip2;
   // Send welcome
   comp_and_send(ws, JSON.stringify({
     type: 'welcome',
