@@ -443,7 +443,7 @@ function showVpnWarning() {
     // Create popup
     const popup = document.createElement("div");
     popup.innerText =
-        "⚠ VPN detected.\nVPN usage is not recommended but is supported.\nOpponent country display is disabled for fairness.";
+        "⚠ VPN detected.\nVPN usage is not recommended and server may not support it.\nUse it at your own risk!\n\nOpponent country display is disabled for fairness.";
 
     popup.style.position = "fixed";
     popup.style.bottom = "20px";
@@ -454,9 +454,9 @@ function showVpnWarning() {
     popup.style.padding = "12px 16px";
     popup.style.borderRadius = "8px";
     popup.style.fontSize = "14px";
-    popup.style.zIndex = "99999";
+    popup.style.zIndex = "999991";
     popup.style.whiteSpace = "pre-line";
-    popup.style.maxWidth = "320px";
+    popup.style.maxWidth = "520px";
     popup.style.textAlign = "center";
 
     document.body.appendChild(popup);
