@@ -147,14 +147,16 @@ console.log("[WAKE] 8080:", WAKE_URL, INTERVAL_MS / 1000);
       console.log("[WAKE] RES RECIVED, IGNORE");
       // ignore errors completely
     });
-  };
-  try {
+  
+ try {
     comp_and_send(socket, JSON.stringify({
         type: "ping"
     }));
   } catch (e){
     // do nothing
     }
+
+};
 
   // Initial ping
   pingWakeEndpoint();
