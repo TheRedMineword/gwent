@@ -2464,8 +2464,19 @@ var card_dict = [
         "ability": "tgc_portal",
         "filename": "tgc20",
         "count": "2"
+    },
+    {
+        "name": "wasteland Elder",
+        "id": "3016",
+        "deck": "sky",
+        "row": "leader",
+        "strength": "0",
+        "ability": "eredin_commander",
+        "filename": "elder_wasteland",
+        "count": "1"
     }
 ];
+
 const witcher_signs = Object.entries(card_dict)
     .filter(([_, card]) => card.witcher_sign)
     .map(([key, card]) => ({

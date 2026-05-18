@@ -1,6 +1,6 @@
 {
-  "sha": "569a930e96bde3f4bd8ee7f79b7e89ed2f03badbac21e2fe2959c417dc6af8f5",
-  "generatedAt": "2026-05-18T06:57:14.524Z",
+  "sha": "ef39c090a83b0feb5578d58caf43353707ed8cd88e6c31183770c50519b66438",
+  "generatedAt": "2026-05-18T07:25:40.537Z",
   "files": [
     {
       "path": "404.html",
@@ -1918,6 +1918,11 @@
       "size": 27450
     },
     {
+      "path": "img/lg/sky_elder_wasteland.jpg",
+      "sha256": "1f7da70719ec0618bc0a70ceb7076e4dd077dd9a8b3d9521e641fa1fea3927f9",
+      "size": 88080
+    },
+    {
       "path": "img/lg/sky_fortunedrum.jpg",
       "sha256": "dade4c546c994a1aa4661fc5d5b0b07834be22a3902e6a248229c397322ab175",
       "size": 191946
@@ -3163,6 +3168,11 @@
       "size": 27886
     },
     {
+      "path": "img/sm/sky_elder_wasteland.jpg",
+      "sha256": "61364875c904803d7ea1b957bf6afbf698171898ca95ba19880424bf72004b74",
+      "size": 30910
+    },
+    {
       "path": "img/sm/sky_fortunedrum.jpg",
       "sha256": "993e0cd0e02761cd1afec4239c89e4ceefded96a56a140a63654e6341500ef7c",
       "size": 92972
@@ -3289,8 +3299,8 @@
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "d2a297332ef763e612349d4aa5dba64917dd313dcbd32b01d6456c0ae01ec084",
-      "size": 57423
+      "sha256": "db963ad0733bcc865c72c16603f765a9ea07d6638d988a426ad1c58e09517ec6",
+      "size": 57666
     },
     {
       "path": "javascript/chat.js",
@@ -3304,8 +3314,8 @@
     },
     {
       "path": "javascript/custom_server/deafult_expanded.txt",
-      "sha256": "9e957e02efd013d5e553b91a4a8563017e295e17454cf529a0a9e4bbe8d2d1b3",
-      "size": 73210
+      "sha256": "579e6ffd3509aacd42325155c11da7f951a95552f74ea0085017abd6c142a0e6",
+      "size": 73462
     },
     {
       "path": "javascript/custom_server/deafult.txt",

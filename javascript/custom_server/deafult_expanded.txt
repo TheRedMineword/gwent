@@ -2571,7 +2571,17 @@
         "ability": "medic",
         "filename": "ranger",
         "count": "1"
-      }
+      },
+    {
+        "name": "wasteland Elder",
+        "id": "3016",
+        "deck": "sky",
+        "row": "leader",
+        "strength": "0",
+        "ability": "eredin_commander",
+        "filename": "elder_wasteland",
+        "count": "1"
+    }
     ],
     "faction": {
       "realms": {
