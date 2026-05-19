@@ -198,9 +198,11 @@ app.get("/wake", (req, res) => {
   res.json({ ok: "ok" });
 });
 app.get("/api/custom_sync", (req, res) => {
+    res.setHeader("DrMinewordGwentServer", "yes");
     const sessionId = req.query.session;
 
     if (!sessionId) {
+      
         return res.status(400).json({ error: "Missing session" });
     }
 
@@ -214,6 +216,7 @@ app.get("/api/custom_sync", (req, res) => {
 
     // ✅ manual Content-Length
     res.setHeader("Content-Type", "application/json");
+    console.log(`Req dowland custom-server config Content-Lenght: ${Buffer.byteLength(JSON.stringify(session.custom.conf ?? null))}`);
     res.setHeader("C-L", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
     res.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
 
