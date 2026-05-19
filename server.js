@@ -198,11 +198,16 @@ app.get("/wake", (req, res) => {
   res.json({ ok: "ok" });
 });
 app.get("/api/custom_sync", (req, res) => {
+    res.setHeader(
+        "Access-Control-Expose-Headers",
+        "C-L, Content-Length"
+    );
+
     res.setHeader("DrMinewordGwentServer", "yes");
+
     const sessionId = req.query.session;
 
     if (!sessionId) {
-      
         return res.status(400).json({ error: "Missing session" });
     }
 
@@ -213,14 +218,19 @@ app.get("/api/custom_sync", (req, res) => {
     }
 
     const payload = JSON.stringify(session.custom.conf ?? null);
+    const length = Buffer.byteLength(payload);
 
-    // ✅ manual Content-Length
+    console.log(
+        `Req download custom-server config Content-Length: ${length}`
+    );
+
     res.setHeader("Content-Type", "application/json");
-    console.log(`Req dowland custom-server config Content-Lenght: ${Buffer.byteLength(JSON.stringify(session.custom.conf ?? null))}`);
-    res.setHeader("C-L", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
-    res.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
+    res.setHeader("C-L", length);
 
-    return res.end(JSON.stringify(session.custom.conf ?? null));
+    // optional
+    res.setHeader("Content-Length", length);
+
+    return res.end(payload);
 });
 app.get("*", (_, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
