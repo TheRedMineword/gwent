@@ -875,9 +875,10 @@ function mulberry32(seed) {
 }
 
 function shuffleSeeded(array, seed, debug = null) {
+	try {
 	let seed_init = seed;
 	seed = for_seed_hashString(seed);
-	console.log(`Shuffle new seed ${seed} from ${seed_init}`);
+	console.log(`Shuffle new seed ${seed} from ${seed_init}`, array);
 	let rng = mulberry32(seed);
 	if (debug === "THAT_IS_OP__RETURN_THIS"){
 		console.log(
@@ -904,6 +905,10 @@ function shuffleSeeded(array, seed, debug = null) {
 	);
 
 	return {"array": arr, "seed": seed};
+} catch (e){
+	console.log(`shuffleSeeded`, ` fatal error`, array, seed, debug, ` error `, e);
+	alert("GAME CRASH!\n\nFatal error at shuffleSeeded function, check console for more info\n\nReport is as bug!!");
+}
 }
 
 // Can make actions during turns like playing cards that it owns
@@ -2338,6 +2343,7 @@ class Game {
 		this.endScreen.classList.add("hide");
 		customizationElem.classList.remove("hide");
 		gameStartControlsElem.classList.remove("hide");
+		customizationElem.classList.remove("noclick");
 	}
 	
 	// Restarts the last game with the same decks
@@ -3897,6 +3903,7 @@ if (2 < descString.length) {
 			comp_and_send(socket, JSON.stringify({ type: "unReady" })); showTooltip(`You are now UnReady`)
 			var btn = document.getElementById("session-start-control");
 			btn.textContent = "Ready";
+			customizationElem.classList.remove("noclick");
 			amReady = false;
 	//		readyButtonElem.classList.remove("ready");
 	//		customizationElem.classList.remove("noclick");
@@ -3928,6 +3935,7 @@ if (2 < descString.length) {
 		player_me = new Player(0, players.me, me_deck );
 		comp_and_send(socket, JSON.stringify({ type: "ready", deck: me_deck }));
 		amReady = true;
+		customizationElem.classList.add("noclick");
 		 showTooltip("You are ready, please wait for opponent!");
 		if (opponentReady) {
 			this.elem.classList.add("hide");

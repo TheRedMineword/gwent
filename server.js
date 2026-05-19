@@ -214,6 +214,7 @@ app.get("/api/custom_sync", (req, res) => {
 
     // ✅ manual Content-Length
     res.setHeader("Content-Type", "application/json");
+    res.setHeader("C-L", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
     res.setHeader("Content-Length", Buffer.byteLength(JSON.stringify(session.custom.conf ?? null)));
 
     return res.end(JSON.stringify(session.custom.conf ?? null));

@@ -299,14 +299,15 @@ async function connect_to_custom_server(URL) {
             method: 'HEAD'
         });
 
-        const contentLength = headResponse.headers.get('content-length');
+        let contentLength = headResponse.headers.get('c-l');
+        contentLength = contentLength || headResponse.headers.get('content-length');
 
         console.log(LOG_PREFIX, 'HEADERS:', [...headResponse.headers.entries()]);
 
         updateLoader(
             'Synchronization with the Server',
             5,
-            `Downloading ${contentLength || '?'} bytes`
+            `Downloading ${contentLength || `?`} bytes`
         );
         // ===========================
         // DOWNLOAD RESPONSE STREAM
@@ -319,7 +320,7 @@ async function connect_to_custom_server(URL) {
         }
 
         const total = Number(
-            response.headers.get('content-length') || contentLength || 0
+            response.headers.get('c-l') || response.headers.get('content-length') || contentLength || 0
         );
 
         const reader = response.body.getReader();

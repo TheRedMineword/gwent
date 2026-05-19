@@ -1,5 +1,5 @@
 {
-  "name": "Example Server",
+  "name": "Deafult Config",
   "env_vars": {
     "showbankms": 9000,
     "players": {
@@ -579,7 +579,7 @@
         "count": "1"
       },
       {
-        "name": "S�le de Tansarville",
+        "name": "Síle de Tansarville",
         "id": "85",
         "deck": "realms",
         "row": "ranged",
@@ -1039,7 +1039,7 @@
         "count": "1"
       },
       {
-        "name": "Eredin Br�acc Glas - The Treacherous",
+        "name": "Eredin Bréacc Glas - The Treacherous",
         "id": "",
         "deck": "monsters",
         "row": "leader",
@@ -1610,7 +1610,7 @@
         "count": "1"
       },
       {
-        "name": "Eithn�",
+        "name": "Eithné",
         "id": "17",
         "deck": "scoiatael",
         "row": "ranged",
@@ -2572,7 +2572,17 @@
         "filename": "ranger",
         "count": "1"
       },
-    {
+      {
+        "name": "20 Years Of That Game Comapny",
+        "id": "3015",
+        "deck": "sky",
+        "row": "siege",
+        "strength": "0",
+        "ability": "tgc_portal",
+        "filename": "tgc20",
+        "count": "2"
+      },
+      {
         "name": "wasteland Elder",
         "id": "3016",
         "deck": "sky",
@@ -2581,7 +2591,7 @@
         "ability": "eredin_commander",
         "filename": "elder_wasteland",
         "count": "1"
-    }
+      }
     ],
     "faction": {
       "realms": {
@@ -2709,6 +2719,10 @@
       "magicthegathering": {
         "name": "Conjunction of the Spheres",
         "description": "Choose one card out of 25 random and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! This card is unstable, each turn it power will change in most of the time negative numbers (On averge power will be -3.27) "
+      },
+      "tgc_portal": {
+        "name": "That Game Company",
+        "description": "Choose one card out of max 25 Sky Faction cards and add it to your hand. The card cannot be picked up with the Decoy once it has been placed! This card is unstable, each turn it power will change in most of the time negative numbers (On averge power will be -3.27) "
       },
       "medic": {
         "name": "medic",
