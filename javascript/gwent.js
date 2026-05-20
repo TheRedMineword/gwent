@@ -727,7 +727,12 @@ op_counter.innerHTML = player_op.hand.cards.length
 				if (data.card.filename === "decoy") {
 					const replacedCard = row.cards.find(bc => bc.filename === data.target.filename);
 					if (!replacedCard) return
-					
+					try {
+						replacedCard.animate("horn"); //placeholder
+						await sleep(1000);
+					} catch (e) {
+						console.log("Decoy target", e);
+					}
 					board.moveTo(replacedCard, player_op.hand, row);
 				}
 				
@@ -2910,12 +2915,27 @@ youtubePlay(video_id, volume_int = 100, repeat = false) {
 		console.log("HandData_after", handData);
 			console.log("You played the card", this.previewCard)
 			comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData, HandMePost: handData_after }));
-			if (extraJSON !== null) {
-				console.log("Hold before send extraJSON", extraJSON);
-				showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds`);
-    await new Promise(resolve => setTimeout(resolve, RegisterMovesHold));
-    comp_and_send(socket, extraJSON);
-    extraJSON = null;
+			if (Array.isArray(extraJSON) && extraJSON.length > 0) {
+    const total = extraJSON.length;
+
+    for (let i = 0; i < total; i++) {
+        const payload = extraJSON[i];
+
+        // base hold + extra 500ms for each next packet
+        const delay = RegisterMovesHold + (i * 500);
+
+        console.log(`Hold before send extraJSON ${i + 1}/${total}`, payload);
+
+        showTooltip(
+            `The opponent synchronizes with the game (${i + 1}/${total}), wait ${delay / 1000}s`
+        );
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        comp_and_send(socket, payload);
+    }
+
+    extraJSON = [];
 }
 			if ( player_op.passed && !player_me.passed ) {
 			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
@@ -2963,12 +2983,27 @@ youtubePlay(video_id, volume_int = 100, repeat = false) {
 		var handData_after = await serializeCards(player_me.hand.cards);
 		console.log("HandData_after", handData_after)
 		comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, isMeHand: handData, HandMePost: handData_after}));
-		if (extraJSON !== null) {
-			console.log("Hold before send extraJSON", extraJSON);
-    showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds`);
-    await new Promise(resolve => setTimeout(resolve, RegisterMovesHold));
-    comp_and_send(socket, extraJSON);
-    extraJSON = null;
+		if (Array.isArray(extraJSON) && extraJSON.length > 0) {
+    const total = extraJSON.length;
+
+    for (let i = 0; i < total; i++) {
+        const payload = extraJSON[i];
+
+        // base hold + extra 500ms for each next packet
+        const delay = RegisterMovesHold + (i * 500);
+
+        console.log(`Hold before send extraJSON ${i + 1}/${total}`, payload);
+
+        showTooltip(
+            `The opponent synchronizes with the game (${i + 1}/${total}), wait ${delay / 1000}s`
+        );
+
+        await new Promise(resolve => setTimeout(resolve, delay));
+
+        comp_and_send(socket, payload);
+    }
+
+    extraJSON = [];
 }
 		if ( player_op.passed && !player_me.passed ) {
 			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
@@ -3400,7 +3435,8 @@ class Carousel {
 
 		if (actionString === "(c, i) => wrapper.card=c.cards[i]" || actionString === "(c,i) => newCard = c.cards[i]") {
 			setTimeout(() => {
-				extraJSON = JSON.stringify({ type: "medicDraw", card: resp.filename });
+				extraJSON = extraJSON.push(JSON.stringify({ type: "medicDraw", card: resp.filename }))
+				//extraJSON = JSON.stringify({ type: "medicDraw", card: resp.filename });
 				console.log("extra json now", extraJSON);
 			}, 1000);
 		} else if (actionString.includes("board.toWeather")) {
