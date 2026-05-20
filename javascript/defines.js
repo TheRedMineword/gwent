@@ -1,6 +1,6 @@
 "use strict"
 let twoPlayersConnected = false; //host alone
-let extraJSON = null;
+let extraJSON = [];
 let displaynow = null;
 let showbankms = 9000;
 let gameended = false;
