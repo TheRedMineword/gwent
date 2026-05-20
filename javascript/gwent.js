@@ -3437,7 +3437,10 @@ class Carousel {
 
 		if (actionString === "(c, i) => wrapper.card=c.cards[i]" || actionString === "(c,i) => newCard = c.cards[i]") {
 			setTimeout(() => {
-				extraJSON = extraJSON.push(JSON.stringify({ type: "medicDraw", card: resp.filename }))
+				extraJSON.push(JSON.stringify({
+    type: "medicDraw",
+    card: resp.filename
+}));
 				//extraJSON = JSON.stringify({ type: "medicDraw", card: resp.filename });
 				console.log("extra json now", extraJSON);
 			}, 1000);
