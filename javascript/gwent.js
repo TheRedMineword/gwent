@@ -2915,7 +2915,8 @@ youtubePlay(video_id, volume_int = 100, repeat = false) {
 		console.log("HandData_after", handData);
 			console.log("You played the card", this.previewCard)
 			comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, target: targetCard, isMeHand: handData, HandMePost: handData_after }));
-			if (Array.isArray(extraJSON) && extraJSON.length > 0) {
+			console.log("extraJSON vibe check:", extraJSON.length, extraJSON);
+			if (extraJSON.length > 0) {
     const total = extraJSON.length;
 
     for (let i = 0; i < total; i++) {
@@ -2983,7 +2984,8 @@ youtubePlay(video_id, volume_int = 100, repeat = false) {
 		var handData_after = await serializeCards(player_me.hand.cards);
 		console.log("HandData_after", handData_after)
 		comp_and_send(socket, JSON.stringify({ type: "play", player: playerId, card: playedCard, row: nomeColuna, isMeHand: handData, HandMePost: handData_after}));
-		if (Array.isArray(extraJSON) && extraJSON.length > 0) {
+		console.log("extraJSON vibe check:", extraJSON.length, extraJSON);
+			if (extraJSON.length > 0) {
     const total = extraJSON.length;
 
     for (let i = 0; i < total; i++) {
