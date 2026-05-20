@@ -703,8 +703,8 @@ op_counter.innerHTML = player_op.hand.cards.length
 				var cards_to_find = await deserializeCards(   data?.isMeHand,    player_op);
 				player_op.hand.cards = cards_to_find;
 				console.log("[OPHAND]", cards_to_find, data?.isMeHand);
+				card = null;
 				// const card = player_op.hand.cards.find(c => c.filename === data.card.filename);
-				let card = null;
 				try {
 					try { console.log("[OPHAND]","IsCardPlayed?", player_op.hand.cards.find(c => c.filename === data.card.filename))} catch (e) {};
 					card = cards_to_find.find(c => c.filename === data.card.filename);
@@ -728,8 +728,8 @@ op_counter.innerHTML = player_op.hand.cards.length
 					const replacedCard = row.cards.find(bc => bc.filename === data.target.filename);
 					if (!replacedCard) return
 					try {
-						replacedCard.animate("horn"); //placeholder
-						await sleep(1000);
+						replacedCard.animate2("decoy"); //placeholder
+						await sleep(Math.floor(ui_display_times.show_me_that_card_you_have * (1 - 0.9)));
 					} catch (e) {
 						console.log("Decoy target", e);
 					}
@@ -773,7 +773,23 @@ op_counter.innerHTML = player_op.hand.cards.length
 
 			// Game - Opponent used the leader card
 			case "useLeader":
-				player_op.activateLeader()
+				console.log("[OPHAND]", await deserializeCards(   data?.isMeHand,    player_op));
+				var cards_to_find = await deserializeCards(   data?.isMeHand,    player_op);
+				player_op.hand.cards = cards_to_find;
+				console.log("[OPHAND]", cards_to_find, data?.isMeHand);
+				// const card = player_op.hand.cards.find(c => c.filename === data.card.filename);
+				card = null;
+				await player_op.activateLeader();
+				try {
+				console.log("[OPHAND] post", await deserializeCards(   data?.HandMePost,    player_op));
+				var cards_to_find_post = await deserializeCards(   data?.HandMePost,    player_op);
+				player_op.hand.cards = cards_to_find_post;
+				console.log("[OPHAND]", player_op.hand.cards);
+				document.getElementById("hand-count-op").innerHTML = player_op.hand.cards.length;
+				} catch (e) {
+					console.log("[OPHAND]","sync from payload post procces fatal", e, "data", data, cards_to_find_post);
+					alert("Failed sync op cars on end of execute path, check console for more \n\nReport it as bug!!!");
+				}
 				break;
 		}
 };
@@ -1109,8 +1125,12 @@ class Player {
 		if (this.id === 0 && this.leader.activated.length > 0){
 			this.elem_leader.addEventListener("click", async () => {
 				await ui.viewCard(this.leader, async () => {
-						comp_and_send(socket, JSON.stringify({ type: "useLeader", player: this.id }));
+						var handData = await serializeCards(player_me.hand.cards);
+		console.log("HandData", handData);
 						await this.activateLeader();
+						var handData_after = await serializeCards(player_me.hand.cards);
+		console.log("HandData post", handData_after);
+						comp_and_send(socket, JSON.stringify({ type: "useLeader", player: this.id, isMeHand: handData, HandMePost: handData_after  }));
 							if ( player_op.passed && !player_me.passed ) {
 			showTooltip(`The opponent synchronizes with the game, wait ${RegisterMovesHold / 1000} seconds, and think about the next move`);
 			await sleep(RegisterMovesHold); 			showTooltip(`You can play now again`);
@@ -2460,7 +2480,8 @@ class Card {
 			"avenger_spawn_creature": "avenger",
 			"hero": "hero_anim",
 			"griffin": "moral",
-			"mtg": "cos"
+			"mtg": "cos",
+		"decoy": "spy"
 		}
 		var temSom = new Array();
 		for (var x in guia) temSom[temSom.length] = x;
@@ -2505,7 +2526,8 @@ class Card {
 		"avenger_spawn_creature": "avenger",
 		"hero": "hero_anim",
 		"griffin": "moral",
-		"mtg": "cos"
+		"mtg": "cos",
+		"decoy": "spy"
 	};
 
 	const literais = [
@@ -2583,6 +2605,7 @@ anim.style.left = "0";
 	
 	// Animates the scorch effect
 	async scorch(name){
+		console.log("async scorch(", name, ")");
 		let anim = this.elem.children[3];
 		anim.style.backgroundSize = "cover";
 		anim.style.backgroundImage = iconURL("anim_" + name);

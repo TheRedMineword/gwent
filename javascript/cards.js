@@ -950,16 +950,16 @@ var card_dict = [
         "filename": "eredin_bronze",
         "count": "1"
     },
-   // {
-  //      "name": "Eredin - Destroyer of Worlds",
-  //      "id": "137",
-  //      "deck": "monsters",
-   //     "row": "leader",
-   //     "strength": "",
-  ///      "ability": "eredin_destroyer",
-  //      "filename": "eredin_gold",
-  //      "count": "1"
-  //  },
+    {
+       "name": "Eredin - Destroyer of Worlds",
+       "id": "137",
+       "deck": "monsters",
+        "row": "leader",
+        "strength": "",
+        "ability": "eredin_destroyer",
+        "filename": "eredin_gold",
+        "count": "1"
+    },
    // {
  //       "name": "Eredin - King of the Wild Hunt",
  //       "id": "135",

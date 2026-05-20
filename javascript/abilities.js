@@ -902,85 +902,159 @@ resolve(player_op.grave.cards[0]);
 		weight: (card, ai, max, data) => ai.weightMedic(data, 0, card.holder)
 	},
 	eredin_destroyer: {
-		description: "Discard 2 cards and draw 1 card of your choice from your deck.",
-		activated: async (card) => {
-			let hand = board.getRow(card, "hand", card.holder);
-			let deck = board.getRow(card, "deck", card.holder);
-			if (card.holder.controller instanceof ControllerOpponent) {
-				// Wait for the opponent to choose which cards to discard and which to get
-				await new Promise((resolve) => {
-					let flag = 0;
-					const handleMessage = async (event) => {
-						const data = await recv_and_decomp(event);
-						if (data.type === "removeCardHand") {
-							// Edit by Rick: Previously used data.index, but hand order seems to not always be synchronized.
-							// So now uses card filename instead.
-							// OLD: const card = hand.cards[data.index];
-							const card = player_op.hand.cards.find(c => c.filename === data.card);
-							
-							player_op.hand.removeCard(card);
-							player_op.grave.addCard(card);
-							flag+=1;
-						}
-						if (data.type === "addCardHand") {
-							// Edit by Rick: Previously used data.index, but deck(?) order seems to not always be synchronized.
-							// So now uses card filename instead.
-							// OLD: const drawnCard = player_op.deck.cards[data.index];
-							const drawnCard = player_op.deck.cards.find(c => c.filename === data.card);
-							
-							player_op.deck.removeCard(drawnCard);
-							player_op.hand.addCard(drawnCard);
-							flag+=1;
-						}
+	description: "Banish 2 cards from your hand and create a copy of a card from your deck.",
 
-						if (flag === 3) {
-							resolve(true);
-						}
-					}
-					socket.addEventListener('message', handleMessage);
-				});
+	activated: async (card) => {
+		let hand = board.getRow(card, "hand", card.holder);
+		let deck = board.getRow(card, "deck", card.holder);
 
-				return;
-			} else
-				Carousel.curr.exit();
-			
-			// Edit by Rick: Previously handled everything inline and didn't return the card object.
-			// Returning a card object is now required in order to read its filename as per the changes made in gwent.js.
-			// OLD: await ui.queueCarousel(hand, 2, (c,i) => board.toGrave(c.cards[i], c), () => true);
-			// OLD: await ui.queueCarousel(deck, 1, (c,i) => board.toHand(c.cards[i], deck), () => true, true);
-			await ui.queueCarousel(hand, 1, (c,i) => {
-				let cardToDiscard = c.cards[i]
-				board.toGrave(cardToDiscard, c);
-				if (Carousel.curr) Carousel.curr.update();
-				return cardToDiscard;
-			}, () => true);
-			// Wait a bit so the board/hand state updates visually.
-			await new Promise(r => setTimeout(r, 500));
-			// Now just do it again instead of instructing the previous ui.queueCarousel() call to require 2 cards.
-			// Fixes an issue with the carousel not updating inbetween selecting card 1 and 2.
-			await ui.queueCarousel(hand, 1, (c,i) => {
-				let cardToDiscard = c.cards[i]
-				board.toGrave(cardToDiscard, c);
-				if (Carousel.curr) Carousel.curr.update();
-				return cardToDiscard;
-			}, () => true);
-			// Wait a bit so the board/hand state updates visually.
-			await new Promise(r => setTimeout(r, 500));
-			// Now finally pick one card to draw from your deck, again returning the card object to ensure receiving client can look it up.
-			await ui.queueCarousel(deck, 1, (c,i) => {
-				let cardToDraw = c.cards[i];
-				board.toHand(cardToDraw, deck);
-				return cardToDraw;
-			}, () => true, true);
+		console.log("[EREDIN_DESTROYER] Ability activated.");
 
-		},
-		weight: (card, ai) => {
-			let cards = ai.discardOrder(card).splice(0,2).filter(c => c.basePower < 7);
-			if (cards.length < 2)
-				return 0;
-			return cards[0].abilities.includes("muster") ? 50 : 25;
+		// Don't simulate opponent
+		if (player_me.id !== card.holder.id) {
+			card.animate("deploy");
+			console.log("[EREDIN_DESTROYER] Opponent played card, waiting for sync.");
+			return;
 		}
+
+		if (Carousel.curr)
+			Carousel.curr.exit();
+
+		// =========================
+		// BANISH CARD 1
+		// =========================
+		console.log("[EREDIN_DESTROYER] Choosing first card to banish.");
+
+		await ui.queueCarousel(
+			hand,
+			1,
+			(c, i) => {
+				let removed = c.cards[i];
+
+				console.log(
+					"[EREDIN_DESTROYER] Banishing card 1:",
+					removed.name || removed.filename
+				);
+
+				// Permanently remove card
+				c.removeCard(removed);
+
+				if (Carousel.curr)
+					Carousel.curr.update();
+
+				return removed;
+			},
+			() => true,
+			false,
+			false,
+			"Choose card to banish (1/2)"
+		);
+
+		await new Promise(r => setTimeout(r, 300));
+
+		// =========================
+		// BANISH CARD 2
+		// =========================
+		console.log("[EREDIN_DESTROYER] Choosing second card to banish.");
+
+		await ui.queueCarousel(
+			hand,
+			1,
+			(c, i) => {
+				let removed = c.cards[i];
+
+				console.log(
+					"[EREDIN_DESTROYER] Banishing card 2:",
+					removed.name || removed.filename
+				);
+
+				// Permanently remove card
+				c.removeCard(removed);
+
+				if (Carousel.curr)
+					Carousel.curr.update();
+
+				return removed;
+			},
+			() => true,
+			false,
+			false,
+			"Choose card to banish (2/2)"
+		);
+
+		await new Promise(r => setTimeout(r, 300));
+
+		// =========================
+		// CHOOSE CARD TO COPY
+		// =========================
+		console.log("[EREDIN_DESTROYER] Choosing card from deck to copy.");
+
+		let wrapper = { card: null };
+
+		await ui.queueCarousel(
+			shuffleSeeded(deck, Math.random().toString(36).substring(2, 10)).array,
+			1,
+			(c, i) => {
+				wrapper.card = c.cards[i];
+
+				console.log(
+					"[EREDIN_DESTROYER] Selected deck card:",
+					wrapper.card.name || wrapper.card.filename
+				);
+
+				return c.cards[i];
+			},
+			() => true,
+			true,
+			false,
+			"Choose a card to create a copy of"
+		);
+
+		if (!wrapper.card) {
+			console.log("[EREDIN_DESTROYER] No card selected.");
+			return;
+		}
+
+		// =========================
+		// CREATE COPY
+		// =========================
+		let copiedData = Object.values(card_dict)
+			.find(cd => cd.filename === wrapper.card.filename);
+
+		if (!copiedData) {
+			console.log(
+				"[EREDIN_DESTROYER] Failed to find card data for:",
+				wrapper.card.filename
+			);
+			return;
+		}
+
+		let created = new Card(copiedData, card.holder);
+
+		console.log(
+			"[EREDIN_DESTROYER] Creating copy:",
+			created.name || created.filename
+		);
+
+		card.holder.hand.addCard(created);
+
+		created.animate("draw");
+		card.animate("deploy");
+
+		console.log("[EREDIN_DESTROYER] Ability finished.");
 	},
+
+	weight: (card, ai) => {
+		let cards = ai.discardOrder(card)
+			.splice(0, 2)
+			.filter(c => c.basePower < 7);
+
+		if (cards.length < 2)
+			return 0;
+
+		return 30;
+	}
+},
 	eredin_king: {
 		description: "Pick any weather card from your deck and play it instantly.",
 		activated: async card => {

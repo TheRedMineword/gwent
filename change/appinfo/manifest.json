@@ -1,6 +1,6 @@
 {
-  "sha": "fd22a16a3dd6fcc13ac8103f4f5a5c20f7c65d88033f1b150d13ebd803792b6b",
-  "generatedAt": "2026-05-19T15:01:34.207Z",
+  "sha": "7a85aa77e5a7a433fad4156fce95746ac1d4d4acdca3d2ea2b1a10afdc59a2d9",
+  "generatedAt": "2026-05-20T17:27:03.761Z",
   "files": [
     {
       "path": "404.html",
@@ -24,7 +24,7 @@
     },
     {
       "path": "change/index.json",
-      "sha256": "8259db0889de56acdb16f547b38d24f7687c3f504aded31d4b4268b76acbaa01",
+      "sha256": "77010ab082ad11d08c09431aca371c7eed9dc4b94037752181028cebc7e86932",
       "size": 24
     },
     {
@@ -61,6 +61,11 @@
       "path": "change/log-update13.txt",
       "sha256": "4fa9ed78b72b5c0e1abe11daf672ccb93242cb75fdbc8c7aeb3927360a836ea1",
       "size": 150
+    },
+    {
+      "path": "change/log-update14.txt",
+      "sha256": "4c817b8ed3b5d124f3da39acf600f5a8383da25dcdf877892cc0f01207e550d7",
+      "size": 201
     },
     {
       "path": "change/log-update2.txt",
@@ -171,6 +176,11 @@
       "path": "img/icons/anim_debuff.png",
       "sha256": "e1ed080033085e8c6ce07b8eacba26b59e02fef2f96e6e6ad9c05b5516ff286e",
       "size": 1507
+    },
+    {
+      "path": "img/icons/anim_decoy.png",
+      "sha256": "5fd9ba2cc0c9f25deb8493a92296a1771c6ebf5c0768bb3ec78d48eb8ee7ee40",
+      "size": 34440
     },
     {
       "path": "img/icons/anim_griffin_hand.png",
@@ -3299,13 +3309,13 @@
     },
     {
       "path": "javascript/abilities.js",
-      "sha256": "e2b58c9889e6b031bac6070588c76414195f2bd4d8a6093229b53b3e3841babb",
-      "size": 40970
+      "sha256": "3bc9f40831491645f496278e9172d14c3cbbb9826d85ff2703f7d8ee23452d6e",
+      "size": 40836
     },
     {
       "path": "javascript/cards.js",
-      "sha256": "db963ad0733bcc865c72c16603f765a9ea07d6638d988a426ad1c58e09517ec6",
-      "size": 57666
+      "sha256": "833406280bec565864a34d3d756a29fe17ee62b63829fccfdc227e80f74de778",
+      "size": 57642
     },
     {
       "path": "javascript/chat.js",
@@ -3319,8 +3329,8 @@
     },
     {
       "path": "javascript/custom_server/deafult_expanded.txt",
-      "sha256": "1710d932bf01a0c1b91f696fa63b36ebebafdc6e61e6ff313ed0b32e88e72035",
-      "size": 74079
+      "sha256": "6cea8b14eab3772abb041de7bbcdaf5ea386b7d6852e5ea0360acd47801506f7",
+      "size": 73343
     },
     {
       "path": "javascript/custom_server/deafult.txt",
@@ -3334,8 +3344,8 @@
     },
     {
       "path": "javascript/defines.js",
-      "sha256": "b9c13e22dc0747167acfad4a6b4ee2bbc4779f62fdd2c60dfb916d56a2614b06",
-      "size": 8178
+      "sha256": "29efbbf2df0cb30a2d14c4d57ca97880dc36458cb7d7e09f0476ea7d1dc9d1b2",
+      "size": 8438
     },
     {
       "path": "javascript/factions.js",
@@ -3344,8 +3354,8 @@
     },
     {
       "path": "javascript/gwent.js",
-      "sha256": "a73d18bc774bf416e8ea9da7fb3eaa7e4a42ee5052c4936289b140bee9ac754b",
-      "size": 142378
+      "sha256": "8e056bf48b0e281cce58bc204e7f8cb0dd435a944fda27f92a176f49f77ed9c5",
+      "size": 149314
     },
     {
       "path": "javascript/jszip.min.js",
@@ -3559,8 +3569,8 @@
     },
     {
       "path": "sfx/packed.zip",
-      "sha256": "03668241f581d6c7478ecc5540f9aaf7bd24acda955a4ea4024590d9e7d2b5b7",
-      "size": 2623003
+      "sha256": "836474b694b09eb8b0c67ee5559bd4adb25a3c4b74765f26e71be91a737080d6",
+      "size": 2623032
     },
     {
       "path": "sfx/pass.mp3",

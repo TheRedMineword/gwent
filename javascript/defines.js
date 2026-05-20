@@ -239,3 +239,6 @@ function ordinal(n) {
 
   return `${n}th`;
 }
+
+
+let card = null;
